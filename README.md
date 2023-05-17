@@ -8,7 +8,6 @@ Eye-candy manager written in Rust
 git clone https://github.com/mrtnvgr/oxidec
 cd oxidec
 cargo install --path .
-cp -r examples ~/.config/oxidec
 ```
 
 **NOTE**: recommended aliases
@@ -22,6 +21,6 @@ alias cs="oxidec colorscheme"
 
 ## Roadmap
 
-- Import colorschemes from xresources, default templates/reloaders **(0.2.0)**
+- Import colorschemes from xresources, ~default templates/reloaders~ **(0.2.0)**
 - Wallpapers **(0.3.0)**
 - Themes **(0.4.0)**
