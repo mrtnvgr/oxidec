@@ -5,9 +5,7 @@ Eye-candy manager written in Rust
 ## Install
 
 ```sh
-git clone https://github.com/mrtnvgr/oxidec
-cd oxidec
-cargo install --path .
+cargo install oxidec
 ```
 
 **NOTE**: recommended aliases
