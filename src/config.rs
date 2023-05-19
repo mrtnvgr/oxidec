@@ -43,11 +43,11 @@ impl Folder {
         self.path().join(entry).exists()
     }
 
-    pub fn random_file(&self) -> Option<String> {
+    pub fn random_file(&self) -> Option<PathBuf> {
         let mut rng = rand::thread_rng();
         let files = fs::read_dir(self.path()).expect("Failed to read the dir contents");
         let entry = files.choose(&mut rng)?.ok()?;
-        Some(entry.path().display().to_string())
+        Some(entry.path())
     }
 
     pub fn copy(&self, path: &PathBuf) -> io::Result<()> {

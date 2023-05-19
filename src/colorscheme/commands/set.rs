@@ -27,14 +27,18 @@ pub fn handle(args: &args::Set) {
 }
 
 fn get_colorscheme_name(args: &args::Set) -> String {
-    args.name.as_ref().map_or_else(
-        || {
-            Folder::Colorschemes
-                .random_file()
-                .expect("There are no colorschemes.")
-        },
-        ToString::to_string,
-    )
+    args.name
+        .as_ref()
+        .map_or_else(get_random_colorscheme, ToString::to_string)
+}
+
+fn get_random_colorscheme() -> String {
+    let file = Folder::Colorschemes
+        .random_file()
+        .expect("There are no colorschemes.")
+        .with_extension("");
+    let filename = file.file_name().unwrap();
+    filename.to_str().unwrap().to_owned()
 }
 
 fn ensure_that_colorscheme_exists(name: &str) {
