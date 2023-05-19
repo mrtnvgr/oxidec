@@ -1,4 +1,5 @@
 pub mod args;
+mod blocks;
 mod commands;
 mod reloaders;
 mod schema;

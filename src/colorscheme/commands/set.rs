@@ -1,6 +1,6 @@
 use crate::{
     cache,
-    colorscheme::{args, reloaders, schema, templates},
+    colorscheme::{args, blocks, reloaders, schema, templates},
     config::Folder,
 };
 use std::{path::PathBuf, string::ToString};
@@ -23,7 +23,7 @@ pub fn handle(args: &args::Set) {
 
     log::info!("Current colorscheme: {}", name);
 
-    // TODO: colored blocks
+    blocks::print();
 }
 
 fn get_colorscheme_name(args: &args::Set) -> String {

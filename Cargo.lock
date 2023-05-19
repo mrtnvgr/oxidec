@@ -220,6 +220,7 @@ checksum = "2dffe52ecf27772e601905b7522cb4ef790d2cc203488bbd0e2fe85fcb74566d"
 name = "oxidec"
 version = "0.1.0"
 dependencies = [
+ "ansi_term",
  "env_logger",
  "home",
  "log",
