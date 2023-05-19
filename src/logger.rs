@@ -18,10 +18,10 @@ fn init_logger() {
         let level_style = buf.default_level_style(record.level());
 
         let level = match record.level() {
-            Level::Info => "[*]",
-            Level::Warn => "warning:",
-            Level::Error => "error:",
-            _ => "[?]",
+            Level::Info => "*",
+            Level::Warn => "!",
+            Level::Error => "x",
+            _ => "?",
         };
 
         writeln!(buf, "{} {}", level_style.value(level), record.args())
