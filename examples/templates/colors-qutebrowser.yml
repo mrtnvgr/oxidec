@@ -1,0 +1,91 @@
+colors.statusbar.caret.bg: "{{ colors.color5 }}"
+colors.statusbar.caret.fg: "{{ special.foreground }}"
+
+colors.statusbar.command.bg: "{{ colors.color6 }}"
+colors.statusbar.command.fg: "{{ special.background }}"
+colors.statusbar.command.private.bg: "black"
+
+colors.statusbar.insert.bg: "{{ colors.color2 }}"
+colors.statusbar.insert.fg: "{{ special.foreground }}"
+
+colors.statusbar.normal.bg: "{{ special.background }}"
+colors.statusbar.normal.fg: "{{ special.foreground }}"
+
+colors.statusbar.private.bg: "{{ special.background }}"
+colors.statusbar.private.fg: "{{ special.foreground }}"
+
+colors.statusbar.progress.bg: "{{ special.foreground }}"
+
+colors.statusbar.url.fg: "{{ special.foreground }}"
+colors.statusbar.url.error.fg: "{{ colors.color1 }}"
+colors.statusbar.url.hover.fg: "{{ colors.color4 }}"
+colors.statusbar.url.success.http.fg: "{{ special.foreground }}"
+colors.statusbar.url.success.https.fg: "{{ colors.color2 }}"
+colors.statusbar.url.warn.fg: "{{ colors.color3 }}"
+
+colors.tabs.bar.bg: "{{ special.background }}"
+colors.tabs.even.fg: "{{ special.foreground }}"
+colors.tabs.even.bg: "{{ special.background }}"
+colors.tabs.odd.fg: "{{ special.foreground }}"
+colors.tabs.odd.bg: "{{ special.background }}"
+
+colors.tabs.selected.even.fg: "{{ special.background }}"
+colors.tabs.selected.even.bg: "{{ special.foreground }}"
+
+colors.tabs.selected.odd.fg: "{{ special.background }}"
+colors.tabs.selected.odd.bg: "{{ special.foreground }}"
+
+colors.completion.category.bg: "{{ colors.color6 }}"
+colors.completion.category.fg: "{{ special.background }}"
+
+colors.completion.category.border.bottom: "{{ special.background }}"
+colors.completion.category.border.top: "{{ colors.color6 }}"
+
+colors.completion.even.bg: "{{ special.background }}"
+colors.completion.odd.bg: "{{ special.background }}"
+
+colors.completion.item.selected.bg: "{{ colors.color4 }}"
+colors.completion.item.selected.fg: "{{ special.foreground }}"
+
+colors.completion.item.selected.border.bottom: "{{ colors.color4 }}"
+colors.completion.item.selected.border.top: "{{ colors.color4 }}"
+
+colors.completion.match.fg: "{{ colors.color2 }}"
+
+colors.completion.scrollbar.bg: "{{ special.foreground }}"
+colors.completion.scrollbar.fg: "{{ special.background }}"
+
+colors.downloads.bar.bg: "{{ special.background }}"
+colors.downloads.error.fg: "{{ special.foreground }}"
+colors.downloads.error.bg: "{{ colors.color1 }}"
+colors.downloads.start.fg: "{{ special.background }}"
+colors.downloads.start.bg: "{{ colors.color5 }}"
+colors.downloads.stop.fg: "{{ special.background }}"
+colors.downloads.stop.bg: "{{ colors.color2 }}"
+
+colors.hints.fg: "{{ special.foreground }}"
+colors.hints.bg: "{{ special.background }}"
+colors.hints.match.fg: "{{ colors.color3 }}"
+
+colors.keyhint.fg: "{{ special.foreground }}"
+colors.keyhint.bg: "{{ special.background }}"
+colors.keyhint.suffix.fg: "{{ colors.color3 }}"
+
+colors.messages.error.fg: "{{ special.foreground }}"
+colors.messages.error.bg: "{{ colors.color1 }}"
+colors.messages.error.border: "{{ colors.color1 }}"
+
+colors.messages.info.fg: "{{ special.foreground }}"
+colors.messages.info.bg: "{{ colors.color2 }}"
+colors.messages.info.border: "{{ colors.color2 }}"
+
+colors.messages.warning.fg: "{{ special.foreground }}"
+colors.messages.warning.bg: "{{ colors.color3 }}"
+colors.messages.warning.border: "{{ colors.color3 }}"
+
+colors.prompts.fg: "{{ special.foreground }}"
+colors.prompts.bg: "{{ special.background }}"
+colors.prompts.border: "{{ special.background }}"
+colors.prompts.selected.bg: "{{ colors.color3 }}"
+
+hints.border: "1px solid {{ special.foreground }}"
