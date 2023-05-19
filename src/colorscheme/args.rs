@@ -11,6 +11,8 @@ pub enum Action {
     Import(Import),
     #[structopt(name = "list", about = "list colorschemes")]
     List(List),
+    #[structopt(name = "status", about = "colorscheme status")]
+    Status(Status),
     #[structopt(name = "reload", about = "reload colorscheme")]
     Reload,
 }
@@ -33,6 +35,12 @@ pub struct Import {
 
 #[derive(StructOpt)]
 pub struct List {
+    #[structopt(long)]
+    pub json: bool,
+}
+
+#[derive(StructOpt)]
+pub struct Status {
     #[structopt(long)]
     pub json: bool,
 }

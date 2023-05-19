@@ -13,6 +13,7 @@ pub fn handle(args: &Action) {
         Action::Remove(args) => commands::remove::handle(args),
         Action::Import(args) => commands::import::handle(args),
         Action::List(args) => commands::list::handle(args),
+        Action::Status(args) => commands::status::handle(args),
         Action::Reload => reloaders::run(),
     }
 }

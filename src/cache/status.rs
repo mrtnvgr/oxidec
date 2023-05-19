@@ -20,11 +20,20 @@ impl Colorscheme {
         Self { name, path }
     }
 
+    pub fn load() -> Self {
+        let path = Self::path();
+        let fr = fs::File::open(path).expect("Failed to read the file");
+        serde_json::from_reader(fr).expect("Failed to parse the file")
+    }
+
     pub fn save(&self) -> std::io::Result<()> {
-        let path = home_dir()
-            .expect("Failed to get HOME directory")
-            .join(".cache/oxidec/status/colorscheme.json");
-        fs::write(path, self.to_json_string())
+        fs::write(Self::path(), self.to_json_string())
+    }
+
+    fn path() -> PathBuf {
+        let home_dir = home_dir().expect("Failed to get HOME directory");
+        let cache_path = ".cache/oxidec/status/colorscheme.json";
+        home_dir.join(cache_path)
     }
 
     fn to_json_string(&self) -> String {

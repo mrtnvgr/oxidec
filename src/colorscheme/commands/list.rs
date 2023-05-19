@@ -12,7 +12,7 @@ fn output_using_log() {
     log::info!("Colorschemes: ");
     for entry in Folder::Colorschemes.list().unwrap() {
         let colorscheme = entry.file_stem().unwrap();
-        log::info!("- {:?}", colorscheme);
+        log::info!("{:?}", colorscheme);
     }
 }
 

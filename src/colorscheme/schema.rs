@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use std::path::PathBuf;
+use std::{fs::File, path::PathBuf};
 
 #[derive(Serialize, Deserialize)]
 pub struct Colorscheme {
@@ -36,7 +36,7 @@ pub struct Colors {
 
 impl Colorscheme {
     pub fn from_file(path: &PathBuf) -> serde_json::Result<Self> {
-        let fr = std::fs::File::open(path).expect("Failed to read the file");
+        let fr = File::open(path).expect("Failed to read the file");
         serde_json::from_reader(fr)
     }
 }
