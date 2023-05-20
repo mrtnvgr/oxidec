@@ -5,6 +5,8 @@ edition = "2021"
 description = "Eye-candy manager written in Rust"
 license = "GPL-3.0"
 repository = "https://github.com/mrtnvgr/oxidec/"
+keywords = ["colorscheme", "wallpaper", "theme", "linux", "cli"]
+categories = ["command-line-utilities"]
 
 [dependencies]
 ansi_term = "0.12.1"
