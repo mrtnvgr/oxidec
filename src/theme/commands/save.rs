@@ -7,6 +7,11 @@ use crate::{
 };
 
 pub fn handle(args: &args::Save) {
+    assert!(
+        !Folder::Themes.contains(&args.name),
+        "Theme with this name already exists!"
+    );
+
     let colorscheme = status::Colorscheme::load();
     let wallpaper = status::Wallpaper::load();
 
