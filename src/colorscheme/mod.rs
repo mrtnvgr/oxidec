@@ -1,9 +1,9 @@
 pub mod args;
-mod blocks;
+pub mod blocks;
 mod commands;
-mod reloaders;
-mod schema;
-mod templates;
+pub mod reloaders;
+pub mod schema;
+pub mod templates;
 
 use args::Action;
 

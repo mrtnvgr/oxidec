@@ -1,4 +1,5 @@
 mod colorscheme;
+mod theme;
 mod wallpaper;
 
 pub mod cache;
@@ -20,6 +21,8 @@ enum Mode {
     Colorscheme(colorscheme::args::Action),
     #[structopt(name = "wallpaper", about = "wallpaper manager")]
     Wallpaper(wallpaper::args::Action),
+    #[structopt(name = "theme", about = "theme manager")]
+    Theme(theme::args::Action),
 }
 
 fn main() {
@@ -31,5 +34,6 @@ fn main() {
     match args.mode {
         Mode::Colorscheme(args) => colorscheme::handle(&args),
         Mode::Wallpaper(args) => wallpaper::handle(&args),
+        Mode::Theme(args) => theme::handle(&args),
     }
 }

@@ -13,6 +13,7 @@ pub enum Folder {
     Templates,
     Reloaders,
     Wallpapers,
+    Themes,
 }
 
 impl Folder {
@@ -26,13 +27,13 @@ impl Folder {
             Self::Templates => root.join("templates"),
             Self::Reloaders => root.join("reloaders"),
             Self::Wallpapers => root.join("wallpapers"),
+            Self::Themes => root.join("themes"),
         }
     }
 
     fn force_extension(&self, path: PathBuf) -> PathBuf {
         match self {
-            // TODO: Self::Colorschemes | Self::Themes
-            Self::Colorschemes => path.with_extension("json"),
+            Self::Colorschemes | Self::Themes => path.with_extension("json"),
             _ => path,
         }
     }
@@ -73,6 +74,7 @@ impl Folder {
     }
 
     pub fn get(&self, entry: &str) -> io::Result<PathBuf> {
+        // TODO: refactor?
         let path = self.force_extension(self.path().join(entry));
         if path.exists() {
             return Ok(path);
@@ -91,6 +93,11 @@ impl Folder {
         }
 
         Err(io::Error::from(io::ErrorKind::NotFound))
+    }
+
+    pub fn build_path(&self, name: &str) -> PathBuf {
+        // TODO: refactor?
+        self.force_extension(self.path().join(name))
     }
 }
 
