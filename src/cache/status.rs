@@ -4,7 +4,10 @@ use serde::{Deserialize, Serialize};
 use std::{
     fs,
     path::{Path, PathBuf},
+    str::FromStr,
 };
+
+// FIXME: Rework this!
 
 #[derive(Serialize, Deserialize)]
 pub struct Colorscheme {
@@ -38,5 +41,70 @@ impl Colorscheme {
 
     fn to_json_string(&self) -> String {
         serde_json::to_string(&self).unwrap()
+    }
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct Wallpaper {
+    pub name: String,
+    pub path: PathBuf,
+    pub mode: WallpaperMode,
+}
+
+impl Wallpaper {
+    pub fn new(entry: &str, mode: WallpaperMode) -> Self {
+        let name = Path::new(&entry).file_name().unwrap();
+        let name = name.to_string_lossy().to_string();
+        let path = Folder::Wallpapers.get(entry).unwrap();
+        Self { name, path, mode }
+    }
+
+    pub fn load() -> Self {
+        let path = Self::path();
+        let fr = fs::File::open(path).expect("Failed to read the file");
+        serde_json::from_reader(fr).expect("Failed to parse the file")
+    }
+
+    pub fn save(&self) -> std::io::Result<()> {
+        fs::write(Self::path(), self.to_json_string())
+    }
+
+    fn path() -> PathBuf {
+        let home_dir = home_dir().expect("Failed to get HOME directory");
+        let cache_path = ".cache/oxidec/status/wallpaper.json";
+        home_dir.join(cache_path)
+    }
+
+    fn to_json_string(&self) -> String {
+        serde_json::to_string(&self).unwrap()
+    }
+}
+
+#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
+pub enum WallpaperMode {
+    Center,
+    Fill,
+    Max,
+    Scale,
+    Tile,
+}
+
+impl FromStr for WallpaperMode {
+    type Err = &'static str;
+    fn from_str(mode: &str) -> Result<Self, Self::Err> {
+        match mode {
+            "center" | "centre" => Ok(Self::Center),
+            "fill" => Ok(Self::Fill),
+            "max" => Ok(Self::Max),
+            "scale" => Ok(Self::Scale),
+            "tile" => Ok(Self::Tile),
+            _ => Err("This mode doesn't exist"),
+        }
+    }
+}
+
+impl WallpaperMode {
+    pub const fn variants() -> [&'static str; 6] {
+        ["center", "centre", "fill", "max", "scale", "tile"]
     }
 }

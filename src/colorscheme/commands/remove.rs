@@ -1,6 +1,5 @@
-use std::io::ErrorKind;
-
 use crate::{colorscheme::args, config::Folder};
+use std::io::ErrorKind;
 
 pub fn handle(args: &args::Remove) {
     match Folder::Colorschemes.remove(&args.name) {

@@ -35,10 +35,9 @@ fn get_colorscheme_name(args: &args::Set) -> String {
 fn get_random_colorscheme() -> String {
     let file = Folder::Colorschemes
         .random_file()
-        .expect("There are no colorschemes.")
-        .with_extension("");
-    let filename = file.file_name().unwrap();
-    filename.to_str().unwrap().to_owned()
+        .expect("There are no colorschemes.");
+    let filestem = file.file_stem().unwrap();
+    filestem.to_str().unwrap().to_owned()
 }
 
 fn ensure_that_colorscheme_exists(name: &str) {

@@ -12,13 +12,13 @@ cargo install oxidec
 
 ```sh
 alias cs="oxidec colorscheme"
-# alias wl="oxidec wallpaper"
-# alias wp="oxidec wallpaper"
+alias wl="oxidec wallpaper"
+alias wp="oxidec wallpaper"
 # alias th="oxidec theme"
 ```
 
 ## Roadmap
 
-- Import colorschemes from xresources, ~default templates/reloaders~ **(0.2.0)**
-- Wallpapers **(0.3.0)**
-- Themes **(0.4.0)**
+- ~Default templates and reloaders~ **(0.1.5)**
+- ~Wallpapers~ **(0.2.0)**
+- Themes **(0.3.0)**

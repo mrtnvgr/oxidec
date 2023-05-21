@@ -31,8 +31,8 @@ impl Folder {
 
     fn force_extension(&self, path: PathBuf) -> PathBuf {
         match self {
+            // TODO: Self::Colorschemes | Self::Themes
             Self::Colorschemes => path.with_extension("json"),
-            Self::Wallpapers => todo!(),
             _ => path,
         }
     }
