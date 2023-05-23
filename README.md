@@ -1,12 +1,21 @@
-# oxidec
+<h3 align="center">
+    <img
+        src="https://github.com/mrtnvgr/oxidec/assets/48406064/8ce1565d-f65a-4664-92fe-995aacb74d7c"
+        width="400px"
+        height="400px"
+    />
+</h3>
+<h3 align="center">oxidec</h3>
+<p align="center">Oxidized delicious eye candies 🍬</p>
+<p align="center"><b>Manage your desktop appearance with ease!</b></h3>
 
-Eye-candy manager written in Rust
+## Features
 
-<img
-    src="https://github.com/mrtnvgr/oxidec/assets/48406064/8ce1565d-f65a-4664-92fe-995aacb74d7c"
-    width="400px"
-    height="400px"
-/>
+- **Generate** files with colors from **templates**!
+- **Update** the colors with **reloaders**!
+- **Generate** colorscheme from **wallpaper**!
+- **Save** the current look into a **theme**!
+- **Import** your **pywal colorschemes**!
 
 ## Install
 
@@ -14,7 +23,7 @@ Eye-candy manager written in Rust
 cargo install oxidec
 ```
 
-**NOTE**: recommended aliases
+### Recommended aliases
 
 ```sh
 alias cs="oxidec colorscheme"
