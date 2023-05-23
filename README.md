@@ -3,9 +3,9 @@
 Eye-candy manager written in Rust
 
 <img
-    src="https://github.com/mrtnvgr/oxidec/assets/48406064/7699d197-3741-45a7-8b5a-1182fca9db89"
-    width="600px"
-    height="600px"
+    src="https://github.com/mrtnvgr/oxidec/assets/48406064/8ce1565d-f65a-4664-92fe-995aacb74d7c"
+    width="400px"
+    height="400px"
 />
 
 ## Install
