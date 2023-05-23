@@ -2,6 +2,12 @@
 
 Eye-candy manager written in Rust
 
+<img
+    src="https://github.com/mrtnvgr/oxidec/assets/48406064/7699d197-3741-45a7-8b5a-1182fca9db89"
+    width="600px"
+    height="600px"
+/>
+
 ## Install
 
 ```sh
