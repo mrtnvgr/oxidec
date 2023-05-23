@@ -39,7 +39,7 @@ impl Folder {
     }
 
     pub fn contains(&self, name: &str) -> bool {
-        let extension = self.force_extension(Path::new(&name).to_path_buf());
+        let extension = self.build_path(name);
         let entry = extension.to_string_lossy().to_string();
         self.path().join(entry).exists()
     }
@@ -94,8 +94,7 @@ impl Folder {
     }
 
     pub fn get(&self, entry: &str) -> io::Result<PathBuf> {
-        // TODO: refactor?
-        let path = self.force_extension(self.path().join(entry));
+        let path = self.build_path(entry);
         if path.exists() {
             return Ok(path);
         }
@@ -116,7 +115,6 @@ impl Folder {
     }
 
     pub fn build_path(&self, name: &str) -> PathBuf {
-        // TODO: refactor?
         self.force_extension(self.path().join(name))
     }
 }
