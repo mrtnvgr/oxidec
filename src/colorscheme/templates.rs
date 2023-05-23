@@ -10,7 +10,7 @@ pub fn generate(colorscheme: &schema::Colorscheme) {
         text.trim_start_matches('#').to_owned()
     });
 
-    let templates = config::Folder::Templates.list().unwrap();
+    let templates = config::Folder::Templates.list();
 
     assert!(!templates.is_empty(), "No templates for generation.");
 

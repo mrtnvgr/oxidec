@@ -10,13 +10,13 @@ pub fn handle(args: &args::List) {
 
 fn output_using_log() {
     log::info!("Colorschemes: ");
-    for entry in Folder::Colorschemes.list().unwrap() {
+    for entry in Folder::Colorschemes.list() {
         let colorscheme = entry.file_stem().unwrap();
         log::info!("{:?}", colorscheme);
     }
 }
 
 fn output_using_json() {
-    let list = Folder::Colorschemes.list().unwrap();
+    let list = Folder::Colorschemes.list();
     print!("{}", serde_json::to_string(&list).unwrap());
 }

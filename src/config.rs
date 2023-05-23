@@ -67,11 +67,14 @@ impl Folder {
         fs::remove_file(self.get(entry)?)
     }
 
-    pub fn list(&self) -> io::Result<Vec<PathBuf>> {
-        // TODO: only files
-        fs::read_dir(self.path())?
-            .map(|res| res.map(|e| e.path()))
-            .collect::<Result<Vec<PathBuf>, io::Error>>()
+    pub fn list(&self) -> Vec<PathBuf> {
+        let entries = fs::read_dir(self.path()).unwrap().flatten();
+        let paths = entries.map(|e| e.path());
+        let mut files = paths.filter(|p| p.is_file()).collect::<Vec<PathBuf>>();
+
+        files.sort();
+
+        files
     }
 
     pub fn get(&self, entry: &str) -> io::Result<PathBuf> {
@@ -81,7 +84,7 @@ impl Folder {
             return Ok(path);
         }
 
-        for file in self.list()? {
+        for file in self.list() {
             let file_name = file.file_name();
             let file_stem = file.file_stem();
 
