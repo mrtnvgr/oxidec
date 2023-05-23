@@ -68,6 +68,7 @@ impl Folder {
     }
 
     pub fn list(&self) -> io::Result<Vec<PathBuf>> {
+        // TODO: only files
         fs::read_dir(self.path())?
             .map(|res| res.map(|e| e.path()))
             .collect::<Result<Vec<PathBuf>, io::Error>>()

@@ -1,3 +1,4 @@
+use super::commands::generate::backends::Backend;
 use std::path::PathBuf;
 use structopt::StructOpt;
 
@@ -13,6 +14,8 @@ pub enum Action {
     List(List),
     #[structopt(name = "status", about = "colorscheme status")]
     Status(Status),
+    #[structopt(name = "generate", about = "generate colorscheme from wallpaper")]
+    Generate(Generate),
     #[structopt(name = "reload", about = "reload colorscheme")]
     Reload,
 }
@@ -43,4 +46,12 @@ pub struct List {
 pub struct Status {
     #[structopt(long)]
     pub json: bool,
+}
+
+#[derive(StructOpt)]
+pub struct Generate {
+    #[structopt(long = "backend", default_value = "imagemagick", case_insensitive = true, possible_values = &Backend::variants())]
+    pub backend: Backend,
+    #[structopt(long)]
+    pub light: bool,
 }
