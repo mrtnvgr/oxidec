@@ -1,9 +1,6 @@
 use home::home_dir;
 use rand::seq::IteratorRandom;
-use std::{
-    fs, io,
-    path::{Path, PathBuf},
-};
+use std::{fs, io, path::PathBuf};
 use strum::{EnumIter, IntoEnumIterator};
 
 #[derive(EnumIter)]
