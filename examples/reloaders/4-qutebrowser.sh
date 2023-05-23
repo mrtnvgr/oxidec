@@ -27,7 +27,7 @@ END
 }
 
 if which qutebrowser &>/dev/null; then
-    merge_configs
+    merge_configs &
 fi
 
 if pidof -x qutebrowser >/dev/null; then
