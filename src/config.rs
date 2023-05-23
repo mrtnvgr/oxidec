@@ -72,7 +72,11 @@ impl Folder {
         let paths = entries.map(|e| e.path());
         let mut files = paths.filter(|p| p.is_file()).collect::<Vec<PathBuf>>();
 
-        files.sort();
+        // TODO: why?
+        match self {
+            Self::Reloaders => (),
+            _ => files.sort_by_key(|path| PathBuf::from(path.file_name().unwrap())),
+        }
 
         files
     }
