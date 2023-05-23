@@ -4,6 +4,7 @@ use crate::{cache::status, colorscheme::args, config::Folder};
 use std::{fs::File, path::Path};
 
 pub fn handle(args: &args::Generate) {
+    log::info!("Generating colorscheme...");
     let wallpaper = status::Wallpaper::load();
 
     let file = Path::new(&wallpaper.name);
