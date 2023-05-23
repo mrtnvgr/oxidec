@@ -10,13 +10,12 @@ pub fn handle(args: &args::List) {
 
 fn output_using_log() {
     log::info!("Wallpapers: ");
-    for entry in Folder::Wallpapers.list() {
-        let wallpaper = entry.file_name().unwrap();
-        log::info!("{:?}", wallpaper);
+    for entry in Folder::Wallpapers.list_names() {
+        log::info!("{:?}", entry);
     }
 }
 
 fn output_using_json() {
-    let list = Folder::Wallpapers.list();
+    let list = Folder::Wallpapers.list_names();
     print!("{}", serde_json::to_string(&list).unwrap());
 }

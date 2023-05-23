@@ -77,6 +77,22 @@ impl Folder {
         files
     }
 
+    pub fn list_stems(&self) -> Vec<String> {
+        let list = self.list();
+        list.iter()
+            .map(|e| e.file_stem().unwrap())
+            .map(|e| e.to_str().unwrap().to_owned())
+            .collect()
+    }
+
+    pub fn list_names(&self) -> Vec<String> {
+        let list = self.list();
+        list.iter()
+            .map(|e| e.file_name().unwrap())
+            .map(|e| e.to_str().unwrap().to_owned())
+            .collect()
+    }
+
     pub fn get(&self, entry: &str) -> io::Result<PathBuf> {
         // TODO: refactor?
         let path = self.force_extension(self.path().join(entry));
