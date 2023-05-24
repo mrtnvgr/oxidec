@@ -1,14 +1,10 @@
-use std::io::Write;
-
 use env_logger::Builder;
 use log::{Level, LevelFilter};
+use std::io::Write;
 
 pub fn init() {
     init_logger();
-
-    if cfg!(not(debug_assertions)) {
-        set_panic_hook();
-    }
+    cli_panics::set_panic_hook();
 }
 
 fn init_logger() {
@@ -31,22 +27,4 @@ fn init_logger() {
     builder.parse_default_env();
 
     builder.init();
-}
-
-fn set_panic_hook() {
-    std::panic::set_hook(Box::new(|info| {
-        let message = match (
-            info.payload().downcast_ref::<&str>(),
-            info.payload().downcast_ref::<String>(),
-        ) {
-            (Some(s), _) => Some((*s).to_owned()),
-            (_, Some(s)) => Some(s.to_string()),
-            (None, None) => None,
-        };
-
-        message.map_or_else(
-            || log::error!("{}", info),
-            |message| log::error!("{}", message),
-        );
-    }));
 }

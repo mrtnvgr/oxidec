@@ -65,6 +65,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "cli-panics"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1d91045ac4c6c7ca168389fd1b46152d012d61dd8fb17fb0c56ba532c5facd26"
+dependencies = [
+ "log",
+]
+
+[[package]]
 name = "colorsys"
 version = "0.6.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -239,6 +248,7 @@ name = "oxidec"
 version = "0.3.2"
 dependencies = [
  "ansi_term",
+ "cli-panics",
  "colorsys",
  "env_logger",
  "home",
