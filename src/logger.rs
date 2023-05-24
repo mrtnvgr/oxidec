@@ -35,8 +35,18 @@ fn init_logger() {
 
 fn set_panic_hook() {
     std::panic::set_hook(Box::new(|info| {
-        info.payload()
-            .downcast_ref::<&str>()
-            .map_or_else(|| log::error!("{}", info), |s| log::error!("{}", s));
+        let message = match (
+            info.payload().downcast_ref::<&str>(),
+            info.payload().downcast_ref::<String>(),
+        ) {
+            (Some(s), _) => Some((*s).to_owned()),
+            (_, Some(s)) => Some(s.to_string()),
+            (None, None) => None,
+        };
+
+        message.map_or_else(
+            || log::error!("{}", info),
+            |message| log::error!("{}", message),
+        );
     }));
 }
