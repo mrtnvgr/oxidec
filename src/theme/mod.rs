@@ -1,6 +1,6 @@
 pub mod args;
 mod commands;
-mod schema;
+pub mod schema;
 
 use args::Action;
 
