@@ -21,5 +21,5 @@ pub fn handle(args: &args::Generate) {
     let path = Folder::Colorschemes.build_path(name);
     serde_json::to_writer(File::create(path).unwrap(), &colorscheme).unwrap();
 
-    log::info!("Generated successfully!");
+    log::info!("Generated theme: {}", name);
 }
