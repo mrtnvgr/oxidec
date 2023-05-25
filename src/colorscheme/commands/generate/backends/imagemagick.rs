@@ -1,23 +1,20 @@
-use crate::colorscheme::schema;
 use colorsys::{ColorTransform, Rgb, SaturationInSpace};
 use lazy_static::lazy_static;
 use regex::Regex;
 use std::path::Path;
 use std::process::Command;
 
-pub fn generate(path: &Path, light: bool) -> schema::Colorscheme {
+pub fn generate(path: &Path, light: bool) -> Vec<Rgb> {
     assert!(
         which::which("convert").is_ok(),
         "ImageMagick is not installed!"
     );
 
     let colors = generate_colors(path);
-    let adjusted_colors = adjust_colors(&colors, light);
-
-    schema::Colorscheme::from_vec_16(&adjusted_colors)
+    adjust_colors(&colors, light)
 }
 
-fn generate_colors(path: &Path) -> Vec<String> {
+fn generate_colors(path: &Path) -> Vec<Rgb> {
     let mut raw_colors = None;
 
     for i in 0..20 {
@@ -37,9 +34,9 @@ fn generate_colors(path: &Path) -> Vec<String> {
             static ref RE: Regex = Regex::new(r"#[0-9a-fA-F]{6}").unwrap();
         }
 
-        let colors: Vec<String> = RE
+        let colors: Vec<Rgb> = RE
             .find_iter(&raw_colors)
-            .map(|x| x.as_str().to_owned())
+            .map(|x| Rgb::from_hex_str(x.as_str()).unwrap())
             .collect();
 
         return colors;
@@ -49,7 +46,7 @@ fn generate_colors(path: &Path) -> Vec<String> {
 }
 
 #[allow(clippy::indexing_slicing)]
-fn adjust_colors(colors: &[String], light: bool) -> Vec<String> {
+fn adjust_colors(colors: &[Rgb], light: bool) -> Vec<Rgb> {
     let mut raw_colors = Vec::new();
     raw_colors.extend_from_slice(&colors[0..1]);
     raw_colors.extend_from_slice(&colors[8..16]);
@@ -58,54 +55,43 @@ fn adjust_colors(colors: &[String], light: bool) -> Vec<String> {
 
     if light {
         for color in &mut raw_colors {
-            let mut rgb = Rgb::from_hex_str(color).unwrap();
-            rgb.saturate(SaturationInSpace::Hsl(50.0));
-            *color = rgb.to_hex_string();
+            color.saturate(SaturationInSpace::Hsl(50.0));
         }
 
-        let mut color15_binding = get_color(colors, 15);
-        color15_binding.lighten(85.0);
-        raw_colors[0] = color15_binding.to_hex_string();
+        raw_colors[0] = colors[15].clone();
+        raw_colors[0].lighten(85.0);
 
-        let mut color15_binding = get_color(colors, 15);
-        color15_binding.lighten(-30.0);
-        raw_colors[8] = color15_binding.to_hex_string();
+        raw_colors[8] = colors[15].clone();
+        raw_colors[8].lighten(-30.0);
 
         raw_colors[7] = colors[0].clone();
         raw_colors[15] = colors[0].clone();
     } else {
-        if raw_colors[0].starts_with("#0") {
-            let mut color0_binding = get_color(&raw_colors, 0);
-            color0_binding.lighten(-40.0);
-            raw_colors[0] = color0_binding.to_hex_string();
+        if raw_colors[0].to_hex_string().starts_with("#0") {
+            raw_colors[0].lighten(-40.0);
         }
 
-        // TODO: make a pull request to colorsys.rs
-        raw_colors[7] = blend_color(&get_color(&raw_colors, 7), "#EEEEEE");
+        lazy_static! {
+            static ref GRAY: Rgb = Rgb::from_hex_str("#EEEEEE").unwrap();
+        }
 
-        let mut color7_binding = get_color(&raw_colors, 7);
-        color7_binding.lighten(-30.0);
-        raw_colors[8] = color7_binding.to_hex_string();
+        raw_colors[7] = blend_color(&raw_colors[7], &GRAY);
 
-        raw_colors[15] = blend_color(&get_color(&raw_colors, 15), "#EEEEEE");
+        raw_colors[8] = raw_colors[7].clone();
+        raw_colors[8].lighten(-30.0);
+
+        raw_colors[15] = blend_color(&raw_colors[15], &GRAY);
     }
 
     raw_colors
 }
 
-#[allow(clippy::indexing_slicing)]
-fn get_color(colors: &[String], index: usize) -> Rgb {
-    Rgb::from_hex_str(&colors[index]).unwrap()
-}
-
-fn blend_color(color1: &Rgb, color2: &str) -> String {
-    let color2 = Rgb::from_hex_str(color2).unwrap();
-
+fn blend_color(color1: &Rgb, color2: &Rgb) -> Rgb {
     let r3 = 0.5_f64.mul_add(color1.red(), 0.5 * color2.red());
     let g3 = 0.5_f64.mul_add(color1.green(), 0.5 * color2.green());
     let b3 = 0.5_f64.mul_add(color1.blue(), 0.5 * color2.blue());
 
-    Rgb::from((r3, g3, b3)).to_hex_string()
+    Rgb::from((r3, g3, b3))
 }
 
 fn get_image_colors(path: &Path, color_count: usize) -> String {

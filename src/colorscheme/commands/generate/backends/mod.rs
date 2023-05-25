@@ -1,4 +1,5 @@
 use crate::colorscheme::schema;
+use colorsys::Rgb;
 use serde::{Deserialize, Serialize};
 use std::{path::Path, str::FromStr};
 
@@ -25,8 +26,11 @@ impl Backend {
     }
 
     pub fn generate(self, path: &Path, light: bool) -> schema::Colorscheme {
-        match self {
+        let colors = match self {
             Self::ImageMagick => imagemagick::generate(path, light),
-        }
+        };
+
+        let hex_colors: Vec<String> = colors.iter().map(Rgb::to_hex_string).collect();
+        schema::Colorscheme::from_vec_16(&hex_colors)
     }
 }
