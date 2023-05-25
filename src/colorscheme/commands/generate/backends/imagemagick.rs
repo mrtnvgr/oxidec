@@ -1,6 +1,7 @@
 use colorsys::{ColorTransform, Rgb, SaturationInSpace};
 use lazy_static::lazy_static;
 use regex::Regex;
+use std::cmp::Ordering;
 use std::path::Path;
 use std::process::Command;
 
@@ -22,11 +23,11 @@ fn generate_colors(path: &Path) -> Vec<Rgb> {
         let colors = generated_colors.lines();
 
         // header + 16 colors
-        if colors.count() > 17 {
-            break;
+        match colors.count().cmp(&17) {
+            Ordering::Less => continue,
+            Ordering::Greater => break,
+            Ordering::Equal => raw_colors = Some(generated_colors),
         }
-
-        raw_colors = Some(generated_colors);
     }
 
     if let Some(raw_colors) = raw_colors {
