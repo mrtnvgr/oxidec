@@ -3,6 +3,7 @@ use home::home_dir;
 use serde::{Deserialize, Serialize};
 use std::{
     fs,
+    io::ErrorKind,
     path::{Path, PathBuf},
     str::FromStr,
 };
@@ -25,8 +26,16 @@ impl Colorscheme {
 
     pub fn load() -> Self {
         let path = Self::path();
-        let fr = fs::File::open(path).expect("Failed to read the file");
-        serde_json::from_reader(fr).expect("Failed to parse the file")
+
+        let fr = match fs::File::open(path) {
+            Ok(fr) => fr,
+            Err(err) if err.kind() == ErrorKind::NotFound => {
+                panic!("Colorscheme status file does not exist")
+            }
+            _ => panic!("Failed to read the colorscheme status file"),
+        };
+
+        serde_json::from_reader(fr).expect("Failed to parse the colorscheme status")
     }
 
     pub fn save(&self) -> std::io::Result<()> {
@@ -61,8 +70,15 @@ impl Wallpaper {
 
     pub fn load() -> Self {
         let path = Self::path();
-        let fr = fs::File::open(path).expect("Failed to read the file");
-        serde_json::from_reader(fr).expect("Failed to parse the file")
+        let fr = match fs::File::open(path) {
+            Ok(fr) => fr,
+            Err(err) if err.kind() == ErrorKind::NotFound => {
+                panic!("Wallpaper status file does not exist")
+            }
+            _ => panic!("Failed to read the wallpaper status file"),
+        };
+
+        serde_json::from_reader(fr).expect("Failed to parse the wallpaper status")
     }
 
     pub fn save(&self) -> std::io::Result<()> {
