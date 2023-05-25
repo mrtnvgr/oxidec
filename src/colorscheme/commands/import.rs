@@ -6,7 +6,7 @@ use crate::{
 pub fn handle(args: &args::Import) {
     assert!(args.file_path.exists(), "This file does not exist");
 
-    let filename = args.file_path.file_name().unwrap();
+    let filename = args.file_path.file_stem().unwrap();
     let name = filename.to_str().unwrap();
     assert!(
         !Folder::Colorschemes.contains(name),
@@ -20,7 +20,7 @@ pub fn handle(args: &args::Import) {
         _ => panic!("This file type is not supported."),
     }
 
-    log::info!("Imported successfully!");
+    log::info!("Imported successfully as \"{}\"!", name);
 }
 
 fn handle_json(args: &args::Import) {
