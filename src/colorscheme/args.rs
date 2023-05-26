@@ -53,4 +53,6 @@ pub struct Generate {
     pub backend: Backend,
     #[arg(long)]
     pub light: bool,
+    #[arg(long, value_parser = clap::value_parser!(i16).range(-100..=100), allow_hyphen_values = true)]
+    pub saturate: Option<i16>,
 }
