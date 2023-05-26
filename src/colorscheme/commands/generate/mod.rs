@@ -16,7 +16,7 @@ pub fn handle(args: &args::Generate) {
         "Colorscheme with this name already exists!"
     );
 
-    let colorscheme = args.backend.generate(&wallpaper.path, args.light);
+    let colorscheme = args.backend.generate(&wallpaper.path, args);
 
     let path = Folder::Colorschemes.build_path(name);
     serde_json::to_writer(File::create(path).unwrap(), &colorscheme).unwrap();

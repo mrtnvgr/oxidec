@@ -49,7 +49,7 @@ pub struct Status {
 
 #[derive(Parser)]
 pub struct Generate {
-    #[arg(long = "backend", default_value = "imagemagick", ignore_case = true)]
+    #[arg(value_enum, long, default_value = "imagemagick", ignore_case = true)]
     pub backend: Backend,
     #[arg(long)]
     pub light: bool,

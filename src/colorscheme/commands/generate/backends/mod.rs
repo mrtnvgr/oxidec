@@ -1,29 +1,19 @@
-use crate::colorscheme::schema;
-use colorsys::Rgb;
-use serde::{Deserialize, Serialize};
-use std::{path::Path, str::FromStr};
+use crate::colorscheme::{args, schema};
+use clap::ValueEnum;
+use colorsys::{ColorTransform, Rgb, SaturationInSpace};
+use std::path::Path;
 
 mod imagemagick;
 
-#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
+#[derive(ValueEnum, Clone, Copy)]
 pub enum Backend {
-    ImageMagick,
-}
-
-impl FromStr for Backend {
-    type Err = &'static str;
-    fn from_str(mode: &str) -> Result<Self, Self::Err> {
-        match mode {
-            "imagemagick" => Ok(Self::ImageMagick),
-            _ => Err("This backend doesn't exist"),
-        }
-    }
+    Imagemagick,
 }
 
 impl Backend {
-    pub fn generate(self, path: &Path, light: bool) -> schema::Colorscheme {
-        let colors = match self {
-            Self::ImageMagick => imagemagick::generate(path, light),
+    pub fn generate(self, path: &Path, args: &args::Generate) -> schema::Colorscheme {
+        let mut colors = match self {
+            Self::Imagemagick => imagemagick::generate(path, args.light),
         };
 
         let hex_colors: Vec<String> = colors.iter().map(Rgb::to_hex_string).collect();

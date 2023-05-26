@@ -1,11 +1,11 @@
 use crate::config::Folder;
+use clap::ValueEnum;
 use home::home_dir;
 use serde::{Deserialize, Serialize};
 use std::{
     fs,
     io::ErrorKind,
     path::{Path, PathBuf},
-    str::FromStr,
 };
 
 // FIXME: Rework this!
@@ -96,25 +96,13 @@ impl Wallpaper {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
+#[derive(Serialize, Deserialize, ValueEnum, Clone, Copy, Debug)]
 pub enum WallpaperMode {
+    // TODO: visible alias
+    #[value(alias = "centre")]
     Center,
     Fill,
     Max,
     Scale,
     Tile,
-}
-
-impl FromStr for WallpaperMode {
-    type Err = &'static str;
-    fn from_str(mode: &str) -> Result<Self, Self::Err> {
-        match mode {
-            "center" | "centre" => Ok(Self::Center),
-            "fill" => Ok(Self::Fill),
-            "max" => Ok(Self::Max),
-            "scale" => Ok(Self::Scale),
-            "tile" => Ok(Self::Tile),
-            _ => Err("This mode doesn't exist"),
-        }
-    }
 }
