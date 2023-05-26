@@ -1,57 +1,56 @@
 use super::commands::generate::backends::Backend;
+use clap::{Parser, Subcommand};
 use std::path::PathBuf;
-use structopt::StructOpt;
 
-#[derive(StructOpt)]
+#[derive(Subcommand)]
 pub enum Action {
-    #[structopt(name = "set", about = "[name] set colorscheme")]
+    #[command(name = "set", about = "[name] set colorscheme")]
     Set(Set),
-    #[structopt(name = "remove", about = "<name> remove colorscheme")]
+    #[command(name = "remove", about = "<name> remove colorscheme")]
     Remove(Remove),
-    #[structopt(name = "import", about = "<file-path> import colorscheme")]
+    #[command(name = "import", about = "<file-path> import colorscheme")]
     Import(Import),
-    #[structopt(name = "list", about = "list colorschemes")]
+    #[command(name = "list", about = "list colorschemes")]
     List(List),
-    #[structopt(name = "status", about = "colorscheme status")]
+    #[command(name = "status", about = "colorscheme status")]
     Status(Status),
-    #[structopt(name = "generate", about = "generate colorscheme from wallpaper")]
+    #[command(name = "generate", about = "generate colorscheme from wallpaper")]
     Generate(Generate),
-    #[structopt(name = "reload", about = "reload colorscheme")]
+    #[command(name = "reload", about = "reload colorscheme")]
     Reload,
 }
 
-#[derive(StructOpt)]
+#[derive(Parser)]
 pub struct Set {
     pub name: Option<String>,
 }
 
-#[derive(StructOpt)]
+#[derive(Parser)]
 pub struct Remove {
     pub name: String,
 }
 
-#[derive(StructOpt)]
+#[derive(Parser)]
 pub struct Import {
-    #[structopt(parse(from_os_str))]
     pub file_path: PathBuf,
 }
 
-#[derive(StructOpt)]
+#[derive(Parser)]
 pub struct List {
-    #[structopt(long)]
+    #[arg(long)]
     pub json: bool,
 }
 
-#[derive(StructOpt)]
+#[derive(Parser)]
 pub struct Status {
-    #[structopt(long)]
+    #[arg(long)]
     pub json: bool,
 }
 
-#[derive(StructOpt)]
+#[derive(Parser)]
 pub struct Generate {
-    #[structopt(long = "backend", default_value = "imagemagick", case_insensitive = true, possible_values = &Backend::variants())]
+    #[arg(long = "backend", default_value = "imagemagick", ignore_case = true)]
     pub backend: Backend,
-    #[structopt(long)]
+    #[arg(long)]
     pub light: bool,
 }

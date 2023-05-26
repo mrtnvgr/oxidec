@@ -118,9 +118,3 @@ impl FromStr for WallpaperMode {
         }
     }
 }
-
-impl WallpaperMode {
-    pub const fn variants() -> [&'static str; 6] {
-        ["center", "centre", "fill", "max", "scale", "tile"]
-    }
-}

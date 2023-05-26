@@ -21,10 +21,6 @@ impl FromStr for Backend {
 }
 
 impl Backend {
-    pub const fn variants() -> [&'static str; 1] {
-        ["imagemagick"]
-    }
-
     pub fn generate(self, path: &Path, light: bool) -> schema::Colorscheme {
         let colors = match self {
             Self::ImageMagick => imagemagick::generate(path, light),

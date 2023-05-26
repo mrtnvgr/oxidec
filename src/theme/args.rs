@@ -1,34 +1,34 @@
-use structopt::StructOpt;
+use clap::{Args, Subcommand};
 
-#[derive(StructOpt)]
+#[derive(Subcommand)]
 pub enum Action {
-    #[structopt(name = "set", about = "[name] set theme")]
+    #[command(name = "set", about = "[name] set theme")]
     Set(Set),
-    #[structopt(name = "save", about = "<name> save theme")]
+    #[command(name = "save", about = "<name> save theme")]
     Save(Save),
-    #[structopt(name = "remove", about = "<name> remove theme")]
+    #[command(name = "remove", about = "<name> remove theme")]
     Remove(Remove),
-    #[structopt(name = "list", about = "list themes")]
+    #[command(name = "list", about = "list themes")]
     List(List),
 }
 
-#[derive(StructOpt)]
+#[derive(Args)]
 pub struct Set {
     pub name: Option<String>,
 }
 
-#[derive(StructOpt)]
+#[derive(Args)]
 pub struct Remove {
     pub name: String,
 }
 
-#[derive(StructOpt)]
+#[derive(Args)]
 pub struct List {
-    #[structopt(long)]
+    #[arg(long)]
     pub json: bool,
 }
 
-#[derive(StructOpt)]
+#[derive(Args)]
 pub struct Save {
     pub name: String,
 }

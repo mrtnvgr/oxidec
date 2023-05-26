@@ -1,48 +1,46 @@
 use crate::cache::status::WallpaperMode;
+use clap::{Parser, Subcommand};
 use std::path::PathBuf;
-use structopt::StructOpt;
 
-#[derive(StructOpt)]
+#[derive(Subcommand)]
 pub enum Action {
-    #[structopt(name = "add", about = "<filename> add wallpaper")]
+    #[command(name = "add", about = "<filename> add wallpaper")]
     Add(Add),
-    #[structopt(name = "set", about = "[filename] set wallpaper")]
+    #[command(name = "set", about = "[filename] set wallpaper")]
     Set(Set),
-    #[structopt(name = "remove", about = "<filename> remove wallpaper")]
+    #[command(name = "remove", about = "<filename> remove wallpaper")]
     Remove(Remove),
-    #[structopt(name = "list", about = "list wallpapers")]
+    #[command(name = "list", about = "list wallpapers")]
     List(List),
-    #[structopt(name = "status", about = "wallpaper status")]
+    #[command(name = "status", about = "wallpaper status")]
     Status(Status),
 }
 
-#[derive(StructOpt)]
+#[derive(Parser)]
 pub struct Add {
-    #[structopt(parse(from_os_str))]
     pub file_path: PathBuf,
 }
 
-#[derive(StructOpt)]
+#[derive(Parser)]
 pub struct Set {
     pub name: Option<String>,
-    #[structopt(long = "mode", default_value = "fill", case_insensitive = true, possible_values = &WallpaperMode::variants())]
+    #[arg(long = "mode", default_value = "fill", ignore_case = true)]
     pub mode: WallpaperMode,
 }
 
-#[derive(StructOpt)]
+#[derive(Parser)]
 pub struct Remove {
-    #[structopt(parse(from_os_str))]
     pub filename: PathBuf,
 }
 
-#[derive(StructOpt)]
+#[derive(Parser)]
 pub struct List {
-    #[structopt(long)]
+    #[arg(long)]
     pub json: bool,
 }
 
-#[derive(StructOpt)]
+#[derive(Parser)]
 pub struct Status {
-    #[structopt(long)]
+    #[arg(long)]
     pub json: bool,
 }

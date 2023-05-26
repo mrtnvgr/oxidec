@@ -6,28 +6,28 @@ pub mod cache;
 pub mod config;
 mod logger;
 
-use structopt::StructOpt;
+use clap::Parser;
 
-#[derive(StructOpt)]
-#[structopt(name = "oxidec", about = "Eye-candy manager written in Rust")]
+#[derive(Parser)]
+#[command(author, version, about)]
 struct OxidecArgs {
-    #[structopt(subcommand)]
+    #[command(subcommand)]
     mode: Mode,
 }
 
-#[derive(StructOpt)]
+#[derive(Parser)]
 enum Mode {
-    #[structopt(name = "colorscheme", about = "colorscheme manager")]
+    #[command(subcommand, name = "colorscheme", about = "colorscheme manager")]
     Colorscheme(colorscheme::args::Action),
-    #[structopt(name = "wallpaper", about = "wallpaper manager")]
+    #[command(subcommand, name = "wallpaper", about = "wallpaper manager")]
     Wallpaper(wallpaper::args::Action),
-    #[structopt(name = "theme", about = "theme manager")]
+    #[command(subcommand, name = "theme", about = "theme manager")]
     Theme(theme::args::Action),
 }
 
 fn main() {
     logger::init();
-    let args = OxidecArgs::from_args();
+    let args = OxidecArgs::parse();
     config::ensure_config_exists();
     cache::ensure_cache_exists();
 
