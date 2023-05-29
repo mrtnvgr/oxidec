@@ -1,6 +1,6 @@
 [package]
 name = "oxidec"
-version = "0.3.4"
+version = "0.3.5"
 edition = "2021"
 description = "Eye-candy manager written in Rust"
 license = "GPL-3.0"
