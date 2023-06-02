@@ -11,9 +11,8 @@ categories = ["command-line-utilities"]
 [dependencies]
 ansi_term = "0.12.1"
 clap = { version = "4.3.0", features = ["derive"] }
-cli-panics = "0.1.0"
+cli-logger = "0.1.0"
 colorsys = "0.6.7"
-env_logger = "0.10.0"
 file-format = "0.16.0"
 home = "0.5.5"
 lazy_static = "1.4.0"

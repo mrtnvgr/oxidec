@@ -4,7 +4,6 @@ mod wallpaper;
 
 pub mod cache;
 pub mod config;
-mod logger;
 
 use clap::Parser;
 
@@ -26,7 +25,7 @@ enum Mode {
 }
 
 fn main() {
-    logger::init();
+    cli_logger::init();
     let args = OxidecArgs::parse();
     config::ensure_config_exists();
     cache::ensure_cache_exists();
