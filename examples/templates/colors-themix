@@ -1,0 +1,53 @@
+NAME="oxidec"
+
+THEME_STYLE=oomox
+
+BG={{ special.background | strip }}
+FG={{ colors.color7 | strip }}
+
+MENU_BG={{ colors.color0 | strip }}
+MENU_FG={{ colors.color7 | strip }}
+
+SEL_BG={{ colors.color3 | strip }}
+SEL_FG={{ colors.color0 | strip }}
+
+TXT_BG={{ special.background | strip }}
+TXT_FG={{ colors.color7 | strip }}
+
+BTN_BG={{ colors.color0 | lighten: 2.0 | strip }}
+BTN_FG={{ colors.color7 | strip }}
+
+ICONS_STYLE=papirus_icons
+
+ICONS_DARK={{ colors.color0 | strip }}
+ICONS_LIGHT={{ colors.color9 | strip }}
+ICONS_LIGHT_FOLDER={{ colors.color11 | strip }}
+ICONS_MEDIUM={{ colors.color3 | strip }}
+
+TERMIMAL_THEME_MODE=manual
+
+TERMINAL_BACKGROUND={{ special.background | strip }}
+TERMINAL_FOREGROUND={{ special.foreground | strip }}
+TERMINAL_CURSOR={{ special.cursor | strip }}
+
+TERMINAL_COLOR0={{ colors.color0 | strip }}
+TERMINAL_COLOR1={{ colors.color1 | strip }}
+TERMINAL_COLOR2={{ colors.color2 | strip }}
+TERMINAL_COLOR3={{ colors.color3 | strip }}
+TERMINAL_COLOR4={{ colors.color4 | strip }}
+TERMINAL_COLOR5={{ colors.color5 | strip }}
+TERMINAL_COLOR6={{ colors.color6 | strip }}
+TERMINAL_COLOR7={{ colors.color7 | strip }}
+TERMINAL_COLOR8={{ colors.color8 | strip }}
+TERMINAL_COLOR9={{ colors.color9 | strip }}
+TERMINAL_COLOR10={{ colors.color10 | strip }}
+TERMINAL_COLOR11={{ colors.color11 | strip }}
+TERMINAL_COLOR12={{ colors.color12 | strip }}
+TERMINAL_COLOR13={{ colors.color13 | strip }}
+TERMINAL_COLOR14={{ colors.color14 | strip }}
+TERMINAL_COLOR15={{ colors.color15 | strip }}
+
+ROUNDNESS=0
+SPACING=3
+GRADIENT=0.0
+GTK3_GENERATE_DARK=True
