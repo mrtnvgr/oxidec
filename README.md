@@ -17,7 +17,7 @@
 - **Save** the current look into a **theme**!
 - **Import** your **pywal colorschemes**!
 - **Avoid** theme breakage by **dependency checking**!
-- **Generate GTK themes** with [Themix](https://github.com/themix-project/themix-gui)!
+- **Apply GTK themes** with [Themix](https://github.com/themix-project/themix-gui)!
 
 ## Install
 
@@ -33,6 +33,12 @@ alias wl="oxidec wallpaper"
 alias wp="oxidec wallpaper"
 alias th="oxidec theme"
 ```
+
+## FAQ
+
+### GTK live reloading doesn't work for me.
+
+For those who don't use Gnome, try [xsettingsd](https://codeberg.org/derat/xsettingsd).
 
 ## Roadmap
 
