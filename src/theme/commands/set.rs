@@ -23,7 +23,7 @@ pub fn handle(args: &args::Set) {
     colorscheme::templates::generate(&colorscheme);
 
     log::info!("Reloading colors...");
-    colorscheme::reloaders::run();
+    colorscheme::reloaders::run(false);
 
     log::info!("Setting wallpaper...");
     wallpaper::set::wallpaper(theme.wallpaper.path, theme.wallpaper.mode);

@@ -23,6 +23,8 @@ pub enum Action {
 #[derive(Parser)]
 pub struct Set {
     pub name: Option<String>,
+    #[arg(long, help = "generate gtk theme/icons")]
+    pub gtk: bool,
 }
 
 #[derive(Parser)]

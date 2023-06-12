@@ -1,7 +1,7 @@
 use crate::{cache::status::Colorscheme, config::Folder};
-use std::process::Command;
+use std::{env, process::Command};
 
-pub fn run() {
+pub fn run(gtk: bool) {
     let colorscheme = Colorscheme::load().name;
 
     for reloader in Folder::Reloaders.list() {
@@ -9,6 +9,10 @@ pub fn run() {
 
         command.arg("-C").arg(&reloader);
         command.env("OXIDEC_COLORSCHEME", &colorscheme);
+
+        if gtk && env::var_os("OXIDEC_GTK").is_none() {
+            command.env("OXIDEC_GTK", "y");
+        }
 
         let status = command.status();
 

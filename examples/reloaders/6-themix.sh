@@ -8,6 +8,10 @@ if [ ! -d "${THEMIX_PATH}" ]; then
     exit 0
 fi
 
+if [ -z "${OXIDEC_GTK}" ]; then
+    exit 0
+fi
+
 THEMIX_PLUGINS_PATH="${THEMIX_PATH}/plugins"
 
 THEMIX_THEME_PATH="${THEMIX_PLUGINS_PATH}/theme_oomox"

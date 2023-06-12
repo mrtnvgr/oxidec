@@ -19,7 +19,7 @@ pub fn handle(args: &args::Set) {
     templates::generate(&colorscheme);
 
     log::info!("Reloading colors...");
-    reloaders::run();
+    reloaders::run(args.gtk);
 
     log::info!("Current colorscheme: {}", name);
 
