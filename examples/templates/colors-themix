@@ -1,6 +1,6 @@
 NAME="oxidec"
 
-THEME_STYLE=oomox
+THEME_STYLE=arc
 
 BG={{ special.background | strip }}
 FG={{ colors.color7 | strip }}
