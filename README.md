@@ -17,7 +17,7 @@
 - **Save** the current look into a **theme**!
 - **Import** your **pywal colorschemes**!
 - **Avoid** theme breakage by **dependency checking**!
-- **Apply GTK themes** with [Themix](https://github.com/themix-project/themix-gui)!
+- **Apply GTK themes** with [Themix](https://github.com/themix-project/themix-gui)![^1]
 
 ## Install
 
@@ -39,3 +39,5 @@ alias th="oxidec theme"
 ### GTK live reloading doesn't work for me.
 
 For those who don't use Gnome, try [xsettingsd](https://codeberg.org/derat/xsettingsd).
+
+[^1]: GTK Theme generation is optional. Use `--gtk` flag or set `OXIDEC_GTK` env variable.
