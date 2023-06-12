@@ -1,5 +1,12 @@
 #!/bin/sh
 
+GTK_THEMES_PATH="${HOME}/.themes"
+GTK_ICONS_PATH="${HOME}/.icons"
+
+if [ ! -d "${GTK_THEMES_PATH}/${OXIDEC_COLORSCHEME}" ] || [ ! -d "${GTK_ICONS_PATH}/${OXIDEC_COLORSCHEME}" ]; then
+    exit 0
+fi
+
 if which xsettingsd &>/dev/null; then
     (echo "Net/ThemeName \"${OXIDEC_COLORSCHEME}\"" > /tmp/xsettingsd.conf
     echo "Net/IconThemeName \"${OXIDEC_COLORSCHEME}\"" >> /tmp/xsettingsd.conf
