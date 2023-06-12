@@ -39,9 +39,3 @@ alias th="oxidec theme"
 ### GTK live reloading doesn't work for me.
 
 For those who don't use Gnome, try [xsettingsd](https://codeberg.org/derat/xsettingsd).
-
-## Roadmap
-
-- ~Default templates and reloaders~ **(0.1.5)**
-- ~Wallpapers~ **(0.2.0)**
-- ~Themes~ **(0.3.0)**
