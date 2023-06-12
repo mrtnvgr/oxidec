@@ -1,28 +1,23 @@
 NAME="oxidec"
 
-THEME_STYLE=arc
+THEME_STYLE=oomox
 
-BG={{ special.background | strip }}
+BG={{ colors.color0 | lighten: -4.0 | strip }}
 FG={{ colors.color7 | strip }}
 
-MENU_BG={{ colors.color0 | strip }}
+MENU_BG={{ special.background | strip }}
 MENU_FG={{ colors.color7 | strip }}
 
-SEL_BG={{ colors.color3 | strip }}
+SEL_BG={{ colors.color5 | strip }}
 SEL_FG={{ colors.color0 | strip }}
 
-TXT_BG={{ special.background | strip }}
+TXT_BG={{ colors.color0 | strip }}
 TXT_FG={{ colors.color7 | strip }}
 
-BTN_BG={{ colors.color0 | lighten: 2.0 | strip }}
+BTN_BG={{ special.background | strip }}
 BTN_FG={{ colors.color7 | strip }}
 
 ICONS_STYLE=papirus_icons
-
-ICONS_DARK={{ colors.color0 | strip }}
-ICONS_LIGHT={{ colors.color9 | strip }}
-ICONS_LIGHT_FOLDER={{ colors.color11 | strip }}
-ICONS_MEDIUM={{ colors.color3 | strip }}
 
 TERMIMAL_THEME_MODE=manual
 
@@ -47,7 +42,7 @@ TERMINAL_COLOR13={{ colors.color13 | strip }}
 TERMINAL_COLOR14={{ colors.color14 | strip }}
 TERMINAL_COLOR15={{ colors.color15 | strip }}
 
-ROUNDNESS=0
+ROUNDNESS=2
 SPACING=3
 GRADIENT=0.0
 GTK3_GENERATE_DARK=True
