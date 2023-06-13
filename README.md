@@ -25,6 +25,12 @@
 cargo install oxidec
 ```
 
+If you want to install new examples on every update, enable `new-examples` feature:
+
+```sh
+cargo install oxidec --features new-examples
+```
+
 ### Recommended aliases
 
 ```sh
