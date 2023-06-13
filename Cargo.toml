@@ -24,3 +24,6 @@ serde_json = "1.0.96"
 strum = { version = "0.24.1", features = ["derive", "strum_macros"] }
 upon = "0.6.0"
 which = "4.4.0"
+
+[features]
+new-examples = []

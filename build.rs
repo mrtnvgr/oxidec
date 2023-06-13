@@ -1,10 +1,4 @@
-use std::{
-    env,
-    ffi::OsString,
-    fs,
-    path::{Path, PathBuf},
-    process::Command,
-};
+use std::{env, fs, path::Path, process::Command};
 
 fn main() {
     println!("cargo:rerun-if-changed=build.rs");
@@ -14,12 +8,23 @@ fn main() {
     panic!("This program is Linux only.");
 
     if let Some(home_dir) = env::var_os("HOME") {
-        copy_example_folder(&home_dir);
+        let config_path = Path::new(&home_dir).join(".config/oxidec/");
+
+        if cfg!(feature = "new-examples") {
+            copy_new_examples(&config_path);
+        } else {
+            copy_examples_folder(&config_path);
+        }
     }
 }
 
-fn copy_example_folder(home_dir: &OsString) {
-    let config_path = Path::new(&home_dir).join(".config/oxidec/");
+fn copy_examples_folder(config_path: &Path) {
+    if !config_path.exists() {
+        copy_folder("examples", config_path);
+    }
+}
+
+fn copy_new_examples(config_path: &Path) {
     let repo_path = Path::new("examples");
 
     for folder in ["templates", "reloaders"] {
@@ -31,17 +36,26 @@ fn copy_example_folder(home_dir: &OsString) {
             let user_file = user_folder.join(file_name);
 
             if !user_file.exists() {
-                copy_file(repo_file.path(), user_file);
+                copy_file(&repo_file.path(), &user_file);
             }
         }
     }
 }
 
-fn copy_file(src: PathBuf, dest: PathBuf) {
-    Command::new("cp")
-        .arg("-n")
-        .arg(src)
-        .arg(dest)
-        .output()
-        .unwrap();
+fn copy_folder(src: &str, dest: &Path) {
+    let mut command = Command::new("cp");
+    command.arg("-r");
+    command.arg(src);
+    command.arg(dest);
+
+    command.output().unwrap();
+}
+
+fn copy_file(src: &Path, dest: &Path) {
+    let mut command = Command::new("cp");
+    command.arg("-n");
+    command.arg(src);
+    command.arg(dest);
+
+    command.output().unwrap();
 }
