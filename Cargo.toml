@@ -9,7 +9,6 @@ keywords = ["colorscheme", "wallpaper", "theme", "linux", "cli"]
 categories = ["command-line-utilities"]
 
 [dependencies]
-ansi_term = "0.12.1"
 clap = { version = "4.3.0", features = ["derive"] }
 cli-logger = "0.1.0"
 colorsys = "0.6.7"
@@ -17,6 +16,7 @@ file-format = "0.16.0"
 home = "0.5.5"
 lazy_static = "1.4.0"
 log = "0.4.17"
+nu-ansi-term = "0.49.0"
 rand = "0.8.5"
 regex = "1.8.1"
 serde = { version = "1.0.162", features = ["derive"] }
@@ -27,3 +27,6 @@ which = "4.4.0"
 
 [features]
 new-examples = []
+
+[profile.release]
+strip = true

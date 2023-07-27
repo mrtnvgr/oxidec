@@ -1,4 +1,4 @@
-use ansi_term::{Color, Style};
+use nu_ansi_term::{Color, Style};
 use std::ops::RangeInclusive;
 
 const BLOCK: &str = "    ";
