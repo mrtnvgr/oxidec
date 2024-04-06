@@ -36,7 +36,7 @@ fn copy_new_examples(config_path: &Path) {
             let user_file = user_folder.join(file_name);
 
             if !user_file.exists() {
-                copy_file(&repo_file.path(), &user_file);
+                fs::copy(repo_file.path(), user_file).unwrap();
             }
         }
     }
@@ -45,15 +45,6 @@ fn copy_new_examples(config_path: &Path) {
 fn copy_folder(src: &str, dest: &Path) {
     let mut command = Command::new("cp");
     command.arg("-r");
-    command.arg(src);
-    command.arg(dest);
-
-    command.output().unwrap();
-}
-
-fn copy_file(src: &Path, dest: &Path) {
-    let mut command = Command::new("cp");
-    command.arg("-n");
     command.arg(src);
     command.arg(dest);
 
