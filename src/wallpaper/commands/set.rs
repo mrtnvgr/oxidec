@@ -1,5 +1,5 @@
 use crate::{
-    cache,
+    cache::{self, status::Object},
     config::Folder,
     wallpaper::{args, set},
 };

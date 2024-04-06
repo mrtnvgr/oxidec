@@ -1,4 +1,7 @@
-use crate::{cache::status, wallpaper::args};
+use crate::{
+    cache::status::{self, Object},
+    wallpaper::args,
+};
 
 pub fn handle(args: &args::Status) {
     let status = status::Wallpaper::load();

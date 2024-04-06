@@ -2,14 +2,13 @@ mod colorscheme;
 mod theme;
 mod wallpaper;
 
-pub mod cache;
-pub mod config;
+mod cache;
+mod config;
 
 use clap::Parser;
 
 #[derive(Parser)]
-#[command(author, version, about)]
-struct OxidecArgs {
+struct Args {
     #[command(subcommand)]
     mode: Mode,
 }
@@ -26,7 +25,7 @@ enum Mode {
 
 fn main() {
     cli_logger::init();
-    let args = OxidecArgs::parse();
+    let args = Args::parse();
     config::ensure_config_exists();
     cache::ensure_cache_exists();
 

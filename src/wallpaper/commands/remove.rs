@@ -20,7 +20,7 @@ pub fn handle(args: &args::Remove) {
     }
 
     match Folder::Wallpapers.remove(name) {
-        Ok(_) => log::info!("Wallpaper was deleted successfully"),
+        Ok(()) => log::info!("Wallpaper was deleted successfully"),
         Err(error) => log::error!("Failed to delete a wallpaper: {}", error),
     }
 }

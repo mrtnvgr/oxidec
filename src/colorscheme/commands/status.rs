@@ -1,7 +1,10 @@
-use crate::{cache::status, colorscheme::args};
+use crate::{
+    cache::status::{Colorscheme, Object},
+    colorscheme::args,
+};
 
 pub fn handle(args: &args::Status) {
-    let status = status::Colorscheme::load();
+    let status = Colorscheme::load();
 
     if args.json {
         print!("{}", serde_json::to_string(&status).unwrap());

@@ -1,4 +1,7 @@
-use crate::{cache::status::Colorscheme, config::Folder};
+use crate::{
+    cache::status::{Colorscheme, Object},
+    config::Folder,
+};
 use std::{env, process::Command};
 
 pub fn run(gtk: bool) {

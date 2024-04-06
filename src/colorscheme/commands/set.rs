@@ -1,5 +1,5 @@
 use crate::{
-    cache,
+    cache::status::{Colorscheme, Object},
     colorscheme::{args, blocks, reloaders, schema, templates},
     config::Folder,
 };
@@ -9,7 +9,7 @@ pub fn handle(args: &args::Set) {
     let name = get_colorscheme_name(args);
     ensure_that_colorscheme_exists(&name);
 
-    let cache = cache::status::Colorscheme::new(&name);
+    let cache = Colorscheme::new(&name);
     cache.save().unwrap();
 
     log::info!("Getting colorscheme...");

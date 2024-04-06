@@ -1,10 +1,9 @@
-use std::fs::File;
-
 use crate::{
-    cache::status,
+    cache::status::{self, Object},
     config::Folder,
     theme::{args, schema},
 };
+use std::fs::File;
 
 pub fn handle(args: &args::Save) {
     assert!(

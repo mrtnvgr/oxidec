@@ -1,4 +1,5 @@
 use crate::{
+    cache::status::Object,
     colorscheme,
     config::Folder,
     theme::{args, schema},

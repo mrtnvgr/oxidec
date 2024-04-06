@@ -1,6 +1,10 @@
 pub mod backends;
 
-use crate::{cache::status, colorscheme::args, config::Folder};
+use crate::{
+    cache::status::{self, Object},
+    colorscheme::args,
+    config::Folder,
+};
 use std::{fs::File, path::Path};
 
 pub fn handle(args: &args::Generate) {

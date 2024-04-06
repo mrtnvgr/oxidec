@@ -1,7 +1,10 @@
 use crate::{colorscheme::args, config::Folder, theme::schema};
 
 pub fn handle(args: &args::Remove) {
-    assert!(Folder::Colorschemes.contains(&args.name), "This colorscheme does not exist");
+    assert!(
+        Folder::Colorschemes.contains(&args.name),
+        "This colorscheme does not exist"
+    );
 
     for path in Folder::Themes.list() {
         let theme = schema::Theme::from_file(&path).unwrap();
@@ -15,7 +18,7 @@ pub fn handle(args: &args::Remove) {
     }
 
     match Folder::Colorschemes.remove(&args.name) {
-        Ok(_) => log::info!("Colorscheme was deleted successfully"),
+        Ok(()) => log::info!("Colorscheme was deleted successfully"),
         Err(error) => log::error!("Failed to delete a colorscheme: {}", error),
     }
 }

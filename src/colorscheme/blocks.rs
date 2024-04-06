@@ -12,12 +12,8 @@ pub fn print() {
 
 fn print_blocks(range: RangeInclusive<u8>) {
     for i in range {
-        print_block(i);
+        let block = Style::new().on(Color::Fixed(i));
+        print!("{}", block.paint(BLOCK));
     }
     println!();
-}
-
-fn print_block(i: u8) {
-    let block = Style::new().on(Color::Fixed(i));
-    print!("{}", block.paint(BLOCK));
 }
