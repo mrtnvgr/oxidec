@@ -15,7 +15,7 @@ pub fn generate(colorscheme: &schema::Colorscheme) {
         let content = fs::read_to_string(&path).expect("Failed to read template content");
 
         let template = engine.compile(&content).unwrap();
-        let result = template.render(colorscheme).to_string().unwrap();
+        let result = template.render(&engine, colorscheme).to_string().unwrap();
 
         let template_name: &str = path.file_name().unwrap().to_str().unwrap();
         cache::templates::create(template_name, result).unwrap();
