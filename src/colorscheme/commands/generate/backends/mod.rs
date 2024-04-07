@@ -21,7 +21,7 @@ impl Backend {
         }
 
         let hex_colors: Vec<String> = colors.iter().map(Rgb::to_hex_string).collect();
-        schema::Colorscheme::from_vec_16(&hex_colors)
+        schema::Colorscheme::from_vec_16(hex_colors)
     }
 }
 
