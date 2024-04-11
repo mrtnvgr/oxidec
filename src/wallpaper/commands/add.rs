@@ -1,7 +1,7 @@
 use crate::{config::Folder, wallpaper::args};
 use file_format::{FileFormat, Kind};
 
-pub fn handle(args: &args::Add) {
+pub fn handle(args: args::Add) {
     assert!(args.file_path.exists(), "This file does not exist");
 
     let format = FileFormat::from_file(&args.file_path).unwrap();

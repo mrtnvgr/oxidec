@@ -5,7 +5,7 @@ use crate::{
 };
 use std::path::Path;
 
-pub fn handle(args: &args::Set) {
+pub fn handle(args: args::Set) {
     let name = get_wallpaper_name(args);
     ensure_that_wallpaper_exists(&name);
     ensure_that_path_is_filename(&name);
@@ -19,7 +19,7 @@ pub fn handle(args: &args::Set) {
     log::info!("Current wallpaper: {}", name);
 }
 
-fn get_wallpaper_name(args: &args::Set) -> String {
+fn get_wallpaper_name(args: args::Set) -> String {
     args.name
         .as_ref()
         .map_or_else(get_random_wallpaper, ToString::to_string)

@@ -5,7 +5,7 @@ use crate::{
 };
 use std::fs::File;
 
-pub fn handle(args: &args::Save) {
+pub fn handle(args: args::Save) {
     assert!(
         !Folder::States.contains(&args.name),
         "A state with this name already exists"

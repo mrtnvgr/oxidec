@@ -3,7 +3,7 @@ use crate::{
     config::Folder,
 };
 
-pub fn handle(args: &args::Import) {
+pub fn handle(args: args::Import) {
     assert!(args.file_path.exists(), "This file does not exist");
 
     let filename = args.file_path.file_stem().unwrap();
@@ -23,7 +23,7 @@ pub fn handle(args: &args::Import) {
     log::info!("Imported successfully as \"{}\"!", name);
 }
 
-fn handle_json(args: &args::Import) {
+fn handle_json(args: args::Import) {
     schema::Colorscheme::from_file(&args.file_path).expect("Failed to validate this JSON file");
     Folder::Colorschemes.copy(&args.file_path).unwrap();
 }

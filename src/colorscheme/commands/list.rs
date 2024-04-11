@@ -1,6 +1,6 @@
 use crate::{colorscheme::args, config::Folder};
 
-pub fn handle(args: &args::List) {
+pub fn handle(args: args::List) {
     if args.json {
         output_using_json();
     } else {

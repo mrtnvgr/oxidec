@@ -1,13 +1,13 @@
 pub mod args;
 pub mod blocks;
-mod commands;
+pub mod commands;
 pub mod reloaders;
 pub mod schema;
 pub mod templates;
 
 use args::Action;
 
-pub fn handle(args: &Action) {
+pub fn handle(args: Action) {
     match args {
         Action::Set(args) => commands::set::handle(args),
         Action::Remove(args) => commands::remove::handle(args),

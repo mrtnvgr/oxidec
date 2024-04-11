@@ -4,7 +4,7 @@ pub mod set;
 
 use args::Action;
 
-pub fn handle(args: &Action) {
+pub fn handle(args: Action) {
     match args {
         Action::Add(args) => commands::add::handle(args),
         Action::Set(args) => commands::set::handle(args),

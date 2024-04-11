@@ -1,6 +1,6 @@
 use crate::{config::Folder, state::args};
 
-pub fn handle(args: &args::Remove) {
+pub fn handle(args: args::Remove) {
     assert!(
         Folder::States.contains(&args.name),
         "This state does not exist"

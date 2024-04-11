@@ -4,7 +4,7 @@ pub mod schema;
 
 use args::Action;
 
-pub fn handle(args: &Action) {
+pub fn handle(args: Action) {
     match args {
         Action::Set(args) => commands::set::handle(args),
         Action::Remove(args) => commands::remove::handle(args),

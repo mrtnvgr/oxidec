@@ -30,8 +30,9 @@ fn main() {
     cache::ensure_cache_exists();
 
     match args.mode {
-        Mode::Colorscheme(args) => colorscheme::handle(&args),
-        Mode::Wallpaper(args) => wallpaper::handle(&args),
-        Mode::State(args) => state::handle(&args),
+        Mode::Colorscheme(args) => colorscheme::handle(args),
+        Mode::Wallpaper(args) => wallpaper::handle(args),
+        Mode::State(args) => state::handle(args),
+        Mode::Theme(args) => theme::handle(args),
     }
 }

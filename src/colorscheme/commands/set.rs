@@ -5,8 +5,8 @@ use crate::{
 };
 use std::{path::PathBuf, string::ToString};
 
-pub fn handle(args: &args::Set) {
-    let name = get_colorscheme_name(args);
+pub fn handle(args: args::Set) {
+    let name = get_colorscheme_name(&args);
     ensure_that_colorscheme_exists(&name);
 
     let cache = Colorscheme::new(&name);

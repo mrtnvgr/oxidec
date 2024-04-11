@@ -7,7 +7,7 @@ use crate::{
 };
 use std::path::PathBuf;
 
-pub fn handle(args: &args::Set) {
+pub fn handle(args: args::Set) {
     let name = get_state_name(args);
     ensure_that_state_exists(&name);
 
@@ -35,7 +35,7 @@ pub fn handle(args: &args::Set) {
     colorscheme::blocks::print();
 }
 
-fn get_state_name(args: &args::Set) -> String {
+fn get_state_name(args: args::Set) -> String {
     args.name
         .as_ref()
         .map_or_else(get_random_state, ToString::to_string)

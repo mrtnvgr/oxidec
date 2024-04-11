@@ -3,7 +3,7 @@ use crate::{
     wallpaper::args,
 };
 
-pub fn handle(args: &args::Status) {
+pub fn handle(args: args::Status) {
     let status = status::Wallpaper::load();
 
     if args.json {
