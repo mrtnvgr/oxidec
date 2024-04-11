@@ -7,7 +7,7 @@
     />
 </h3>
 <h3 align="center">oxidec</h3>
-<p align="center">Oxidized delicious eye candies 🍬</p>
+<!-- <p align="center">Oxidized delicious eye candies 🍬</p> -->
 <p align="center"><b>Manage your desktop appearance with ease!</b></h3>
 
 ## Features
@@ -46,6 +46,11 @@ alias st="oxidec state"
 
 ### GTK live reloading doesn't work for me.
 
-For those who don't use Gnome, try [xsettingsd](https://codeberg.org/derat/xsettingsd).
+Try [xsettingsd](https://codeberg.org/derat/xsettingsd)
+
+### What's the difference between states and themes?
+
+- State: one colorscheme, **one** wallpaper _(a saved state of current candies)_
+- Theme: one colorscheme, **multiple** wallpapers
 
 [^1]: GTK Theme generation is optional. Use `--gtk` flag or set `OXIDEC_GTK` env variable.
