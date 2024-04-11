@@ -1,4 +1,5 @@
 <h3 align="center">
+    <b>OUTDATED</b>
     <img
         src="https://github.com/mrtnvgr/oxidec/assets/48406064/8ce1565d-f65a-4664-92fe-995aacb74d7c"
         width="400px"
@@ -37,7 +38,8 @@ cargo install oxidec --features new-examples
 alias cs="oxidec colorscheme"
 alias wl="oxidec wallpaper"
 alias wp="oxidec wallpaper"
-alias th="oxidec theme"
+alias st="oxidec state"
+# alias th="oxidec theme"
 ```
 
 ## FAQ

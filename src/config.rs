@@ -10,7 +10,7 @@ pub enum Folder {
     Templates,
     Reloaders,
     Wallpapers,
-    Themes,
+    States,
 }
 
 impl Folder {
@@ -24,13 +24,13 @@ impl Folder {
             Self::Templates => root.join("templates"),
             Self::Reloaders => root.join("reloaders"),
             Self::Wallpapers => root.join("wallpapers"),
-            Self::Themes => root.join("themes"),
+            Self::States => root.join("states"),
         }
     }
 
     fn force_extension(&self, path: PathBuf) -> PathBuf {
         match self {
-            Self::Colorschemes | Self::Themes => path.with_extension("json"),
+            Self::Colorschemes | Self::States => path.with_extension("json"),
             _ => path,
         }
     }

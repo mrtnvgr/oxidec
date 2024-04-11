@@ -1,4 +1,4 @@
-use crate::{colorscheme::args, config::Folder, theme::schema};
+use crate::{colorscheme::args, config::Folder, state::schema};
 
 pub fn handle(args: &args::Remove) {
     assert!(
@@ -6,19 +6,19 @@ pub fn handle(args: &args::Remove) {
         "This colorscheme does not exist"
     );
 
-    for path in Folder::Themes.list() {
-        let theme = schema::Theme::from_file(&path).unwrap();
+    for path in Folder::States.list() {
+        let state = schema::State::from_file(&path).unwrap();
         let path = Folder::Colorschemes.get(&args.name).unwrap();
 
         assert!(
-            theme.colorscheme.path != path,
-            "\"{}\" theme depends on this colorscheme",
-            theme.name
+            state.colorscheme.path != path,
+            "\"{}\" state depends on this colorscheme",
+            state.name
         );
     }
 
     match Folder::Colorschemes.remove(&args.name) {
-        Ok(()) => log::info!("Colorscheme was deleted successfully"),
+        Ok(()) => log::info!("\"{}\" colorscheme was deleted successfully", args.name),
         Err(error) => log::error!("Failed to delete a colorscheme: {}", error),
     }
 }

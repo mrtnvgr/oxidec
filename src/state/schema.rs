@@ -3,13 +3,13 @@ use serde::{Deserialize, Serialize};
 use std::{fs::File, path::PathBuf};
 
 #[derive(Serialize, Deserialize)]
-pub struct Theme {
+pub struct State {
     pub name: String,
     pub colorscheme: Colorscheme,
     pub wallpaper: Wallpaper,
 }
 
-impl Theme {
+impl State {
     pub fn new(name: &str, colorscheme: Colorscheme, wallpaper: Wallpaper) -> Self {
         Self {
             name: name.to_owned(),

@@ -2,13 +2,13 @@ use clap::{Args, Subcommand};
 
 #[derive(Subcommand)]
 pub enum Action {
-    #[command(name = "set", about = "[name] set theme")]
+    #[command(name = "set", about = "[name] set state")]
     Set(Set),
-    #[command(name = "save", about = "<name> save theme")]
+    #[command(name = "save", about = "<name> save state")]
     Save(Save),
-    #[command(name = "remove", about = "<name> remove theme")]
+    #[command(name = "remove", about = "<name> remove state")]
     Remove(Remove),
-    #[command(name = "list", about = "list themes")]
+    #[command(name = "list", about = "list states")]
     List(List),
 }
 
