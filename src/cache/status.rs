@@ -29,7 +29,7 @@ where
 
     fn path() -> PathBuf {
         let home_dir = home_dir().expect("Failed to get HOME directory");
-        let cache_path = ".cache/oxidec/status/colorscheme.json";
+        let cache_path = format!(".cache/oxidec/status/{}.json", Self::NAME);
         home_dir.join(cache_path)
     }
 
