@@ -10,5 +10,6 @@ pub fn handle(args: Action) {
         Action::New(args) => commands::new::handle(&args),
         Action::Remove(args) => commands::remove::handle(&args),
         Action::List(args) => commands::list::handle(&args),
+        Action::ThemeWallpapers(args) => commands::tw::handle(&args),
     }
 }

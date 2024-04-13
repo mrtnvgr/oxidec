@@ -10,10 +10,16 @@ pub enum Action {
     Remove(Remove),
     #[command(name = "list", about = "list themes")]
     List(List),
+    #[command(subcommand, name = "w", about = "theme wallpapers manager")]
+    ThemeWallpapers(ThemeWallpapers),
 }
 
 // TODO: Add/remove wallpaper: th w(allpapers) (add/remove) (optional: specify wallpaper)
-// TODO: Loop through wallpapers: th w(allpapers) next, th wallpapers previous, th wallpapers random
+// TODO: Loop through wallpapers: th w rnd
+
+// TODO: th rnd
+// TODO: wl rnd
+// TODO: cs rnd
 
 #[derive(Args)]
 pub struct Set {
@@ -34,4 +40,12 @@ pub struct Remove {
 pub struct List {
     #[arg(long)]
     pub json: bool,
+}
+
+#[derive(Subcommand)]
+pub enum ThemeWallpapers {
+    #[command(name = "add", about = "add current wallpaper to the theme")]
+    TWAdd,
+    #[command(name = "remove", about = "remove current wallpaper from the theme")]
+    TWRemove,
 }

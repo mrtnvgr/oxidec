@@ -55,12 +55,22 @@ pub struct Wallpaper {
     pub mode: WallpaperMode,
 }
 
+#[derive(Serialize, Deserialize)]
+pub struct Theme {
+    pub name: String,
+    pub path: PathBuf,
+}
+
 impl Object for Colorscheme {
     const NAME: &'static str = "colorscheme";
 }
 
 impl Object for Wallpaper {
-    const NAME: &'static str = "colorscheme";
+    const NAME: &'static str = "wallpaper";
+}
+
+impl Object for Theme {
+    const NAME: &'static str = "theme";
 }
 
 impl Colorscheme {
@@ -78,6 +88,15 @@ impl Wallpaper {
         let name = name.to_string_lossy().to_string();
         let path = Folder::Wallpapers.get(entry).unwrap();
         Self { name, path, mode }
+    }
+}
+
+impl Theme {
+    pub fn new(entry: &str) -> Self {
+        let stem = Path::new(&entry).file_stem().unwrap();
+        let name = stem.to_string_lossy().to_string();
+        let path = Folder::Themes.get(entry).unwrap();
+        Self { name, path }
     }
 }
 

@@ -15,8 +15,8 @@ pub fn handle(args: &args::Import) {
 
     let extension = args.file_path.extension().unwrap_or_default();
     match extension.to_ascii_lowercase().to_str().unwrap_or_default() {
-        "json" => handle_json(&args),
-        "xres" | "xresources" => todo!("Xresources are not supported yet."),
+        "json" => handle_json(args),
+        // TODO: "xres" | "xresources" => todo!(),
         _ => panic!("This file type is not supported."),
     }
 

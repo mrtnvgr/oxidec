@@ -1,4 +1,5 @@
 use crate::{
+    cache::{self, status::Object},
     colorscheme,
     config::Folder,
     theme::{args, schema},
@@ -24,8 +25,13 @@ pub fn handle(args: &args::Set) {
 
     wallpaper::set(&wallpaper.name, wallpaper.mode);
 
+    let cache = cache::status::Theme::new(&name);
+    cache.save().unwrap();
+
     log::info!("Current colorscheme: {}", theme.colorscheme.name);
     log::info!("Current wallpaper: {}", wallpaper.name);
+    eprintln!();
+    log::info!("Current theme: {}", name);
 
     colorscheme::blocks::print();
 }

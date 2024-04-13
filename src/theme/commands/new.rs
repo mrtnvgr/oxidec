@@ -20,5 +20,8 @@ pub fn handle(args: &args::New) {
     let path = Folder::Themes.build_path(&args.name);
     serde_json::to_writer(File::create(path).unwrap(), &theme).unwrap();
 
-    log::info!("{} theme was saved", args.name);
+    let cache = status::Theme::new(&args.name);
+    cache.save().unwrap();
+
+    log::info!("Current theme: {}", args.name);
 }

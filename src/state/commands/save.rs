@@ -3,7 +3,6 @@ use crate::{
     config::Folder,
     state::{args, schema},
 };
-use std::fs::File;
 
 pub fn handle(args: &args::Save) {
     assert!(
@@ -15,9 +14,7 @@ pub fn handle(args: &args::Save) {
     let wallpaper = status::Wallpaper::load();
 
     let state = schema::State::new(&args.name, colorscheme, wallpaper);
-
-    let path = Folder::States.build_path(&args.name);
-    serde_json::to_writer(File::create(path).unwrap(), &state).unwrap();
+    state.save();
 
     log::info!("Saved as {}", args.name);
 }
