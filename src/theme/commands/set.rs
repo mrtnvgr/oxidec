@@ -5,6 +5,8 @@ use crate::{
     wallpaper,
 };
 
+use rand::prelude::*;
+
 pub fn handle(args: &args::Set) {
     let name = args.name.clone().unwrap_or_else(get_random_theme);
 
@@ -13,12 +15,13 @@ pub fn handle(args: &args::Set) {
     let path = Folder::Themes.get(&name).unwrap();
 
     let error_message = format!("Failed to load {name:?}");
-    let mut theme = schema::Theme::from_file(&path).expect(&error_message);
+    let theme = schema::Theme::from_file(&path).expect(&error_message);
 
     colorscheme::set(&theme.colorscheme.name, false);
 
-    // TODO: get random wallpaper
-    let wallpaper = theme.wallpapers.pop().unwrap();
+    let mut rng = rand::thread_rng();
+    let wallpaper = theme.wallpapers.choose(&mut rng).unwrap();
+
     wallpaper::set(&wallpaper.name, wallpaper.mode);
 
     log::info!("Current colorscheme: {}", theme.colorscheme.name);
