@@ -3,33 +3,32 @@ use crate::{
     colorscheme::{args, blocks, reloaders, schema, templates},
     config::Folder,
 };
-use std::{path::PathBuf, string::ToString};
 
 pub fn handle(args: args::Set) {
-    let name = get_colorscheme_name(&args);
+    let name = args.name.unwrap_or_else(get_random_colorscheme);
+
     ensure_that_colorscheme_exists(&name);
 
-    let cache = Colorscheme::new(&name);
-    cache.save().unwrap();
-
-    log::info!("Getting colorscheme...");
-    let colorscheme = load_colorscheme(&cache.path);
-
-    log::info!("Generating templates...");
-    templates::generate(&colorscheme);
-
-    log::info!("Reloading colors...");
-    reloaders::run(args.gtk);
+    set(&name, args.gtk);
 
     log::info!("Current colorscheme: {}", name);
 
     blocks::print();
 }
 
-fn get_colorscheme_name(args: &args::Set) -> String {
-    args.name
-        .as_ref()
-        .map_or_else(get_random_colorscheme, ToString::to_string)
+pub fn set(name: &str, gtk: bool) {
+    let cache = Colorscheme::new(&name);
+    cache.save().unwrap();
+
+    log::info!("Getting colorscheme...");
+    let error_message = format!("Failed to load {name:?}");
+    let colorscheme = schema::Colorscheme::from_file(&cache.path).expect(&error_message);
+
+    log::info!("Generating templates...");
+    templates::generate(&colorscheme);
+
+    log::info!("Reloading colors...");
+    reloaders::run(gtk);
 }
 
 fn get_random_colorscheme() -> String {
@@ -45,12 +44,4 @@ fn ensure_that_colorscheme_exists(name: &str) {
         Folder::Colorschemes.contains(name),
         "This colorscheme does not exist"
     );
-}
-
-fn load_colorscheme(path: &PathBuf) -> schema::Colorscheme {
-    let binding = path.with_extension("");
-    let colorscheme = binding.file_name().unwrap();
-
-    let error_message = format!("Failed to load {colorscheme:?}");
-    schema::Colorscheme::from_file(path).expect(&error_message)
 }

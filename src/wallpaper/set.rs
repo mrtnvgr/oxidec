@@ -1,11 +1,20 @@
-use crate::cache::status::WallpaperMode;
+use crate::{
+    cache::status::{Object, Wallpaper, WallpaperMode},
+    config::Folder,
+};
+
 use std::{
     io,
     path::PathBuf,
     process::{Command, ExitStatus},
 };
 
-pub fn wallpaper(path: PathBuf, mode: WallpaperMode) {
+pub fn wallpaper(name: &str, mode: WallpaperMode) {
+    let cache = Wallpaper::new(&name, mode);
+    cache.save().unwrap();
+
+    let path = Folder::Wallpapers.get(name).unwrap();
+
     // TODO: support desktops, wayland
     if feh(path, mode).is_err() {
         log::error!("Feh is not installed on your system.");

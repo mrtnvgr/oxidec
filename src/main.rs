@@ -1,5 +1,6 @@
 mod colorscheme;
 mod state;
+mod theme;
 mod wallpaper;
 
 mod cache;
@@ -21,6 +22,8 @@ enum Mode {
     Wallpaper(wallpaper::args::Action),
     #[command(subcommand, name = "state", about = "state manager")]
     State(state::args::Action),
+    #[command(subcommand, name = "theme", about = "theme manager")]
+    Theme(theme::args::Action),
 }
 
 fn main() {

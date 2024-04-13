@@ -5,6 +5,8 @@ pub mod reloaders;
 pub mod schema;
 pub mod templates;
 
+pub use commands::set::set;
+
 use args::Action;
 
 pub fn handle(args: Action) {

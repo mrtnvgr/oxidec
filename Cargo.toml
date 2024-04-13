@@ -2,7 +2,7 @@
 name = "oxidec"
 version = "1.0.0-dev"
 edition = "2021"
-description = "Eye-candy manager written in Rust"
+description = "Advanced eye-candy manager written in Rust"
 license = "GPL-3.0"
 repository = "https://github.com/mrtnvgr/oxidec/"
 keywords = ["colorscheme", "wallpaper", "theme", "linux", "cli"]
@@ -26,4 +26,5 @@ upon = "0.8"
 which = "6.0"
 
 [features]
+default = []
 new-examples = []

@@ -1,28 +1,17 @@
 use crate::{
-    cache::{self, status::Object},
     config::Folder,
-    wallpaper::{args, set},
+    wallpaper::{self, args},
 };
 use std::path::Path;
 
 pub fn handle(args: args::Set) {
-    let name = get_wallpaper_name(args);
+    let name = args.name.unwrap_or_else(get_random_wallpaper);
     ensure_that_wallpaper_exists(&name);
     ensure_that_path_is_filename(&name);
 
-    let cache = cache::status::Wallpaper::new(&name, args.mode);
-    cache.save().unwrap();
-
-    let path = Folder::Wallpapers.get(&name).unwrap();
-    set::wallpaper(path, args.mode);
+    wallpaper::set(&name, args.mode);
 
     log::info!("Current wallpaper: {}", name);
-}
-
-fn get_wallpaper_name(args: args::Set) -> String {
-    args.name
-        .as_ref()
-        .map_or_else(get_random_wallpaper, ToString::to_string)
 }
 
 fn get_random_wallpaper() -> String {

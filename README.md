@@ -26,7 +26,7 @@
 cargo install oxidec
 ```
 
-If you want to install new examples on every update, enable `new-examples` feature:
+If you want to install new files from examples directory on every update, enable `new-examples` feature:
 
 ```sh
 cargo install oxidec --features new-examples
@@ -41,6 +41,8 @@ alias wp="oxidec wallpaper"
 alias st="oxidec state"
 # alias th="oxidec theme"
 ```
+
+<!-- TODO: move list logic to Folder struct -->
 
 ## FAQ
 

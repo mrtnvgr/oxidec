@@ -11,7 +11,7 @@ pub enum Backend {
 }
 
 impl Backend {
-    pub fn generate(self, path: &Path, args: &args::Generate) -> schema::Colorscheme {
+    pub fn generate(self, path: &Path, args: args::Generate) -> schema::Colorscheme {
         let mut colors = match self {
             Self::Imagemagick => imagemagick::generate(path, args.light),
         };

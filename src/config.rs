@@ -1,6 +1,9 @@
 use home::home_dir;
 use rand::seq::IteratorRandom;
-use std::{fs, io, path::PathBuf};
+use std::{
+    fs, io,
+    path::{Path, PathBuf},
+};
 use strum::{EnumIter, IntoEnumIterator};
 
 #[derive(EnumIter)]
@@ -11,6 +14,7 @@ pub enum Folder {
     Reloaders,
     Wallpapers,
     States,
+    Themes,
 }
 
 impl Folder {
@@ -25,13 +29,14 @@ impl Folder {
             Self::Reloaders => root.join("reloaders"),
             Self::Wallpapers => root.join("wallpapers"),
             Self::States => root.join("states"),
+            Self::Themes => root.join("themes"),
         }
     }
 
     fn force_extension(&self, path: PathBuf) -> PathBuf {
         match self {
-            Self::Colorschemes | Self::States => path.with_extension("json"),
-            _ => path,
+            Self::Colorschemes | Self::States | Self::Themes => path.with_extension("json"),
+            Self::Root | Self::Templates | Self::Reloaders | Self::Wallpapers => path,
         }
     }
 
@@ -48,7 +53,7 @@ impl Folder {
         Some(entry.path())
     }
 
-    pub fn copy(&self, path: &PathBuf) -> io::Result<()> {
+    pub fn copy(&self, path: &Path) -> io::Result<()> {
         let from_path = fs::canonicalize(path)?;
         let file_name = path.file_name().unwrap_or_default();
         let to_path = self.path().join(file_name);
