@@ -8,16 +8,22 @@ use std::{
     path::PathBuf,
     process::{Command, ExitStatus},
 };
+use which::which;
 
 pub fn wallpaper(name: &str, mode: WallpaperMode) {
-    let cache = Wallpaper::new(&name, mode);
+    let cache = Wallpaper::new(name, mode);
     cache.save().unwrap();
 
     let path = Folder::Wallpapers.get(name).unwrap();
 
-    // TODO: support desktops, wayland
-    if feh(path, mode).is_err() {
-        log::error!("Feh is not installed on your system.");
+    // TODO: support for desktops
+
+    if which("feh").is_ok() {
+        feh(path, mode).unwrap();
+    } else if which("swaybg").is_ok() {
+        swaybg(path, mode).unwrap();
+    } else {
+        log::error!("None of the supported wallpaper daemons are installed.");
     }
 }
 
@@ -31,4 +37,17 @@ fn feh(path: PathBuf, mode: WallpaperMode) -> io::Result<ExitStatus> {
     };
 
     Command::new("feh").arg(mode).arg(path).status()
+}
+
+fn swaybg(path: PathBuf, mode: WallpaperMode) -> io::Result<ExitStatus> {
+    let mode = match mode {
+        WallpaperMode::Center => "-m center",
+        WallpaperMode::Fill => "-m fill",
+        WallpaperMode::Max => "-m stretch",
+        WallpaperMode::Scale => "-m fit",
+        WallpaperMode::Tile => "-m tile",
+        // TODO: WallpaperMode::Color => "-m solid_color",
+    };
+
+    Command::new("swaybg").arg(mode).arg(path).status()
 }

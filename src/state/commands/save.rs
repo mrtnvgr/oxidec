@@ -19,5 +19,5 @@ pub fn handle(args: args::Save) {
     let path = Folder::States.build_path(&args.name);
     serde_json::to_writer(File::create(path).unwrap(), &state).unwrap();
 
-    log::info!("Saved successfully");
+    log::info!("Saved");
 }

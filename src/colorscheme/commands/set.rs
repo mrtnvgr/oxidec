@@ -17,7 +17,7 @@ pub fn handle(args: args::Set) {
 }
 
 pub fn set(name: &str, gtk: bool) {
-    let cache = Colorscheme::new(&name);
+    let cache = Colorscheme::new(name);
     cache.save().unwrap();
 
     log::info!("Getting colorscheme...");
