@@ -14,9 +14,6 @@ pub enum Action {
     ThemeWallpapers(ThemeWallpapers),
 }
 
-// TODO: Add/remove wallpaper: th w(allpapers) (add/remove) (optional: specify wallpaper)
-// TODO: Loop through wallpapers: th w rnd
-
 // TODO: th rnd
 // TODO: wl rnd
 // TODO: cs rnd
@@ -45,7 +42,9 @@ pub struct List {
 #[derive(Subcommand)]
 pub enum ThemeWallpapers {
     #[command(name = "add", about = "add current wallpaper to the theme")]
-    TWAdd,
+    Add,
     #[command(name = "remove", about = "remove current wallpaper from the theme")]
-    TWRemove,
+    Remove,
+    #[command(name = "rnd", about = "set a random wallpaper from the theme")]
+    Rnd,
 }
