@@ -6,7 +6,7 @@ use crate::{
 
 use std::fs::File;
 
-pub fn handle(args: &args::Create) {
+pub fn handle(args: &args::New) {
     assert!(
         !Folder::Themes.contains(&args.name),
         "A theme with this name already exists"
