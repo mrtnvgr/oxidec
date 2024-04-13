@@ -1,19 +1,12 @@
-// use crate::{
-//     cache::status::{self, Object},
-//     config::Folder,
-//     theme::{args, schema},
-// };
-// use std::fs::File;
-
-use std::fs::File;
-
 use crate::{
     cache::status::{self, Object},
     config::Folder,
     theme::{args, schema},
 };
 
-pub fn handle(args: args::Create) {
+use std::fs::File;
+
+pub fn handle(args: &args::Create) {
     assert!(
         !Folder::Themes.contains(&args.name),
         "A theme with this name already exists"

@@ -1,6 +1,6 @@
 use crate::{config::Folder, state::args};
 
-pub fn handle(args: args::List) {
+pub fn handle(args: &args::List) {
     let states = Folder::States.list_stems();
 
     if args.json {

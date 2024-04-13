@@ -5,8 +5,8 @@ use crate::{
     wallpaper,
 };
 
-pub fn handle(args: args::Set) {
-    let name = args.name.unwrap_or_else(get_random_theme);
+pub fn handle(args: &args::Set) {
+    let name = args.name.clone().unwrap_or_else(get_random_theme);
 
     assert!(Folder::Themes.contains(&name), "This theme does not exist");
 

@@ -1,6 +1,6 @@
 use crate::{config::Folder, state::schema, wallpaper::args};
 
-pub fn handle(args: args::Remove) {
+pub fn handle(args: &args::Remove) {
     let name = args.filename.file_name().unwrap().to_str().unwrap();
 
     assert!(

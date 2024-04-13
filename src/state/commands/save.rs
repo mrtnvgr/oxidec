@@ -5,7 +5,7 @@ use crate::{
 };
 use std::fs::File;
 
-pub fn handle(args: args::Save) {
+pub fn handle(args: &args::Save) {
     assert!(
         !Folder::States.contains(&args.name),
         "A state with this name already exists"
@@ -19,5 +19,5 @@ pub fn handle(args: args::Save) {
     let path = Folder::States.build_path(&args.name);
     serde_json::to_writer(File::create(path).unwrap(), &state).unwrap();
 
-    log::info!("Saved");
+    log::info!("Saved as {}", args.name);
 }

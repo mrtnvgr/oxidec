@@ -3,7 +3,7 @@ use crate::{
     config::Folder,
 };
 
-pub fn handle(args: args::Import) {
+pub fn handle(args: &args::Import) {
     assert!(args.file_path.exists(), "This file does not exist");
 
     let filename = args.file_path.file_stem().unwrap();

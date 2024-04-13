@@ -1,6 +1,6 @@
 use crate::{config::Folder, theme::args};
 
-pub fn handle(args: args::Remove) {
+pub fn handle(args: &args::Remove) {
     assert!(
         Folder::Themes.contains(&args.name),
         "This theme does not exist"

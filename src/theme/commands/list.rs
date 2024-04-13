@@ -1,6 +1,6 @@
 use crate::{config::Folder, theme::args};
 
-pub fn handle(args: args::List) {
+pub fn handle(args: &args::List) {
     let themes = Folder::Themes.list_stems();
 
     if args.json {

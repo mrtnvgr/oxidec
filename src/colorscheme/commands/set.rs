@@ -4,8 +4,8 @@ use crate::{
     config::Folder,
 };
 
-pub fn handle(args: args::Set) {
-    let name = args.name.unwrap_or_else(get_random_colorscheme);
+pub fn handle(args: &args::Set) {
+    let name = args.name.clone().unwrap_or_else(get_random_colorscheme);
 
     ensure_that_colorscheme_exists(&name);
 

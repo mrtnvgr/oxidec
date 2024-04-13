@@ -7,7 +7,7 @@ use crate::{
 };
 use std::{fs::File, path::Path};
 
-pub fn handle(args: args::Generate) {
+pub fn handle(args: &args::Generate) {
     log::info!("Generating colorscheme...");
     let wallpaper = status::Wallpaper::load();
 

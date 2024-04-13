@@ -3,7 +3,7 @@ use crate::{
     colorscheme::args,
 };
 
-pub fn handle(args: args::Status) {
+pub fn handle(args: &args::Status) {
     let status = Colorscheme::load();
 
     if args.json {

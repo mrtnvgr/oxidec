@@ -1,6 +1,6 @@
 use crate::{colorscheme::args, config::Folder, state::schema};
 
-pub fn handle(args: args::Remove) {
+pub fn handle(args: &args::Remove) {
     assert!(
         Folder::Colorschemes.contains(&args.name),
         "This colorscheme does not exist"

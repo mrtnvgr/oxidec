@@ -5,8 +5,8 @@ use crate::{
     wallpaper,
 };
 
-pub fn handle(args: args::Set) {
-    let name = args.name.unwrap_or_else(get_random_state);
+pub fn handle(args: &args::Set) {
+    let name = args.name.clone().unwrap_or_else(get_random_state);
     ensure_that_state_exists(&name);
 
     let path = Folder::States.get(&name).unwrap();
