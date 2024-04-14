@@ -50,7 +50,6 @@ pub struct Colorscheme {
 
 #[derive(Serialize, Deserialize)]
 pub struct Wallpaper {
-    pub name: String,
     pub path: PathBuf,
     pub mode: WallpaperMode,
 }
@@ -83,11 +82,8 @@ impl Colorscheme {
 }
 
 impl Wallpaper {
-    pub fn new(entry: &str, mode: WallpaperMode) -> Self {
-        let name = Path::new(&entry).file_name().unwrap();
-        let name = name.to_string_lossy().to_string();
-        let path = Folder::Wallpapers.get(entry).unwrap();
-        Self { name, path, mode }
+    pub fn new(path: PathBuf, mode: WallpaperMode) -> Self {
+        Self { path, mode }
     }
 }
 

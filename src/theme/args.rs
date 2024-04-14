@@ -14,10 +14,6 @@ pub enum Action {
     ThemeWallpapers(ThemeWallpapers),
 }
 
-// TODO: th rnd
-// TODO: wl rnd
-// TODO: cs rnd
-
 #[derive(Args)]
 pub struct Set {
     pub name: Option<String>,

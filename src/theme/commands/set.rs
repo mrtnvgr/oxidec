@@ -9,7 +9,10 @@ use crate::{
 use rand::prelude::*;
 
 pub fn handle(args: &args::Set) {
-    let name = args.name.clone().unwrap_or_else(get_random_theme);
+    let name = args
+        .name
+        .clone()
+        .unwrap_or_else(|| Folder::Themes.random_entry());
 
     assert!(Folder::Themes.contains(&name), "This theme does not exist");
 
@@ -23,21 +26,17 @@ pub fn handle(args: &args::Set) {
     let mut rng = rand::thread_rng();
     let wallpaper = theme.wallpapers.choose(&mut rng).unwrap();
 
-    wallpaper::set(&wallpaper.name, wallpaper.mode);
+    let wallpaper_name = wallpaper.path.to_string_lossy();
+
+    wallpaper::set(wallpaper.path.clone(), wallpaper.mode);
 
     let cache = cache::status::Theme::new(&name);
     cache.save().unwrap();
 
     log::info!("Current colorscheme: {}", theme.colorscheme.name);
-    log::info!("Current wallpaper: {}", wallpaper.name);
+    log::info!("Current wallpaper: {}", wallpaper_name);
     eprintln!();
     log::info!("Current theme: {}", name);
 
     colorscheme::blocks::print();
-}
-
-fn get_random_theme() -> String {
-    let file = Folder::Themes.random_file().expect("There are no themes.");
-    let filestem = file.file_stem().unwrap();
-    filestem.to_str().unwrap().to_owned()
 }

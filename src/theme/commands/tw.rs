@@ -42,5 +42,5 @@ fn set_random() {
     let mut rng = thread_rng();
     let wallpaper = theme.wallpapers.choose(&mut rng).unwrap();
 
-    wallpaper::set(&wallpaper.name, wallpaper.mode);
+    wallpaper::set(wallpaper.path.clone(), wallpaper.mode);
 }

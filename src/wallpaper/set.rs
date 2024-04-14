@@ -1,7 +1,4 @@
-use crate::{
-    cache::status::{Object, Wallpaper, WallpaperMode},
-    config::Folder,
-};
+use crate::cache::status::{Object, Wallpaper, WallpaperMode};
 
 use std::{
     io,
@@ -10,25 +7,23 @@ use std::{
 };
 use which::which;
 
-pub fn wallpaper(name: &str, mode: WallpaperMode) {
-    let cache = Wallpaper::new(name, mode);
+pub fn wallpaper(path: PathBuf, mode: WallpaperMode) {
+    let cache = Wallpaper::new(path, mode);
     cache.save().unwrap();
-
-    let path = Folder::Wallpapers.get(name).unwrap();
 
     // TODO: support for desktops
 
     if which("feh").is_ok() {
-        feh(path, mode).unwrap();
+        feh(cache).unwrap();
     } else if which("swaybg").is_ok() {
-        swaybg(path, mode).unwrap();
+        swaybg(cache).unwrap();
     } else {
         log::error!("None of the supported wallpaper daemons are installed.");
     }
 }
 
-fn feh(path: PathBuf, mode: WallpaperMode) -> io::Result<ExitStatus> {
-    let mode = match mode {
+fn feh(wallpaper: Wallpaper) -> io::Result<ExitStatus> {
+    let mode = match wallpaper.mode {
         WallpaperMode::Center => "--bg-center",
         WallpaperMode::Fill => "--bg-fill",
         WallpaperMode::Max => "--bg-max",
@@ -36,11 +31,11 @@ fn feh(path: PathBuf, mode: WallpaperMode) -> io::Result<ExitStatus> {
         WallpaperMode::Tile => "--bg-tile",
     };
 
-    Command::new("feh").arg(mode).arg(path).status()
+    Command::new("feh").arg(mode).arg(wallpaper.path).status()
 }
 
-fn swaybg(path: PathBuf, mode: WallpaperMode) -> io::Result<ExitStatus> {
-    let mode = match mode {
+fn swaybg(wallpaper: Wallpaper) -> io::Result<ExitStatus> {
+    let mode = match wallpaper.mode {
         WallpaperMode::Center => "-m center",
         WallpaperMode::Fill => "-m fill",
         WallpaperMode::Max => "-m stretch",
@@ -49,5 +44,8 @@ fn swaybg(path: PathBuf, mode: WallpaperMode) -> io::Result<ExitStatus> {
         // TODO: WallpaperMode::Color => "-m solid_color",
     };
 
-    Command::new("swaybg").arg(mode).arg(path).status()
+    Command::new("swaybg")
+        .arg(mode)
+        .arg(wallpaper.path)
+        .status()
 }

@@ -5,33 +5,23 @@ use crate::{
 use std::path::Path;
 
 pub fn handle(args: &args::Set) {
-    let name = args.name.clone().unwrap_or_else(get_random_wallpaper);
+    let name = args
+        .name
+        .clone()
+        .unwrap_or_else(|| Folder::Wallpapers.random_entry());
 
-    ensure_that_wallpaper_exists(&name);
-    ensure_that_path_is_filename(&name);
+    ensure_that_path_is_a_filename(&name);
 
-    wallpaper::set(&name, args.mode);
+    let path = Folder::Wallpapers
+        .get(&name)
+        .expect("This wallpaper does not exist");
+
+    wallpaper::set(path, args.mode);
 
     log::info!("Current wallpaper: {}", name);
 }
 
-fn get_random_wallpaper() -> String {
-    let file = Folder::Wallpapers
-        .random_file()
-        .expect("There are no wallpapers.");
-
-    let filename = file.file_name().unwrap();
-    filename.to_str().unwrap().to_owned()
-}
-
-fn ensure_that_wallpaper_exists(name: &str) {
-    assert!(
-        Folder::Wallpapers.contains(name),
-        "This wallpaper does not exist"
-    );
-}
-
-fn ensure_that_path_is_filename(name: &str) {
+fn ensure_that_path_is_a_filename(name: &str) {
     let path = Path::new(name);
     let filename = path.file_name().unwrap();
     assert!(

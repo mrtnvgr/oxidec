@@ -21,16 +21,21 @@ impl Folder {
     fn path(&self) -> PathBuf {
         let mut root = home_dir().expect("Failed to get HOME directory");
         root.push(".config/oxidec");
+        root.push(self.get_self_handle());
+        root
+    }
 
+    fn get_self_handle(&self) -> String {
         match self {
-            Self::Root => root,
-            Self::Colorschemes => root.join("colorschemes"),
-            Self::Templates => root.join("templates"),
-            Self::Reloaders => root.join("reloaders"),
-            Self::Wallpapers => root.join("wallpapers"),
-            Self::States => root.join("states"),
-            Self::Themes => root.join("themes"),
+            Self::Root => "",
+            Self::Colorschemes => "colorschemes",
+            Self::Templates => "templates",
+            Self::Reloaders => "reloaders",
+            Self::Wallpapers => "wallpapers",
+            Self::States => "states",
+            Self::Themes => "themes",
         }
+        .to_owned()
     }
 
     fn force_extension(&self, path: PathBuf) -> PathBuf {
@@ -46,11 +51,17 @@ impl Folder {
         self.path().join(entry).exists()
     }
 
-    pub fn random_file(&self) -> Option<PathBuf> {
+    fn random_file(&self) -> Option<PathBuf> {
         let mut rng = rand::thread_rng();
         let files = fs::read_dir(self.path()).expect("Failed to read the dir contents");
         let entry = files.choose(&mut rng)?.ok()?;
         Some(entry.path())
+    }
+
+    pub fn random_entry(&self) -> String {
+        let error_message = format!("There are no {}.", self.get_self_handle());
+        let file = self.random_file().expect(&error_message);
+        file.to_string_lossy().into()
     }
 
     pub fn copy(&self, path: &Path) -> io::Result<()> {
@@ -82,16 +93,18 @@ impl Folder {
     pub fn list_stems(&self) -> Vec<String> {
         let list = self.list();
         list.iter()
-            .map(|e| e.file_stem().unwrap())
-            .map(|e| e.to_str().unwrap().to_owned())
+            .map(|e| e.file_stem())
+            .flatten()
+            .map(|e| e.to_string_lossy().into())
             .collect()
     }
 
     pub fn list_names(&self) -> Vec<String> {
         let list = self.list();
         list.iter()
-            .map(|e| e.file_name().unwrap())
-            .map(|e| e.to_str().unwrap().to_owned())
+            .map(|e| e.file_name())
+            .flatten()
+            .map(|e| e.to_string_lossy().into())
             .collect()
     }
 
@@ -105,8 +118,8 @@ impl Folder {
             let file_name = file.file_name();
             let file_stem = file.file_stem();
 
-            let file_name = file_name.unwrap_or_default().to_str().unwrap();
-            let file_stem = file_stem.unwrap_or_default().to_str().unwrap();
+            let file_name = file_name.unwrap_or_default().to_string_lossy();
+            let file_stem = file_stem.unwrap_or_default().to_string_lossy();
 
             if file_name == entry || file_stem == entry {
                 return Ok(file);

@@ -5,9 +5,15 @@ use crate::{
 };
 
 pub fn handle(args: &args::Set) {
-    let name = args.name.clone().unwrap_or_else(get_random_colorscheme);
+    let name = args
+        .name
+        .clone()
+        .unwrap_or_else(|| Folder::Colorschemes.random_entry());
 
-    ensure_that_colorscheme_exists(&name);
+    assert!(
+        Folder::Colorschemes.contains(&name),
+        "This colorscheme does not exist"
+    );
 
     set(&name, args.gtk);
 
@@ -29,19 +35,4 @@ pub fn set(name: &str, gtk: bool) {
 
     log::info!("Reloading colors...");
     reloaders::run(gtk);
-}
-
-fn get_random_colorscheme() -> String {
-    let file = Folder::Colorschemes
-        .random_file()
-        .expect("There are no colorschemes.");
-    let filestem = file.file_stem().unwrap();
-    filestem.to_str().unwrap().to_owned()
-}
-
-fn ensure_that_colorscheme_exists(name: &str) {
-    assert!(
-        Folder::Colorschemes.contains(name),
-        "This colorscheme does not exist"
-    );
 }
