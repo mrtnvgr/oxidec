@@ -1,11 +1,11 @@
 <h3 align="center">
-    <b>OUTDATED</b>
     <img
         src="https://github.com/mrtnvgr/oxidec/assets/48406064/8ce1565d-f65a-4664-92fe-995aacb74d7c"
         width="400px"
         height="400px"
     />
 </h3>
+<h3 align="center" style="color: #ed8796;"><b>OUTDATED</b></h3>
 <h3 align="center">oxidec</h3>
 <!-- <p align="center">Oxidized delicious eye candies 🍬</p> -->
 <p align="center"><b>Manage your desktop appearance with ease!</b></h3>
@@ -38,21 +38,13 @@ cargo install oxidec --features new-examples
 alias cs="oxidec colorscheme"
 alias wl="oxidec wallpaper"
 alias wp="oxidec wallpaper"
-alias st="oxidec state"
-# alias th="oxidec theme"
+alias th="oxidec theme"
 ```
-
-<!-- TODO: move list logic to Folder struct -->
 
 ## FAQ
 
 ### GTK live reloading doesn't work for me.
 
 Try [xsettingsd](https://codeberg.org/derat/xsettingsd)
-
-### What's the difference between states and themes?
-
-- State: one colorscheme, **one** wallpaper _(a saved state of current candies)_
-- Theme: one colorscheme, **multiple** wallpapers
 
 [^1]: GTK Theme generation is optional. Use `--gtk` flag or set `OXIDEC_GTK` env variable.
