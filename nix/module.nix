@@ -18,6 +18,17 @@ in {
   options.oxidec = {
     enable = mkEnableOption "enable oxidec";
 
+    aliases = mkOption {
+      type = with types; attrsOf str;
+      description = "Shell aliases";
+      default = {
+        cs = "colorscheme";
+        wl = "wallpaper";
+        wp = "wallpaper";
+        th = "theme";
+      };
+    };
+
     colorschemes = mkOption {
       type = with types; attrsOf colorscheme;
       default = {};
@@ -44,7 +55,9 @@ in {
     home.packages = [ pkg ];
 
     xdg.configFile = mergeAttrsList (map (x: mkFiles x) [ "colorschemes" "themes" ]);
-    # TODO: recommended aliases option
+
+    home.shellAliases = mapAttrs (n: v: "oxidec ${v}") cfg.aliases;
+
     # TODO: templates
     # TODO: activation scripts
   };
