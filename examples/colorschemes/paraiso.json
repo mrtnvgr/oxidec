@@ -1,10 +1,8 @@
 {
-  "special": {
+  "colors": {
     "background": "#2f1e2e",
     "foreground": "#a39e9b",
-    "cursor": "#a39e9b"
-  },
-  "colors": {
+
     "color0": "#2f1e2e",
     "color1": "#ef6155",
     "color2": "#48b685",

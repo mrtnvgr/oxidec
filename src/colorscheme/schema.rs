@@ -3,15 +3,7 @@ use std::{collections::HashMap, fs::File, path::Path};
 
 #[derive(Serialize, Deserialize)]
 pub struct Colorscheme {
-    pub special: Special,
     pub palette: HashMap<String, String>,
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct Special {
-    pub background: String,
-    pub foreground: String,
-    pub cursor: String,
 }
 
 impl Colorscheme {
@@ -29,14 +21,6 @@ impl Colorscheme {
             palette.insert(key, value);
         }
 
-        // PERF: use references
-        #[allow(clippy::indexing_slicing)]
-        let special = Special {
-            background: palette["color0"].clone(),
-            foreground: palette["color15"].clone(),
-            cursor: palette["color15"].clone(),
-        };
-
-        Self { special, palette }
+        Self { palette }
     }
 }

@@ -1,6 +1,6 @@
-foreground={{ special.foreground }}
-background={{ special.background }}
-cursor={{ special.cursor }}
+foreground={{ colors.foreground }}
+background={{ colors.background }}
+cursor={{ colors.foreground }}
 
 color0={{ colors.color0 }}
 color1={{ colors.color1 }}

@@ -1,7 +1,7 @@
-*foreground:        {{ special.foreground }}
-*background:        {{ special.background }}
-*.foreground:       {{ special.foreground }}
-*.background:       {{ special.background }}
+*foreground:  {{ colors.foreground }}
+*background:  {{ colors.background }}
+*.foreground: {{ colors.foreground }}
+*.background: {{ colors.background }}
 
 *.color0: {{ colors.color0 }}
 *color0:  {{ colors.color0 }}
@@ -39,6 +39,6 @@
 *.color66: {{ colors.color0 }}
 *color66:  {{ colors.color0 }}
 
-slock.init: {{ special.background }}
+slock.init: {{ colors.background }}
 slock.input: {{ colors.color4 }}
 slock.failed: {{ colors.color1 }}

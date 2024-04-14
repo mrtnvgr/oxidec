@@ -1,7 +1,7 @@
 {
-  "background": "{{ special.background }}",
-  "foreground": "{{ special.foreground }}",
-  "cursor": "{{ special.cursor }}",
+  "background": "{{ colors.background }}",
+  "foreground": "{{ colors.foreground }}",
+  "cursor": "{{ colors.foreground }}",
 
   "color0": "{{ colors.color0 }}",
   "color1": "{{ colors.color1 }}",
