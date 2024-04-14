@@ -1,7 +1,7 @@
 use crate::{
     cache::{self, status::Object},
     colorscheme,
-    config::Folder,
+    config::Directory,
     theme::{args, schema},
     wallpaper,
 };
@@ -12,11 +12,14 @@ pub fn handle(args: &args::Set) {
     let name = args
         .name
         .clone()
-        .unwrap_or_else(|| Folder::Themes.random_entry());
+        .unwrap_or_else(|| Directory::Themes.random_entry());
 
-    assert!(Folder::Themes.contains(&name), "This theme does not exist");
+    assert!(
+        Directory::Themes.contains(&name),
+        "This theme does not exist"
+    );
 
-    let path = Folder::Themes.get(&name).unwrap();
+    let path = Directory::Themes.get(&name).unwrap();
 
     let error_message = format!("Failed to load {name:?}");
     let theme = schema::Theme::from_file(&path).expect(&error_message);

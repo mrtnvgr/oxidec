@@ -1,6 +1,6 @@
 use crate::{
     colorscheme,
-    config::Folder,
+    config::Directory,
     state::{args, schema},
     wallpaper,
 };
@@ -9,9 +9,9 @@ pub fn handle(args: &args::Set) {
     let name = args
         .name
         .clone()
-        .unwrap_or_else(|| Folder::States.random_entry());
+        .unwrap_or_else(|| Directory::States.random_entry());
 
-    let path = Folder::States
+    let path = Directory::States
         .get(&name)
         .expect("This state does not exist");
 

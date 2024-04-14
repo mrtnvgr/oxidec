@@ -1,4 +1,4 @@
-use crate::{config::Folder, wallpaper::args};
+use crate::{config::Directory, wallpaper::args};
 
 pub fn handle(args: &args::List) {
     if args.json {
@@ -10,12 +10,12 @@ pub fn handle(args: &args::List) {
 
 fn output_using_log() {
     log::info!("Wallpapers: ");
-    for entry in Folder::Wallpapers.list_names() {
+    for entry in Directory::Wallpapers.list_names() {
         log::info!("{:?}", entry);
     }
 }
 
 fn output_using_json() {
-    let list = Folder::Wallpapers.list_names();
+    let list = Directory::Wallpapers.list_names();
     print!("{}", serde_json::to_string(&list).unwrap());
 }

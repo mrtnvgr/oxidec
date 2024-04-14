@@ -1,13 +1,13 @@
 use crate::{
     cache::status::{Colorscheme, Object},
-    config::Folder,
+    config::Directory,
 };
 use std::{env, process::Command};
 
 pub fn run(gtk: bool) {
     let colorscheme = Colorscheme::load().name;
 
-    for reloader in Folder::Reloaders.list() {
+    for reloader in Directory::Reloaders.list() {
         let mut command = Command::new("sh");
 
         command.arg("-C").arg(&reloader);

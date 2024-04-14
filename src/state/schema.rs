@@ -1,6 +1,6 @@
 use crate::{
     cache::status::{Colorscheme, Wallpaper},
-    config::Folder,
+    config::Directory,
 };
 use serde::{Deserialize, Serialize};
 use std::{fs::File, path::Path};
@@ -27,7 +27,7 @@ impl State {
     }
 
     pub fn save(self) {
-        let path = Folder::States.build_path(&self.name);
+        let path = Directory::States.build_path(&self.name);
         serde_json::to_writer(File::create(path).unwrap(), &self).unwrap();
     }
 }

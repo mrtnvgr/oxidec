@@ -13,27 +13,27 @@ fn main() {
         if cfg!(feature = "new-examples") {
             copy_new_examples(&config_path);
         } else {
-            copy_examples_folder(&config_path);
+            copy_examples_directory(&config_path);
         }
     }
 }
 
-fn copy_examples_folder(config_path: &Path) {
+fn copy_examples_directory(config_path: &Path) {
     if !config_path.exists() {
-        copy_folder("examples", config_path);
+        copy_directory("examples", config_path);
     }
 }
 
 fn copy_new_examples(config_path: &Path) {
     let repo_path = Path::new("examples");
 
-    for folder in ["templates", "reloaders"] {
-        let user_folder = config_path.join(folder);
-        let repo_folder = repo_path.join(folder);
+    for directory in ["templates", "reloaders"] {
+        let user_directory = config_path.join(directory);
+        let repo_directory = repo_path.join(directory);
 
-        for repo_file in fs::read_dir(repo_folder).unwrap().flatten() {
+        for repo_file in fs::read_dir(repo_directory).unwrap().flatten() {
             let file_name = repo_file.file_name();
-            let user_file = user_folder.join(file_name);
+            let user_file = user_directory.join(file_name);
 
             if !user_file.exists() {
                 fs::copy(repo_file.path(), user_file).unwrap();
@@ -42,7 +42,7 @@ fn copy_new_examples(config_path: &Path) {
     }
 }
 
-fn copy_folder(src: &str, dest: &Path) {
+fn copy_directory(src: &str, dest: &Path) {
     let mut command = Command::new("cp");
     command.arg("-r");
     command.arg(src);

@@ -1,4 +1,4 @@
-use crate::{colorscheme::args, config::Folder};
+use crate::{colorscheme::args, config::Directory};
 
 pub fn handle(args: &args::List) {
     if args.json {
@@ -10,12 +10,12 @@ pub fn handle(args: &args::List) {
 
 fn output_using_log() {
     log::info!("Colorschemes: ");
-    for entry in Folder::Colorschemes.list_stems() {
+    for entry in Directory::Colorschemes.list_stems() {
         log::info!("{:?}", entry);
     }
 }
 
 fn output_using_json() {
-    let list = Folder::Colorschemes.list_stems();
+    let list = Directory::Colorschemes.list_stems();
     print!("{}", serde_json::to_string(&list).unwrap());
 }

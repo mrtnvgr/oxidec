@@ -1,4 +1,4 @@
-use crate::config::Folder;
+use crate::config::Directory;
 use clap::ValueEnum;
 use home::home_dir;
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
@@ -76,7 +76,7 @@ impl Colorscheme {
     pub fn new(entry: &str) -> Self {
         let stem = Path::new(&entry).file_stem().unwrap();
         let name = stem.to_string_lossy().to_string();
-        let path = Folder::Colorschemes.get(entry).unwrap();
+        let path = Directory::Colorschemes.get(entry).unwrap();
         Self { name, path }
     }
 }
@@ -91,7 +91,7 @@ impl Theme {
     pub fn new(entry: &str) -> Self {
         let stem = Path::new(&entry).file_stem().unwrap();
         let name = stem.to_string_lossy().to_string();
-        let path = Folder::Themes.get(entry).unwrap();
+        let path = Directory::Themes.get(entry).unwrap();
         Self { name, path }
     }
 }

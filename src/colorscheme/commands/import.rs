@@ -1,6 +1,6 @@
 use crate::{
     colorscheme::{args, schema},
-    config::Folder,
+    config::Directory,
 };
 
 pub fn handle(args: &args::Import) {
@@ -9,7 +9,7 @@ pub fn handle(args: &args::Import) {
     let filename = args.file_path.file_stem().unwrap();
     let name = filename.to_str().unwrap();
     assert!(
-        !Folder::Colorschemes.contains(name),
+        !Directory::Colorschemes.contains(name),
         "Colorscheme with this name already exists!"
     );
 
@@ -25,5 +25,5 @@ pub fn handle(args: &args::Import) {
 
 fn handle_json(args: &args::Import) {
     schema::Colorscheme::from_file(&args.file_path).expect("Failed to validate this JSON file");
-    Folder::Colorschemes.copy(&args.file_path).unwrap();
+    Directory::Colorschemes.copy(&args.file_path).unwrap();
 }

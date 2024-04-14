@@ -1,5 +1,5 @@
 use crate::{
-    config::Folder,
+    config::Directory,
     wallpaper::{self, args},
 };
 use std::path::Path;
@@ -8,11 +8,11 @@ pub fn handle(args: &args::Set) {
     let name = args
         .name
         .clone()
-        .unwrap_or_else(|| Folder::Wallpapers.random_entry());
+        .unwrap_or_else(|| Directory::Wallpapers.random_entry());
 
     ensure_that_path_is_a_filename(&name);
 
-    let path = Folder::Wallpapers
+    let path = Directory::Wallpapers
         .get(&name)
         .expect("This wallpaper does not exist");
 

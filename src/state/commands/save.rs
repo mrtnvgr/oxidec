@@ -1,12 +1,12 @@
 use crate::{
     cache::status::{self, Object},
-    config::Folder,
+    config::Directory,
     state::{args, schema},
 };
 
 pub fn handle(args: &args::Save) {
     assert!(
-        !Folder::States.contains(&args.name),
+        !Directory::States.contains(&args.name),
         "A state with this name already exists"
     );
 

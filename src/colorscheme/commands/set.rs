@@ -1,17 +1,17 @@
 use crate::{
     cache::status::{Colorscheme, Object},
     colorscheme::{args, blocks, reloaders, schema, templates},
-    config::Folder,
+    config::Directory,
 };
 
 pub fn handle(args: &args::Set) {
     let name = args
         .name
         .clone()
-        .unwrap_or_else(|| Folder::Colorschemes.random_entry());
+        .unwrap_or_else(|| Directory::Colorschemes.random_entry());
 
     assert!(
-        Folder::Colorschemes.contains(&name),
+        Directory::Colorschemes.contains(&name),
         "This colorscheme does not exist"
     );
 

@@ -1,7 +1,7 @@
-use crate::{config::Folder, state::args};
+use crate::{config::Directory, state::args};
 
 pub fn handle(args: &args::List) {
-    let states = Folder::States.list_stems();
+    let states = Directory::States.list_stems();
 
     if args.json {
         output_using_json(&states);

@@ -7,7 +7,7 @@ use std::{
 use strum::{EnumIter, IntoEnumIterator};
 
 #[derive(EnumIter)]
-pub enum Folder {
+pub enum Directory {
     Root,
     Colorschemes,
     Templates,
@@ -17,7 +17,7 @@ pub enum Folder {
     Themes,
 }
 
-impl Folder {
+impl Directory {
     fn path(&self) -> PathBuf {
         let mut root = home_dir().expect("Failed to get HOME directory");
         root.push(".config/oxidec");
@@ -135,8 +135,8 @@ impl Folder {
 }
 
 pub fn ensure_config_exists() {
-    for folder in Folder::iter() {
-        let path = folder.path();
+    for directory in Directory::iter() {
+        let path = directory.path();
         fs::create_dir_all(path).expect("Failed to create config directories");
     }
 }

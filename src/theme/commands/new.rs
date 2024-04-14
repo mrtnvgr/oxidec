@@ -1,6 +1,6 @@
 use crate::{
     cache::status::{self, Object},
-    config::Folder,
+    config::Directory,
     theme::{args, schema},
 };
 
@@ -8,7 +8,7 @@ use std::fs::File;
 
 pub fn handle(args: &args::New) {
     assert!(
-        !Folder::Themes.contains(&args.name),
+        !Directory::Themes.contains(&args.name),
         "A theme with this name already exists"
     );
 
@@ -17,7 +17,7 @@ pub fn handle(args: &args::New) {
 
     let theme = schema::Theme::new(&args.name, colorscheme, vec![wallpaper]);
 
-    let path = Folder::Themes.build_path(&args.name);
+    let path = Directory::Themes.build_path(&args.name);
     serde_json::to_writer(File::create(path).unwrap(), &theme).unwrap();
 
     let cache = status::Theme::new(&args.name);

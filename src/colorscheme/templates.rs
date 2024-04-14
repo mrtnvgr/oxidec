@@ -8,7 +8,7 @@ use std::fs;
 pub fn generate(colorscheme: &schema::Colorscheme) {
     let engine = get_engine();
 
-    let templates = config::Folder::Templates.list();
+    let templates = config::Directory::Templates.list();
     assert!(!templates.is_empty(), "No templates for generation.");
 
     for path in templates {
