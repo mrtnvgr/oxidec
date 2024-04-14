@@ -13,7 +13,6 @@ pub enum Directory {
     Templates,
     Reloaders,
     Wallpapers,
-    States,
     Themes,
 }
 
@@ -32,7 +31,6 @@ impl Directory {
             Self::Templates => "templates",
             Self::Reloaders => "reloaders",
             Self::Wallpapers => "wallpapers",
-            Self::States => "states",
             Self::Themes => "themes",
         }
         .to_owned()
@@ -40,7 +38,7 @@ impl Directory {
 
     fn force_extension(&self, path: PathBuf) -> PathBuf {
         match self {
-            Self::Colorschemes | Self::States | Self::Themes => path.with_extension("json"),
+            Self::Colorschemes | Self::Themes => path.with_extension("json"),
             Self::Root | Self::Templates | Self::Reloaders | Self::Wallpapers => path,
         }
     }

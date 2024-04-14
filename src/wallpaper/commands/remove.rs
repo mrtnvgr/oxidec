@@ -1,4 +1,4 @@
-use crate::{config::Directory, state::schema, wallpaper::args};
+use crate::{config::Directory, theme::schema, wallpaper::args};
 
 pub fn handle(args: &args::Remove) {
     let name = args.filename.file_name().unwrap().to_str().unwrap();
@@ -8,15 +8,17 @@ pub fn handle(args: &args::Remove) {
         "This wallpaper does not exist"
     );
 
-    for path in Directory::States.list() {
-        let state = schema::State::from_file(&path).unwrap();
+    for path in Directory::Themes.list() {
+        let theme = schema::Theme::from_file(&path).unwrap();
         let path = Directory::Wallpapers.get(name).unwrap();
 
-        assert!(
-            state.wallpaper.path != path,
-            "\"{}\" state depends on this wallpaper",
-            state.name
-        );
+        for wallpaper in theme.wallpapers {
+            assert!(
+                wallpaper.path != path,
+                "\"{}\" theme depends on this wallpaper",
+                theme.name
+            );
+        }
     }
 
     match Directory::Wallpapers.remove(name) {

@@ -1,5 +1,4 @@
 mod colorscheme;
-mod state;
 mod theme;
 mod wallpaper;
 
@@ -20,8 +19,6 @@ enum Mode {
     Colorscheme(colorscheme::args::Action),
     #[command(subcommand, name = "wallpaper", about = "wallpaper manager")]
     Wallpaper(wallpaper::args::Action),
-    #[command(subcommand, name = "state", about = "state manager")]
-    State(state::args::Action),
     #[command(subcommand, name = "theme", about = "theme manager")]
     Theme(theme::args::Action),
 }
@@ -35,7 +32,6 @@ fn main() {
     match args.mode {
         Mode::Colorscheme(args) => colorscheme::handle(args),
         Mode::Wallpaper(args) => wallpaper::handle(args),
-        Mode::State(args) => state::handle(args),
         Mode::Theme(args) => theme::handle(args),
     }
 }
