@@ -1,6 +1,6 @@
 { lib, ... }:
 let
-  inherit (lib) mkOptionType isString hasPrefix types;
+  inherit (lib) mkOption mkOptionType isString hasPrefix types removePrefix;
 
   # Credits: nix-colors <3
   hexBaseType = mkOptionType {
@@ -14,16 +14,6 @@ in rec {
 
   colorscheme = with types; submodule {
     options = {
-      special = mkOption {
-        type = (submodule {
-          options = {
-            background = { types = hex; };
-            foreground = { types = hex; };
-            cursor = { types = hex; };
-          };
-        });
-      };
-
       palette = mkOption { type = attrsOf hex; };
     };
   };
@@ -42,7 +32,7 @@ in rec {
   theme = with types; submodule {
     options = {
       name = mkOption { type = oneLineStr; };
-      # TODO: assert if colorscheme exists
+      # TODO: assert/check if colorscheme exists
       colorscheme = mkOption { type = oneLineStr; };
       wallpapers = mkOption { type = listOf (wallpaperCache); };
     };
