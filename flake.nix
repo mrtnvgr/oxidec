@@ -5,7 +5,7 @@
 
   outputs = { nixpkgs, ... }: rec {
     homeManagerModules = rec {
-      oxidec = import ./module.nix;
+      oxidec = import ./nix/module.nix;
       default = oxidec;
     };
 
