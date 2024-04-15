@@ -8,15 +8,13 @@ use crate::{
 
 #[derive(Serialize, Deserialize)]
 pub struct Theme {
-    pub name: String,
     pub colorscheme: Colorscheme,
     pub wallpapers: Vec<Wallpaper>,
 }
 
 impl Theme {
-    pub fn new(name: &str, colorscheme: Colorscheme, wallpapers: Vec<Wallpaper>) -> Self {
+    pub fn new(colorscheme: Colorscheme, wallpapers: Vec<Wallpaper>) -> Self {
         Self {
-            name: name.to_owned(),
             colorscheme,
             wallpapers,
         }
@@ -27,8 +25,8 @@ impl Theme {
         serde_json::from_reader(fr)
     }
 
-    pub fn save(self) {
-        let path = Directory::Themes.build_path(&self.name);
+    pub fn save(self, name: &str) {
+        let path = Directory::Themes.build_path(name);
         serde_json::to_writer(File::create(path).unwrap(), &self).unwrap();
     }
 }

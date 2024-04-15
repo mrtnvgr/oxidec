@@ -28,7 +28,7 @@ fn toggle(kind: &ThemeWallpapers) {
         ThemeWallpapers::Rnd => unreachable!(),
     }
 
-    theme.save();
+    theme.save(&cache.name);
 
     log::info!("Success");
 }

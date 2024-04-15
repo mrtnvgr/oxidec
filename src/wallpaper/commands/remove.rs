@@ -10,13 +10,14 @@ pub fn handle(args: &args::Remove) {
 
     for path in Directory::Themes.list() {
         let theme = schema::Theme::from_file(&path).unwrap();
+        let theme_name = path.file_name().unwrap().to_string_lossy();
         let path = Directory::Wallpapers.get(name).unwrap();
 
         for wallpaper in theme.wallpapers {
             assert!(
                 wallpaper.path != path,
                 "\"{}\" theme depends on this wallpaper",
-                theme.name
+                theme_name
             );
         }
     }

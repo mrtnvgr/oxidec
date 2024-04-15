@@ -15,7 +15,7 @@ pub fn handle(args: &args::New) {
     let colorscheme = status::Colorscheme::load();
     let wallpaper = status::Wallpaper::load();
 
-    let theme = schema::Theme::new(&args.name, colorscheme, vec![wallpaper]);
+    let theme = schema::Theme::new(colorscheme, vec![wallpaper]);
 
     let path = Directory::Themes.build_path(&args.name);
     serde_json::to_writer(File::create(path).unwrap(), &theme).unwrap();
