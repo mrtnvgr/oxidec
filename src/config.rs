@@ -91,8 +91,7 @@ impl Directory {
     pub fn list_stems(&self) -> Vec<String> {
         let list = self.list();
         list.iter()
-            .map(|e| e.file_stem())
-            .flatten()
+            .filter_map(|e| e.file_stem())
             .map(|e| e.to_string_lossy().into())
             .collect()
     }
@@ -100,8 +99,7 @@ impl Directory {
     pub fn list_names(&self) -> Vec<String> {
         let list = self.list();
         list.iter()
-            .map(|e| e.file_name())
-            .flatten()
+            .filter_map(|e| e.file_name())
             .map(|e| e.to_string_lossy().into())
             .collect()
     }

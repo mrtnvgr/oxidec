@@ -5,7 +5,7 @@ pub mod reloaders;
 pub mod schema;
 pub mod templates;
 
-pub use commands::set::set;
+pub use commands::set::set_without_cache;
 
 use args::Action;
 

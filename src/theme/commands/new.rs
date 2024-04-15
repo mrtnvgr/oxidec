@@ -1,5 +1,6 @@
 use crate::{
     cache::status::{self, Object},
+    colorscheme,
     config::Directory,
     theme::{args, schema},
 };
@@ -13,6 +14,8 @@ pub fn handle(args: &args::New) {
     );
 
     let colorscheme = status::Colorscheme::load();
+    let colorscheme = colorscheme::schema::Colorscheme::from_file(&colorscheme.path).unwrap();
+
     let wallpaper = status::Wallpaper::load();
 
     let theme = schema::Theme::new(colorscheme, vec![wallpaper]);

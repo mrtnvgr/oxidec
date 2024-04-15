@@ -1,10 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::{fs::File, path::Path};
 
-use crate::{
-    cache::status::{Colorscheme, Wallpaper},
-    config::Directory,
-};
+use crate::{cache::status::Wallpaper, colorscheme::schema::Colorscheme, config::Directory};
 
 #[derive(Serialize, Deserialize)]
 pub struct Theme {

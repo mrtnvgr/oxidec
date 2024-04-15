@@ -31,9 +31,8 @@ in rec {
 
   theme = with types; submodule {
     options = {
-      # TODO: assert/check if colorscheme exists
-      colorscheme = mkOption { type = oneLineStr; };
-      wallpapers = mkOption { type = listOf (wallpaperCache); };
+      colorscheme = mkOption { type = colorscheme; };
+      wallpapers = mkOption { type = listOf wallpaperCache; };
     };
   };
 }

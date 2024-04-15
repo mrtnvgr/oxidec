@@ -10,28 +10,28 @@ pub fn handle(args: &args::Set) {
         .clone()
         .unwrap_or_else(|| Directory::Colorschemes.random_entry());
 
-    assert!(
-        Directory::Colorschemes.contains(&name),
-        "This colorscheme does not exist"
-    );
+    log::info!("Getting colorscheme...");
 
-    set(&name, args.gtk);
+    let colorscheme_path = Directory::Colorschemes
+        .get(&name)
+        .expect("This colorscheme does not exist");
+
+    let error_message = format!("Failed to load {name:?}");
+    let colorscheme = schema::Colorscheme::from_file(&colorscheme_path).expect(&error_message);
+
+    set_without_cache(&colorscheme, args.gtk);
+
+    let cache = Colorscheme::new(&name);
+    cache.save().unwrap();
 
     log::info!("Current colorscheme: {}", name);
 
     blocks::print();
 }
 
-pub fn set(name: &str, gtk: bool) {
-    let cache = Colorscheme::new(name);
-    cache.save().unwrap();
-
-    log::info!("Getting colorscheme...");
-    let error_message = format!("Failed to load {name:?}");
-    let colorscheme = schema::Colorscheme::from_file(&cache.path).expect(&error_message);
-
+pub fn set_without_cache(colorscheme: &schema::Colorscheme, gtk: bool) {
     log::info!("Generating templates...");
-    templates::generate(&colorscheme);
+    templates::generate(colorscheme);
 
     log::info!("Reloading colors...");
     reloaders::run(gtk);
