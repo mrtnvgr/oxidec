@@ -2,29 +2,9 @@
 let
   inherit (lib) mkIf mkEnableOption mkOption mapAttrs mergeAttrsList optionalString listToAttrs;
 
-  pkg = pkgs.rustPlatform.buildRustPackage {
-    name = "oxidec";
-
-    src = lib.cleanSource ./..;
-    cargoLock.lockFile = ./../Cargo.lock;
-  };
-
-  cfg = config.oxidec;
-
   types = lib.types // (import ./types.nix { inherit lib; });
 
-  mkJSONFile = group: mapAttrs (name: value: { text = builtins.toJSON value; target = "oxidec/${group}/${name}.json"; }) config.oxidec.${group};
-  JSONFiles = mergeAttrsList (map (x: mkJSONFile x) [ "colorschemes" "themes" ]);
-
-  wallpapers = listToAttrs (map (wallpaper: {
-    name = "oxidec/wallpapers/${wallpaper.name}";
-    value = { source = wallpaper; };
-  }) config.oxidec.wallpapers);
-
-  mkTextFile = group: mapAttrs (name: value: { text = value; target = "oxidec/${group}/${name}"; }) config.oxidec.${group};
-  textFiles = mergeAttrsList (map (x: mkTextFile x) [ "templates" ]);
-
-  oxidecFiles = JSONFiles // textFiles // wallpapers;
+  cfg = config.oxidec;
 in {
   options.oxidec = {
     enable = mkEnableOption "enable oxidec";
@@ -70,9 +50,28 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = [ pkg ];
+    home.packages = [
+      (pkgs.rustPlatform.buildRustPackage {
+        name = "oxidec";
 
-    xdg.configFile = oxidecFiles;
+        src = lib.cleanSource ./..;
+        cargoLock.lockFile = ./../Cargo.lock;
+      })
+    ];
+
+    xdg.configFile = let
+      mkJSONFile = group: mapAttrs (name: value: { text = builtins.toJSON value; target = "oxidec/${group}/${name}.json"; }) config.oxidec.${group};
+      JSONFiles = mergeAttrsList (map (x: mkJSONFile x) [ "colorschemes" "themes" ]);
+
+      wallpapers = listToAttrs (map (wallpaper: {
+        name = "oxidec/wallpapers/${wallpaper.name}";
+        value = { source = wallpaper; };
+      }) config.oxidec.wallpapers);
+
+      mkTextFile = group: mapAttrs (name: value: { text = value; target = "oxidec/${group}/${name}"; }) config.oxidec.${group};
+      textFiles = mergeAttrsList (map (x: mkTextFile x) [ "templates" ]);
+    in
+      JSONFiles // textFiles // wallpapers;
 
     home.shellAliases = mapAttrs (n: v: "oxidec ${v}") cfg.aliases;
 
