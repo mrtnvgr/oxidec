@@ -35,4 +35,18 @@ in rec {
       wallpapers = mkOption { type = listOf wallpaperCache; };
     };
   };
+
+  raw = with types; submodule {
+    options = {
+      templates = mkOption {
+        type = attrsOf str;
+        default = {};
+      };
+
+      reloaders = mkOption {
+        type = attrsOf str;
+        default = {};
+      };
+    };
+  };
 }

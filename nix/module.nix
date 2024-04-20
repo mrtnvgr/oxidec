@@ -23,29 +23,23 @@ in {
     colorschemes = mkOption {
       type = with types; attrsOf colorscheme;
       default = {};
-
-      # TODO: example = [];
     };
 
     wallpapers = mkOption {
       type = with types; listOf path;
       default = [ ];
-
-      # TODO: example = [];
     };
 
     themes = mkOption {
       type = with types; attrsOf theme;
       default = {};
-
-      # TODO: example = {};
     };
 
-    templates = mkOption {
+    raw = mkOption { type = types.raw; };
+
+    files = mkOption {
       type = with types; attrsOf str;
       default = {};
-
-      # TODO: example = {};
     };
   };
 
@@ -68,10 +62,10 @@ in {
         value = { source = wallpaper; };
       }) config.oxidec.wallpapers);
 
-      mkTextFile = group: mapAttrs (name: value: { text = value; target = "oxidec/${group}/${name}"; }) config.oxidec.${group};
-      textFiles = mergeAttrsList (map (x: mkTextFile x) [ "templates" ]);
+      templates = mapAttrs (name: value: { text = value; target = "oxidec/templates/${name}"; }) config.oxidec.raw.templates;
+      reloaders = mapAttrs (name: value: { text = value; target = "oxidec/reloaders/${name}"; executable = true; }) config.oxidec.raw.reloaders;
     in
-      JSONFiles // textFiles // wallpapers;
+      JSONFiles // templates // reloaders // wallpapers;
 
     home.shellAliases = mapAttrs (n: v: "oxidec ${v}") cfg.aliases;
 
