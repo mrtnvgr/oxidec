@@ -1,16 +1,21 @@
-{ lib, ... }:
+{ pkgs, config, lib, ... }:
 let
-  inherit (lib) mkOption mkOptionType isString hasPrefix types removePrefix;
+  inherit (lib) mkOption mkOptionType isString hasPrefix types removePrefix optionalString;
 
+  # TODO: get latest version from home-manager repo
+  fileType = (import ./file-type.nix {
+    inherit (config.home) homeDirectory;
+    inherit pkgs lib;
+  }).fileType;
+  mkFileType = option: path: fileType "oxidec.${option}" "{env}`HOME`/${path}" "${config.home.homeDirectory}${optionalString (path != "") "/"}${path}";
+in rec {
   # Credits: nix-colors <3
-  hexBaseType = mkOptionType {
+  hex = mkOptionType {
     name = "hex-color";
     descriptionClass = "noun";
     description = "RGB color in hex format";
-    check = x: isString x && !(hasPrefix "#" x);
+    check = x: isString x && hasPrefix "#" x;
   };
-in rec {
-  hex = with types; coercedTo str (removePrefix "#") hexBaseType;
 
   colorscheme = with types; submodule {
     options = {
@@ -39,14 +44,16 @@ in rec {
   raw = with types; submodule {
     options = {
       templates = mkOption {
-        type = attrsOf str;
+        type = mkFileType "raw.templates" "oxidec/templates";
         default = {};
       };
 
       reloaders = mkOption {
-        type = attrsOf str;
+        type = mkFileType "raw.reloaders" "oxidec/reloaders";
         default = {};
       };
     };
   };
+
+  file = mkFileType "files" "";
 }

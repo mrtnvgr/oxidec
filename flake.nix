@@ -1,7 +1,5 @@
 {
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-  };
+  # inputs = {};
 
   outputs = { nixpkgs, ... }: rec {
     homeManagerModules = rec {

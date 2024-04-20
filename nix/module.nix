@@ -1,8 +1,7 @@
 { config, pkgs, lib, ... }:
+with lib;
 let
-  inherit (lib) mkIf mkEnableOption mkOption mapAttrs mergeAttrsList optionalString listToAttrs;
-
-  types = lib.types // (import ./types.nix { inherit lib; });
+  types = lib.types // (import ./types.nix { inherit pkgs config lib; });
 
   cfg = config.oxidec;
 in {
@@ -35,10 +34,13 @@ in {
       default = {};
     };
 
-    raw = mkOption { type = types.raw; };
+    raw = mkOption {
+      type = types.raw;
+      default = {};
+    };
 
     files = mkOption {
-      type = with types; attrsOf str;
+      type = types.file;
       default = {};
     };
   };
@@ -54,16 +56,28 @@ in {
     ];
 
     xdg.configFile = let
-      mkJSONFile = group: mapAttrs (name: value: { text = builtins.toJSON value; target = "oxidec/${group}/${name}.json"; }) config.oxidec.${group};
+      mkJSONFile = group: mapAttrs (name: value: { text = builtins.toJSON value; target = "oxidec/${group}/${name}.json"; }) cfg.${group};
       JSONFiles = mergeAttrsList (map (x: mkJSONFile x) [ "colorschemes" "themes" ]);
 
       wallpapers = listToAttrs (map (wallpaper: {
         name = "oxidec/wallpapers/${wallpaper.name}";
         value = { source = wallpaper; };
-      }) config.oxidec.wallpapers);
+      }) cfg.wallpapers);
 
-      templates = mapAttrs (name: value: { text = value; target = "oxidec/templates/${name}"; }) config.oxidec.raw.templates;
-      reloaders = mapAttrs (name: value: { text = value; target = "oxidec/reloaders/${name}"; executable = true; }) config.oxidec.raw.reloaders;
+      reloaders = let
+        rawReloaders = mapAttrs' (name: value: nameValuePair name (value // { executable = true; })) cfg.raw.reloaders;
+        fileReloader = let
+          mkFile = name: "ln -s $HOME/oxidec/templates/${replaceStrings ["/"] ["^"] name} $HOME/${name}";
+          files = map (name: mkFile name) (attrNames cfg.files);
+        in concatStringsSep "\n" files;
+      in
+        if cfg.files != {} then rawReloaders // { "oxidec/reloaders/nix-files.sh".text = fileReloader; } else rawReloaders;
+
+        templates = let
+          rawTemplates = cfg.raw.templates;
+          # TODO: broken
+          fileTemplates = mapAttrs' (name: value: nameValuePair "oxidec/templates/${replaceStrings ["/"] ["^"] name}" value) cfg.files;
+        in rawTemplates // fileTemplates;
     in
       JSONFiles // templates // reloaders // wallpapers;
 
