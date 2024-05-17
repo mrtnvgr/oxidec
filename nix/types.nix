@@ -1,6 +1,6 @@
 { pkgs, config, lib, ... }:
 let
-  inherit (lib) mkOption mkOptionType isString hasPrefix types removePrefix optionalString;
+  inherit (lib) mkOption mkOptionType isString hasPrefix types optionalString;
 
   # TODO: get latest version from home-manager repo
   fileType = (import ./file-type.nix {
@@ -17,31 +17,31 @@ in rec {
     check = x: isString x && hasPrefix "#" x;
   };
 
-  colorscheme = with types; submodule {
+  colorscheme = types.submodule {
     options = {
-      palette = mkOption { type = attrsOf hex; };
+      palette = mkOption { type = types.attrsOf hex; };
     };
   };
 
-  wallpaperCache = with types; submodule {
+  wallpaperCache = types.submodule {
     options = {
-      path = mkOption { type = path; };
+      path = mkOption { type = types.path; };
 
       mode = mkOption {
-        type = enum [ "center" "centre" "fill" "max" "scale" "tile" ];
+        type = types.enum [ "center" "centre" "fill" "max" "scale" "tile" ];
         default = "center";
       };
     };
   };
 
-  theme = with types; submodule {
+  theme = types.submodule {
     options = {
       colorscheme = mkOption { type = colorscheme; };
-      wallpapers = mkOption { type = listOf wallpaperCache; };
+      wallpapers = mkOption { type = types.listOf wallpaperCache; };
     };
   };
 
-  raw = with types; submodule {
+  raw = types.submodule {
     options = {
       templates = mkOption {
         type = mkFileType "raw.templates" "oxidec/templates";
@@ -55,5 +55,5 @@ in rec {
     };
   };
 
-  file = mkFileType "files" "";
+  files = mkFileType "files" "";
 }

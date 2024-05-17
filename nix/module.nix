@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }:
-with lib;
 let
+  inherit (lib) mkEnableOption mkOption mkIf mapAttrs mergeAttrsList listToAttrs mapAttrs' nameValuePair replaceStrings attrNames concatStringsSep;
   types = lib.types // (import ./types.nix { inherit pkgs config lib; });
 
   cfg = config.oxidec;
@@ -35,12 +35,12 @@ in {
     };
 
     raw = mkOption {
-      type = types.raw;
+      type = with types; attrsOf raw;
       default = {};
     };
 
     files = mkOption {
-      type = types.file;
+      type = types.files;
       default = {};
     };
   };
@@ -73,11 +73,9 @@ in {
       in
         if cfg.files != {} then rawReloaders // { "oxidec/reloaders/nix-files.sh".text = fileReloader; } else rawReloaders;
 
-        templates = let
-          rawTemplates = cfg.raw.templates;
-          # TODO: broken
-          fileTemplates = mapAttrs' (name: value: nameValuePair "oxidec/templates/${replaceStrings ["/"] ["^"] name}" value) cfg.files;
-        in rawTemplates // fileTemplates;
+      templates = let
+        fileTemplates = mapAttrs' (name: value: nameValuePair "oxidec/templates/${replaceStrings ["/"] ["^"] name}" value) cfg.files;
+      in fileTemplates // cfg.raw.templates;
     in
       JSONFiles // templates // reloaders // wallpapers;
 
