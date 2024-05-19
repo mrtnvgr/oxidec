@@ -48,7 +48,7 @@ pub struct Colorscheme {
     pub path: PathBuf,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, PartialEq)]
 pub struct Wallpaper {
     pub path: PathBuf,
     pub mode: WallpaperMode,
@@ -96,7 +96,7 @@ impl Theme {
     }
 }
 
-#[derive(Serialize, Deserialize, ValueEnum, Clone, Copy, Debug)]
+#[derive(Serialize, Deserialize, ValueEnum, Clone, Copy, Debug, PartialEq)]
 pub enum WallpaperMode {
     // TODO: visible alias
     #[value(alias = "centre")]

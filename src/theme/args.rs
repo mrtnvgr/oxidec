@@ -41,6 +41,12 @@ pub enum ThemeWallpapers {
     Add,
     #[command(name = "remove", about = "remove current wallpaper from the theme")]
     Remove,
-    #[command(name = "rnd", about = "set a random wallpaper from the theme")]
-    Rnd,
+    #[command(name = "switch", about = "set a wallpaper from the theme")]
+    Switch(Switch),
+}
+
+#[derive(Args)]
+pub struct Switch {
+    #[arg(long)]
+    pub random: bool,
 }
