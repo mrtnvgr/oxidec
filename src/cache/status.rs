@@ -27,7 +27,7 @@ where
 
     fn path() -> PathBuf {
         let home_dir = home_dir().expect("Failed to get HOME directory");
-        let cache_path = format!(".cache/oxidec/status/{}.json", Self::NAME);
+        let cache_path = format!(".cache/oxidec/{}.json", Self::NAME);
         home_dir.join(cache_path)
     }
 
@@ -46,7 +46,7 @@ pub struct Colorscheme {
     pub path: PathBuf,
 }
 
-#[derive(Serialize, Deserialize, PartialEq)]
+#[derive(Serialize, Deserialize, PartialEq, Eq)]
 pub struct Wallpaper {
     pub path: PathBuf,
     pub mode: WallpaperMode,
