@@ -6,7 +6,7 @@ pub fn run() {
     if let Some(x) = Colorscheme::try_load() {
         run_reloaders(&x.name);
     } else {
-        log::warn!("No colorscheme is selected");
+        log::warn!("No colorscheme to reload");
     }
 }
 
