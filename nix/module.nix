@@ -3,6 +3,12 @@ let
   types = lib.types // (import ./types.nix { inherit pkgs config lib; });
 
   cfg = config.oxidec;
+
+  oxidec = pkgs.rustPlatform.buildRustPackage {
+    name = "oxidec";
+    src = lib.cleanSource ./..;
+    cargoLock.lockFile = ./../Cargo.lock;
+  };
 in {
   options.oxidec = {
     enable = lib.mkEnableOption "enable oxidec";
@@ -45,14 +51,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [
-      (pkgs.rustPlatform.buildRustPackage {
-        name = "oxidec";
-
-        src = lib.cleanSource ./..;
-        cargoLock.lockFile = ./../Cargo.lock;
-      })
-    ];
+    home.packages = [ oxidec ];
 
     xdg.configFile = let
       mkJSONFile = group: lib.mapAttrs (name: value: { text = builtins.toJSON value; target = "oxidec/${group}/${name}.json"; }) cfg.${group};
@@ -69,6 +68,8 @@ in {
 
     home.shellAliases = lib.mapAttrs (n: v: "oxidec ${v}") cfg.aliases;
 
-    # TODO: activation scripts
+    home.activation.oxidec = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      ${oxidec}/bin/oxidec colorscheme reload
+    '';
   };
 }
