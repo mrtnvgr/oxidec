@@ -1,10 +1,10 @@
 [package]
 name = "oxidec"
-version = "1.0.0-dev"
+version = "2.0.0"
 edition = "2021"
 description = "Advanced eye-candy manager written in Rust"
 license = "GPL-3.0"
-repository = "https://github.com/mrtnvgr/oxidec/"
+repository = "https://github.com/mrtnvgr/oxidec"
 keywords = ["colorscheme", "wallpaper", "theme", "linux", "cli"]
 categories = ["command-line-utilities"]
 
@@ -24,7 +24,3 @@ serde_json = "1"
 strum = { version = "0.26", features = ["derive", "strum_macros"] }
 upon = "0.8"
 which = "6.0"
-
-[features]
-default = []
-new-examples = []
