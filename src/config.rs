@@ -1,9 +1,7 @@
 use home::home_dir;
 use rand::seq::IteratorRandom;
-use std::{
-    fs, io,
-    path::{Path, PathBuf},
-};
+use std::{fs, io};
+use std::path::{Path, PathBuf};
 use strum::{EnumIter, IntoEnumIterator};
 
 #[derive(EnumIter)]
@@ -59,7 +57,8 @@ impl Directory {
     pub fn random_entry(&self) -> String {
         let error_message = format!("There are no {}.", self.get_self_handle());
         let file = self.random_file().expect(&error_message);
-        file.to_string_lossy().into()
+        let stem = file.file_stem().unwrap_or_default();
+        stem.to_string_lossy().into()
     }
 
     pub fn copy(&self, path: &Path) -> io::Result<()> {
