@@ -1,39 +1,28 @@
 { pkgs, config, lib, ... }:
 let
-  inherit (lib) mkOption mkOptionType isString hasPrefix types optionalString;
-
-  # TODO: get latest version from home-manager repo
   fileType = (import ./file-type.nix {
     inherit (config.home) homeDirectory;
     inherit pkgs lib;
   }).fileType;
-  mkFileType = option: path: fileType "oxidec.${option}" "{env}`HOME`/${path}" "${config.home.homeDirectory}${optionalString (path != "") "/"}${path}";
+  mkFileType = option: path: fileType "oxidec.${option}" "{env}`HOME`/${path}" "${config.home.homeDirectory}${lib.optionalString (path != "") "/"}${path}";
 in rec {
-  # Credits: nix-colors <3
-  hex = mkOptionType {
-    name = "hex-color";
-    descriptionClass = "noun";
-    description = "RGB color in hex format";
-    check = x: isString x && hasPrefix "#" x;
-  };
+  colorscheme = with lib.types; attrsOf str;
 
-  colorscheme = types.attrsOf hex;
-
-  wallpaperCache = types.submodule {
+  wallpaperCache = lib.types.submodule {
     options = {
-      path = mkOption { type = types.path; };
+      path = lib.mkOption { type = lib.types.path; };
 
-      mode = mkOption {
-        type = types.enum [ "center" "fill" "max" "scale" "tile" ];
+      mode = lib.mkOption {
+        type = lib.types.enum [ "center" "fill" "max" "scale" "tile" ];
         default = "center";
       };
     };
   };
 
-  theme = types.submodule {
+  theme = lib.types.submodule {
     options = {
-      colorscheme = mkOption { type = colorscheme; };
-      wallpapers = mkOption { type = types.listOf wallpaperCache; };
+      colorscheme = lib.mkOption { type = colorscheme; };
+      wallpapers = lib.mkOption { type = lib.types.listOf wallpaperCache; };
     };
   };
 

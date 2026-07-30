@@ -1,6 +1,5 @@
 use super::commands::generate::backends::Backend;
 use clap::{Parser, Subcommand};
-use std::path::PathBuf;
 
 #[derive(Subcommand)]
 pub enum Action {
