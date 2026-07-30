@@ -49,20 +49,32 @@ fn get_engine() -> Engine<'static> {
         color.alpha()
     });
 
-    engine.add_function("css_rgb", |text: String| {
-        let color = Rgb::from_hex_str(&text).unwrap();
-        color.to_css_string()
-    });
-
     engine.add_function("lighten", |text: String, amt: f64| {
         let mut color = Rgb::from_hex_str(&text).unwrap();
         color.lighten(amt);
-        color.to_hex_string()
+        color.to_hexa_string()
     });
 
     engine.add_function("set_alpha", |text: String, amt: f64| {
         let mut color = Rgb::from_hex_str(&text).unwrap();
         color.set_alpha(amt);
+        color.to_hexa_string()
+    });
+
+    let rgb = |text: String| {
+        let color = Rgb::from_hex_str(&text).unwrap();
+        color.to_css_string()
+    };
+    engine.add_function("rgb", rgb);
+    engine.add_function("rgba", rgb);
+
+    engine.add_function("hex", |text: String| {
+        let color = Rgb::from_hex_str(&text).unwrap();
+        color.to_hex_string()
+    });
+
+    engine.add_function("hexa", |text: String| {
+        let color = Rgb::from_hex_str(&text).unwrap();
         color.to_hexa_string()
     });
 
