@@ -14,7 +14,6 @@
 - **Update** the colors with **reloaders**!
 - **Generate** colorscheme from **wallpaper**!
 - **Save** the current look into a **theme**!
-- **Import** your **pywal colorschemes**!
 - **Avoid** theme breakage by **dependency checking**!
 - **Apply GTK themes** with [Themix](https://github.com/themix-project/themix-gui)![^1]
 
