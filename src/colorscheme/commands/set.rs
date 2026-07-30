@@ -19,10 +19,10 @@ pub fn handle(args: &args::Set) {
     let error_message = format!("Failed to load {name:?}");
     let colorscheme = schema::Colorscheme::from_file(&colorscheme_path).expect(&error_message);
 
-    set_without_cache(&colorscheme, args.gtk);
-
     let cache = Colorscheme::new(&name);
     cache.save().unwrap();
+
+    set_without_cache(&colorscheme, args.gtk);
 
     log::info!("Current colorscheme: {}", name);
 

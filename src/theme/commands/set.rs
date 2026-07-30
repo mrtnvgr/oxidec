@@ -24,6 +24,9 @@ pub fn handle(args: &args::Set) {
     let error_message = format!("Failed to load {name:?}");
     let theme = schema::Theme::from_file(&path).expect(&error_message);
 
+    let cache = cache::status::Theme::new(&name);
+    cache.save().unwrap();
+
     colorscheme::set_without_cache(&theme.colorscheme, false);
 
     let mut rng = rand::rng();
@@ -32,9 +35,6 @@ pub fn handle(args: &args::Set) {
     let wallpaper_name = wallpaper.path.to_string_lossy();
 
     wallpaper::set(wallpaper.path.clone(), wallpaper.mode);
-
-    let cache = cache::status::Theme::new(&name);
-    cache.save().unwrap();
 
     log::info!("Current theme: {}", name);
     log::info!("Current wallpaper: {}", wallpaper_name);
