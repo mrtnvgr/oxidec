@@ -37,5 +37,3 @@ alias th="oxidec theme"
 ### GTK live reloading doesn't work for me.
 
 Try [xsettingsd](https://codeberg.org/derat/xsettingsd)
-
-[^1]: GTK Theme generation is optional. Use `--gtk` flag or set `OXIDEC_GTK` env variable.
