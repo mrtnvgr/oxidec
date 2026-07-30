@@ -1,14 +1,13 @@
 { config, pkgs, lib, ... }:
 let
-  inherit (lib) mkEnableOption mkOption mkIf mapAttrs mergeAttrsList listToAttrs mapAttrs' nameValuePair replaceStrings attrNames concatStringsSep;
   types = lib.types // (import ./types.nix { inherit pkgs config lib; });
 
   cfg = config.oxidec;
 in {
   options.oxidec = {
-    enable = mkEnableOption "enable oxidec";
+    enable = lib.mkEnableOption "enable oxidec";
 
-    aliases = mkOption {
+    aliases = lib.mkOption {
       type = with types; attrsOf str;
       description = "Shell aliases";
       default = {
@@ -19,33 +18,34 @@ in {
       };
     };
 
-    colorschemes = mkOption {
+    colorschemes = lib.mkOption {
       type = with types; attrsOf colorscheme;
       default = {};
     };
 
-    wallpapers = mkOption {
+    # TODO: { darkforrest = ...; }
+    wallpapers = lib.mkOption {
       type = with types; listOf path;
       default = [ ];
     };
 
-    themes = mkOption {
+    themes = lib.mkOption {
       type = with types; attrsOf theme;
       default = {};
     };
 
-    raw = mkOption {
-      type = with types; attrsOf raw;
+    templates = lib.mkOption {
+      type = types.templates;
       default = {};
     };
 
-    files = mkOption {
-      type = types.files;
+    reloaders = lib.mkOption {
+      type = types.reloaders;
       default = {};
     };
   };
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     home.packages = [
       (pkgs.rustPlatform.buildRustPackage {
         name = "oxidec";
@@ -56,30 +56,20 @@ in {
     ];
 
     xdg.configFile = let
-      mkJSONFile = group: mapAttrs (name: value: { text = builtins.toJSON value; target = "oxidec/${group}/${name}.json"; }) cfg.${group};
-      JSONFiles = mergeAttrsList (map (x: mkJSONFile x) [ "colorschemes" "themes" ]);
+      mkJSONFile = group: lib.mapAttrs (name: value: { text = builtins.toJSON value; target = "oxidec/${group}/${name}.json"; }) cfg.${group};
+      JSONFiles = lib.mergeAttrsList (map (x: mkJSONFile x) [ "colorschemes" "themes" ]);
 
-      wallpapers = listToAttrs (map (wallpaper: {
+      wallpapers = lib.listToAttrs (map (wallpaper: {
         name = "oxidec/wallpapers/${wallpaper.name}";
         value = { source = wallpaper; };
       }) cfg.wallpapers);
 
-      reloaders = let
-        rawReloaders = mapAttrs' (name: value: nameValuePair name (value // { executable = true; })) cfg.raw.reloaders;
-        fileReloader = let
-          mkFile = name: "ln -s $HOME/oxidec/templates/${replaceStrings ["/"] ["^"] name} $HOME/${name}";
-          files = map (name: mkFile name) (attrNames cfg.files);
-        in concatStringsSep "\n" files;
-      in
-        if cfg.files != {} then rawReloaders // { "oxidec/reloaders/nix-files.sh".text = fileReloader; } else rawReloaders;
-
-      templates = let
-        fileTemplates = mapAttrs' (name: value: nameValuePair "oxidec/templates/${replaceStrings ["/"] ["^"] name}" value) cfg.files;
-      in fileTemplates // cfg.raw.templates;
+      reloaders = lib.mapAttrs' (name: value: lib.nameValuePair name (value // { executable = true; })) cfg.reloaders;
+      templates = cfg.templates;
     in
       JSONFiles // templates // reloaders // wallpapers;
 
-    home.shellAliases = mapAttrs (n: v: "oxidec ${v}") cfg.aliases;
+    home.shellAliases = lib.mapAttrs (n: v: "oxidec ${v}") cfg.aliases;
 
     # TODO: activation scripts
   };

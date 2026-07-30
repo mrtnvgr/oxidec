@@ -17,11 +17,7 @@ in rec {
     check = x: isString x && hasPrefix "#" x;
   };
 
-  colorscheme = types.submodule {
-    options = {
-      palette = mkOption { type = types.attrsOf hex; };
-    };
-  };
+  colorscheme = types.attrsOf hex;
 
   wallpaperCache = types.submodule {
     options = {
@@ -41,19 +37,6 @@ in rec {
     };
   };
 
-  raw = types.submodule {
-    options = {
-      templates = mkOption {
-        type = mkFileType "raw.templates" "oxidec/templates";
-        default = {};
-      };
-
-      reloaders = mkOption {
-        type = mkFileType "raw.reloaders" "oxidec/reloaders";
-        default = {};
-      };
-    };
-  };
-
-  files = mkFileType "files" "";
+  templates = mkFileType "templates" "oxidec/templates";
+  reloaders = mkFileType "reloaders" "oxidec/reloaders";
 }
