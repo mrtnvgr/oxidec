@@ -62,10 +62,13 @@ fn get_engine() -> Engine<'static> {
 mod test {
     use colorsys::Rgb;
 
-    /// In case `to_css_string` changes it's behaviour
+    /// `to_css_string` should always return RGB
     #[test]
     fn test_css_rgb() {
         let color = Rgb::from_hex_str("#FF0000").unwrap();
         assert_eq!(color.to_css_string(), "rgb(255,0,0)");
+
+        let color = Rgb::from_hex_str("#00FF0030").unwrap();
+        assert_eq!(color.to_css_string(), "rgba(0,255,0,0.19)");
     }
 }
