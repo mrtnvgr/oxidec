@@ -2,45 +2,45 @@ NAME="oxidec"
 
 THEME_STYLE=oomox
 
-BG={{ colors.color0 | lighten: -4.0 | strip }}
-FG={{ colors.color7 | strip }}
+BG={{ color0 | lighten: -4.0 | strip }}
+FG={{ color7 | strip }}
 
-MENU_BG={{ special.background | strip }}
-MENU_FG={{ colors.color7 | strip }}
+MENU_BG={{ background | strip }}
+MENU_FG={{ color7 | strip }}
 
-SEL_BG={{ colors.color5 | strip }}
-SEL_FG={{ colors.color0 | strip }}
+SEL_BG={{ color5 | strip }}
+SEL_FG={{ color0 | strip }}
 
-TXT_BG={{ colors.color0 | strip }}
-TXT_FG={{ colors.color7 | strip }}
+TXT_BG={{ color0 | strip }}
+TXT_FG={{ color7 | strip }}
 
-BTN_BG={{ special.background | strip }}
-BTN_FG={{ colors.color7 | strip }}
+BTN_BG={{ background | strip }}
+BTN_FG={{ color7 | strip }}
 
 ICONS_STYLE=papirus_icons
 
 TERMIMAL_THEME_MODE=manual
 
-TERMINAL_BACKGROUND={{ special.background | strip }}
-TERMINAL_FOREGROUND={{ special.foreground | strip }}
-TERMINAL_CURSOR={{ special.cursor | strip }}
+TERMINAL_BACKGROUND={{ background | strip }}
+TERMINAL_FOREGROUND={{ foreground | strip }}
+TERMINAL_CURSOR={{ cursor | strip }}
 
-TERMINAL_COLOR0={{ colors.color0 | strip }}
-TERMINAL_COLOR1={{ colors.color1 | strip }}
-TERMINAL_COLOR2={{ colors.color2 | strip }}
-TERMINAL_COLOR3={{ colors.color3 | strip }}
-TERMINAL_COLOR4={{ colors.color4 | strip }}
-TERMINAL_COLOR5={{ colors.color5 | strip }}
-TERMINAL_COLOR6={{ colors.color6 | strip }}
-TERMINAL_COLOR7={{ colors.color7 | strip }}
-TERMINAL_COLOR8={{ colors.color8 | strip }}
-TERMINAL_COLOR9={{ colors.color9 | strip }}
-TERMINAL_COLOR10={{ colors.color10 | strip }}
-TERMINAL_COLOR11={{ colors.color11 | strip }}
-TERMINAL_COLOR12={{ colors.color12 | strip }}
-TERMINAL_COLOR13={{ colors.color13 | strip }}
-TERMINAL_COLOR14={{ colors.color14 | strip }}
-TERMINAL_COLOR15={{ colors.color15 | strip }}
+TERMINAL_COLOR0={{ color0 | strip }}
+TERMINAL_COLOR1={{ color1 | strip }}
+TERMINAL_COLOR2={{ color2 | strip }}
+TERMINAL_COLOR3={{ color3 | strip }}
+TERMINAL_COLOR4={{ color4 | strip }}
+TERMINAL_COLOR5={{ color5 | strip }}
+TERMINAL_COLOR6={{ color6 | strip }}
+TERMINAL_COLOR7={{ color7 | strip }}
+TERMINAL_COLOR8={{ color8 | strip }}
+TERMINAL_COLOR9={{ color9 | strip }}
+TERMINAL_COLOR10={{ color10 | strip }}
+TERMINAL_COLOR11={{ color11 | strip }}
+TERMINAL_COLOR12={{ color12 | strip }}
+TERMINAL_COLOR13={{ color13 | strip }}
+TERMINAL_COLOR14={{ color14 | strip }}
+TERMINAL_COLOR15={{ color15 | strip }}
 
 ROUNDNESS=2
 SPACING=3
