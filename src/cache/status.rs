@@ -81,12 +81,6 @@ impl Colorscheme {
     }
 }
 
-impl Wallpaper {
-    pub fn new(path: PathBuf, mode: WallpaperMode) -> Self {
-        Self { path, mode }
-    }
-}
-
 impl Theme {
     pub fn new(entry: &str) -> Self {
         let stem = Path::new(&entry).file_stem().unwrap();

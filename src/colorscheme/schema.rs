@@ -3,7 +3,7 @@ use std::{collections::HashMap, fs::File, path::Path};
 
 #[derive(Serialize, Deserialize)]
 pub struct Colorscheme {
-    pub palette: HashMap<String, String>,
+    data: HashMap<String, String>,
 }
 
 impl Colorscheme {
@@ -15,12 +15,12 @@ impl Colorscheme {
     pub fn from_vec_16(colors: Vec<String>) -> Self {
         assert!(colors.len() == 16, "Couldn't generate a colorscheme");
 
-        let mut palette = HashMap::new();
+        let mut data = HashMap::new();
         for (index, value) in colors.into_iter().enumerate() {
             let key = format!("color{index}");
-            palette.insert(key, value);
+            data.insert(key, value);
         }
 
-        Self { palette }
+        Self { data }
     }
 }

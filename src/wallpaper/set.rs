@@ -1,14 +1,12 @@
 use crate::cache::status::{Object, Wallpaper, WallpaperMode};
 
-use std::{
-    io,
-    path::PathBuf,
-    process::{Command, ExitStatus},
-};
+use std::io;
+use std::path::PathBuf;
+use std::process::{Command, ExitStatus};
 use which::which;
 
 pub fn wallpaper(path: PathBuf, mode: WallpaperMode) {
-    let cache = Wallpaper::new(path, mode);
+    let cache = Wallpaper { path, mode };
     cache.save().unwrap();
 
     // TODO: support for desktops
