@@ -72,7 +72,10 @@ in {
       JSONFiles // cfg.templates // reloaders // wallpapers;
 
     oxidec.templates = lib.mapAttrs' (name: value:
-      lib.nameValuePair (lib.replaceStrings ["/"] ["^"] name) value
+      let
+        escaped = lib.replaceStrings ["/"] ["^"] name;
+      in
+        lib.nameValuePair escaped (value // { target = escaped; })
     ) (lib.filterAttrs (_: value: value.enable) cfg.files);
 
     oxidec.reloaders = lib.optionalAttrs (cfg.files != {}) {
