@@ -22,17 +22,17 @@ pub fn handle(args: &args::Set) {
     let cache = Colorscheme::new(&name);
     cache.save().unwrap();
 
-    set_without_cache(&colorscheme, args.gtk);
+    set_without_cache(&colorscheme);
 
     log::info!("Current colorscheme: {}", name);
 
     blocks::print();
 }
 
-pub fn set_without_cache(colorscheme: &schema::Colorscheme, gtk: bool) {
+pub fn set_without_cache(colorscheme: &schema::Colorscheme) {
     log::info!("Generating templates...");
     templates::generate(colorscheme);
 
     log::info!("Reloading colors...");
-    reloaders::run(gtk);
+    reloaders::run();
 }

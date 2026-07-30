@@ -27,7 +27,7 @@ pub fn handle(args: &args::Set) {
     let cache = cache::status::Theme::new(&name);
     cache.save().unwrap();
 
-    colorscheme::set_without_cache(&theme.colorscheme, false);
+    colorscheme::set_without_cache(&theme.colorscheme);
 
     let mut rng = rand::rng();
     let wallpaper = theme.wallpapers.choose(&mut rng).unwrap();

@@ -1,10 +1,8 @@
-use crate::{
-    cache::status::{Colorscheme, Object},
-    config::Directory,
-};
-use std::{env, process::Command};
+use crate::config::Directory;
+use crate::cache::status::{Colorscheme, Object};
+use std::process::Command;
 
-pub fn run(gtk: bool) {
+pub fn run() {
     let colorscheme = Colorscheme::load().name;
 
     for reloader in Directory::Reloaders.list() {
@@ -12,10 +10,6 @@ pub fn run(gtk: bool) {
 
         command.arg("-C").arg(&reloader);
         command.env("OXIDEC_COLORSCHEME", &colorscheme);
-
-        if gtk && env::var_os("OXIDEC_GTK").is_none() {
-            command.env("OXIDEC_GTK", "y");
-        }
 
         let status = command.status();
 
