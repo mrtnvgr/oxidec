@@ -1,4 +1,4 @@
-use colorsys::{ColorTransform, Rgb};
+use colorsys::{ColorAlpha, ColorTransform, Rgb};
 use upon::Engine;
 
 use super::schema;
@@ -44,6 +44,11 @@ fn get_engine() -> Engine<'static> {
         color.blue()
     });
 
+    engine.add_function("a", |text: String| {
+        let color = Rgb::from_hex_str(&text).unwrap();
+        color.alpha()
+    });
+
     engine.add_function("css_rgb", |text: String| {
         let color = Rgb::from_hex_str(&text).unwrap();
         color.to_css_string()
@@ -53,6 +58,12 @@ fn get_engine() -> Engine<'static> {
         let mut color = Rgb::from_hex_str(&text).unwrap();
         color.lighten(amt);
         color.to_hex_string()
+    });
+
+    engine.add_function("set_alpha", |text: String, amt: f64| {
+        let mut color = Rgb::from_hex_str(&text).unwrap();
+        color.set_alpha(amt);
+        color.to_hexa_string()
     });
 
     engine
