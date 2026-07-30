@@ -11,7 +11,7 @@ pub fn handle(args: &args::List) {
 fn output_using_log() {
     log::info!("Wallpapers: ");
     for entry in Directory::Wallpapers.list_names() {
-        log::info!("{:?}", entry);
+        log::info!("{entry}");
     }
 }
 

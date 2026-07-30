@@ -11,7 +11,7 @@ pub fn handle(args: &args::List) {
 fn output_using_log() {
     log::info!("Colorschemes: ");
     for entry in Directory::Colorschemes.list_stems() {
-        log::info!("{:?}", entry);
+        log::info!("{entry}");
     }
 }
 
