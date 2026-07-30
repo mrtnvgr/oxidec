@@ -4,6 +4,7 @@ mod wallpaper;
 
 mod cache;
 mod config;
+mod logger;
 
 use clap::Parser;
 
@@ -24,7 +25,8 @@ enum Mode {
 }
 
 fn main() {
-    cli_logger::init();
+    logger::init();
+
     let args = Args::parse();
     config::ensure_config_exists();
     cache::ensure_cache_exists();
