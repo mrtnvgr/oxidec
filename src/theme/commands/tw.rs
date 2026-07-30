@@ -1,13 +1,9 @@
-use crate::{
-    cache::status::{self, Object, Wallpaper},
-    theme::{
-        args::{Switch, ThemeWallpapers},
-        schema,
-    },
-    wallpaper,
-};
+use crate::cache::status::{self, Object, Wallpaper};
+use crate::theme::args::{Switch, ThemeWallpapers};
+use crate::theme::schema;
+use crate::wallpaper;
 
-use rand::prelude::*;
+use rand::prelude::IndexedRandom;
 
 pub fn handle(kind: &ThemeWallpapers) {
     match kind {
@@ -62,7 +58,7 @@ fn set_random_wallpaper(theme: &schema::Theme, wallpaper_cache: &Wallpaper) {
 }
 
 fn get_random_wallpaper(theme: &schema::Theme) -> &Wallpaper {
-    let mut rng = thread_rng();
+    let mut rng = rand::rng();
     theme.wallpapers.choose(&mut rng).unwrap()
 }
 

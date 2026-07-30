@@ -26,7 +26,7 @@ pub fn handle(args: &args::Set) {
 
     colorscheme::set_without_cache(&theme.colorscheme, false);
 
-    let mut rng = rand::thread_rng();
+    let mut rng = rand::rng();
     let wallpaper = theme.wallpapers.choose(&mut rng).unwrap();
 
     let wallpaper_name = wallpaper.path.to_string_lossy();

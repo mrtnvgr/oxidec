@@ -25,11 +25,11 @@ pub fn generate(colorscheme: &schema::Colorscheme) {
 fn get_engine() -> Engine<'static> {
     let mut engine = Engine::new();
 
-    engine.add_filter("strip", |text: String| {
+    engine.add_function("strip", |text: String| {
         text.trim_start_matches('#').to_owned()
     });
 
-    engine.add_filter("lighten", |text: String, amt: f64| {
+    engine.add_function("lighten", |text: String, amt: f64| {
         let mut color = Rgb::from_hex_str(&text).unwrap();
         color.lighten(amt);
         color.to_hex_string()

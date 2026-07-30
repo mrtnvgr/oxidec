@@ -50,7 +50,7 @@ impl Directory {
     }
 
     fn random_file(&self) -> Option<PathBuf> {
-        let mut rng = rand::thread_rng();
+        let mut rng = rand::rng();
         let files = fs::read_dir(self.path()).expect("Failed to read the dir contents");
         let entry = files.choose(&mut rng)?.ok()?;
         Some(entry.path())

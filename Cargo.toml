@@ -11,16 +11,16 @@ categories = ["command-line-utilities"]
 [dependencies]
 clap = { version = "4.5", features = ["derive"] }
 cli-logger = "0.1"
-colorsys = "0.6"
-file-format = "0.24"
+colorsys = "0.7"
+file-format = "0.29"
 home = "0.5"
 lazy_static = "1.4.0"
 log = "0.4"
-nu-ansi-term = "0.50"
-rand = "0.8.5"
+nu-ansi-term = "0.50.3"
+rand = "0.10.2"
 regex = "1.10"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
-strum = { version = "0.26", features = ["derive", "strum_macros"] }
-upon = "0.8"
-which = "6.0"
+strum = { version = "0.28", features = ["derive", "strum_macros"] }
+upon = "0.11"
+which = "8.0"
