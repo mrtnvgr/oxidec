@@ -8,8 +8,6 @@ pub enum Action {
     Set(Set),
     #[command(name = "remove", about = "<name> remove colorscheme")]
     Remove(Remove),
-    #[command(name = "import", about = "<file-path> import colorscheme")]
-    Import(Import),
     #[command(name = "list", about = "list colorschemes")]
     List(List),
     #[command(name = "status", about = "colorscheme status")]
@@ -30,11 +28,6 @@ pub struct Set {
 #[derive(Parser)]
 pub struct Remove {
     pub name: String,
-}
-
-#[derive(Parser)]
-pub struct Import {
-    pub file_path: PathBuf,
 }
 
 #[derive(Parser)]
