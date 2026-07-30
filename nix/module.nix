@@ -70,6 +70,7 @@ in {
 
     home.activation.oxidec = lib.hm.dag.entryAfter ["writeBoundary"] ''
       ${oxidec}/bin/oxidec colorscheme reload
+      ${oxidec}/bin/oxidec wallpaper reload
     '';
   };
 }
