@@ -10,7 +10,7 @@ pub fn handle(args: &args::Set) {
         .clone()
         .unwrap_or_else(|| Directory::Colorschemes.random_entry());
 
-    log::info!("Getting colorscheme...");
+    log::debug!("Getting colorscheme...");
 
     let colorscheme_path = Directory::Colorschemes
         .get(&name)
@@ -24,15 +24,15 @@ pub fn handle(args: &args::Set) {
 
     set_without_cache(&colorscheme);
 
-    log::info!("Current colorscheme: {}", name);
+    log::info!("Current colorscheme: {name}");
 
     blocks::print();
 }
 
 pub fn set_without_cache(colorscheme: &schema::Colorscheme) {
-    log::info!("Generating templates...");
+    log::debug!("Generating templates...");
     templates::generate(colorscheme);
 
-    log::info!("Reloading colors...");
+    log::debug!("Reloading colors...");
     reloaders::run();
 }
