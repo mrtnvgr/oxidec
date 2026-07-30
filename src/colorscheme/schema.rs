@@ -3,6 +3,7 @@ use std::{collections::HashMap, fs::File, path::Path};
 
 #[derive(Serialize, Deserialize)]
 pub struct Colorscheme {
+    #[serde(flatten)]
     data: HashMap<String, String>,
 }
 
