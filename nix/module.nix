@@ -23,10 +23,9 @@ in {
       default = {};
     };
 
-    # TODO: { darkforrest = ...; }
     wallpapers = lib.mkOption {
-      type = with types; listOf path;
-      default = [ ];
+      type = with types; attrsOf path;
+      default = {};
     };
 
     themes = lib.mkOption {
@@ -59,15 +58,14 @@ in {
       mkJSONFile = group: lib.mapAttrs (name: value: { text = builtins.toJSON value; target = "oxidec/${group}/${name}.json"; }) cfg.${group};
       JSONFiles = lib.mergeAttrsList (map (x: mkJSONFile x) [ "colorschemes" "themes" ]);
 
-      wallpapers = lib.listToAttrs (map (wallpaper: {
-        name = "oxidec/wallpapers/${wallpaper.name}";
-        value = { source = wallpaper; };
-      }) cfg.wallpapers);
+      wallpapers = lib.mapAttrs'
+        (name: value: lib.nameValuePair "oxidec/wallpapers/${name}" { source = value; })
+        cfg.wallpapers;
 
+      # ensure executable permissions
       reloaders = lib.mapAttrs' (name: value: lib.nameValuePair name (value // { executable = true; })) cfg.reloaders;
-      templates = cfg.templates;
     in
-      JSONFiles // templates // reloaders // wallpapers;
+      JSONFiles // cfg.templates // reloaders // wallpapers;
 
     home.shellAliases = lib.mapAttrs (n: v: "oxidec ${v}") cfg.aliases;
 
