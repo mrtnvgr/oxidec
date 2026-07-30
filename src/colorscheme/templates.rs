@@ -29,6 +29,26 @@ fn get_engine() -> Engine<'static> {
         text.trim_start_matches('#').to_owned()
     });
 
+    engine.add_function("r", |text: String| {
+        let color = Rgb::from_hex_str(&text).unwrap();
+        color.red()
+    });
+
+    engine.add_function("g", |text: String| {
+        let color = Rgb::from_hex_str(&text).unwrap();
+        color.green()
+    });
+
+    engine.add_function("b", |text: String| {
+        let color = Rgb::from_hex_str(&text).unwrap();
+        color.blue()
+    });
+
+    engine.add_function("css_rgb", |text: String| {
+        let color = Rgb::from_hex_str(&text).unwrap();
+        color.to_css_string()
+    });
+
     engine.add_function("lighten", |text: String, amt: f64| {
         let mut color = Rgb::from_hex_str(&text).unwrap();
         color.lighten(amt);
@@ -36,4 +56,16 @@ fn get_engine() -> Engine<'static> {
     });
 
     engine
+}
+
+#[cfg(test)]
+mod test {
+    use colorsys::Rgb;
+
+    /// In case `to_css_string` changes it's behaviour
+    #[test]
+    fn test_css_rgb() {
+        let color = Rgb::from_hex_str("#FF0000").unwrap();
+        assert_eq!(color.to_css_string(), "rgb(255,0,0)");
+    }
 }
