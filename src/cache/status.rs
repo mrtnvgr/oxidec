@@ -2,6 +2,7 @@ use crate::config::Directory;
 use clap::ValueEnum;
 use home::home_dir;
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
+use std::fs::File;
 use std::{fs, io};
 use std::path::{Path, PathBuf};
 
@@ -14,7 +15,7 @@ where
     fn load() -> Self {
         let path = Self::path();
 
-        let reader = match fs::File::open(path) {
+        let reader = match File::open(path) {
             Ok(fr) => fr,
             Err(err) if err.kind() == io::ErrorKind::NotFound => {
                 panic!("{} status file does not exist", Self::NAME)
@@ -23,6 +24,11 @@ where
         };
 
         serde_json::from_reader(reader).expect("Failed to parse status")
+    }
+
+    fn try_load() -> Option<Self> {
+        let reader = File::open(Self::path()).ok()?;
+        serde_json::from_reader(reader).ok()
     }
 
     fn path() -> PathBuf {
