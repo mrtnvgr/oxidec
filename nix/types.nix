@@ -28,7 +28,7 @@ in rec {
       path = mkOption { type = types.path; };
 
       mode = mkOption {
-        type = types.enum [ "center" "centre" "fill" "max" "scale" "tile" ];
+        type = types.enum [ "center" "fill" "max" "scale" "tile" ];
         default = "center";
       };
     };

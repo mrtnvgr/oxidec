@@ -98,8 +98,6 @@ impl Theme {
 
 #[derive(Serialize, Deserialize, ValueEnum, Clone, Copy, Debug, PartialEq)]
 pub enum WallpaperMode {
-    // TODO: visible alias
-    #[value(alias = "centre")]
     Center,
     Fill,
     Max,
