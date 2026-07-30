@@ -5,9 +5,7 @@
         height="400px"
     />
 </h3>
-<h3 align="center" style="color: #ed8796;"><b>OUTDATED</b></h3>
 <h3 align="center">oxidec</h3>
-<!-- <p align="center">Oxidized delicious eye candies 🍬</p> -->
 <p align="center"><b>Manage your desktop appearance with ease!</b></h3>
 
 ## Features
