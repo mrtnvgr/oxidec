@@ -6,6 +6,8 @@ let
   }).fileType;
   mkFileType = option: path: fileType "oxidec.${option}" "{env}`HOME`/${path}" "${config.home.homeDirectory}${lib.optionalString (path != "") "/"}${path}";
 in rec {
+  files = mkFileType "files" "";
+
   colorscheme = with lib.types; attrsOf str;
 
   wallpaperCache = lib.types.submodule {

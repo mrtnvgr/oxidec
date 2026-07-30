@@ -39,6 +39,11 @@ in {
       default = {};
     };
 
+    files = lib.mkOption {
+      type = types.files;
+      default = {};
+    };
+
     templates = lib.mkOption {
       type = types.templates;
       default = {};
@@ -65,6 +70,31 @@ in {
       reloaders = lib.mapAttrs' (name: value: lib.nameValuePair name (value // { executable = true; })) cfg.reloaders;
     in
       JSONFiles // cfg.templates // reloaders // wallpapers;
+
+    oxidec.templates = lib.mapAttrs' (name: value:
+      lib.nameValuePair (lib.replaceStrings ["/"] ["^"] name) value
+    ) (lib.filterAttrs (_: value: value.enable) cfg.files);
+
+    oxidec.reloaders = lib.optionalAttrs (cfg.files != {}) {
+      "_nix.sh" = {
+        text = let
+          enabled = lib.filterAttrs (_: v: v.enable) cfg.files;
+
+          mkCopy = name: value: let
+            escaped = lib.replaceStrings ["/"] ["^"] name;
+          in
+            ''
+              mkdir -p "$(dirname "$HOME/${value.target}")"
+              cp "$CACHE/${escaped}" "$HOME/${value.target}"
+              ${lib.optionalString (value.executable == true) ''chmod +x "$HOME/${value.target}"''}
+            '';
+        in ''
+          #!/bin/sh
+          CACHE="$HOME/.cache/oxidec/templates"
+          ${lib.concatStringsSep "\n" (lib.mapAttrsToList mkCopy enabled)}
+        '';
+      };
+    };
 
     home.shellAliases = lib.mapAttrs (n: v: "oxidec ${v}") cfg.aliases;
 
