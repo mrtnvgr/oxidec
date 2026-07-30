@@ -2,10 +2,8 @@ use crate::config::Directory;
 use clap::ValueEnum;
 use home::home_dir;
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
-use std::{
-    fs, io,
-    path::{Path, PathBuf},
-};
+use std::{fs, io};
+use std::path::{Path, PathBuf};
 
 pub trait Object
 where
@@ -90,7 +88,7 @@ impl Theme {
     }
 }
 
-#[derive(Serialize, Deserialize, ValueEnum, Clone, Copy, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, ValueEnum, Clone, Copy, Debug, PartialEq, Eq)]
 pub enum WallpaperMode {
     Center,
     Fill,
