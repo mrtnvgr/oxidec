@@ -1,9 +1,9 @@
 use colorsys::{ColorTransform, Rgb, SaturationInSpace};
-use lazy_static::lazy_static;
 use regex::Regex;
 use std::cmp::Ordering;
 use std::path::Path;
 use std::process::Command;
+use std::sync::LazyLock;
 
 pub fn generate(path: &Path, light: bool) -> Vec<Rgb> {
     assert!(
@@ -24,16 +24,16 @@ fn generate_colors(path: &Path) -> Vec<Rgb> {
 
         // header + 16 colors
         match colors.count().cmp(&17) {
-            Ordering::Less => continue,
+            Ordering::Less => (),
             Ordering::Greater => break,
             Ordering::Equal => raw_colors = Some(generated_colors),
         }
     }
 
     if let Some(raw_colors) = raw_colors {
-        lazy_static! {
-            static ref RE: Regex = Regex::new(r"#[0-9a-fA-F]{6}").unwrap();
-        }
+        static RE: LazyLock<Regex> = LazyLock::new(|| {
+            Regex::new(r"#[0-9a-fA-F]{6}").unwrap()
+        });
 
         let colors: Vec<Rgb> = RE
             .find_iter(&raw_colors)
@@ -72,16 +72,16 @@ fn adjust_colors(colors: &[Rgb], light: bool) -> Vec<Rgb> {
             raw_colors[0].lighten(-40.0);
         }
 
-        lazy_static! {
-            static ref GRAY: Rgb = Rgb::from_hex_str("#EEEEEE").unwrap();
-        }
+        let gray = LazyLock::new(|| {
+            Rgb::from_hex_str("#EEEEEE").unwrap()
+        });
 
-        raw_colors[7] = blend_color(&raw_colors[7], &GRAY);
+        raw_colors[7] = blend_color(&raw_colors[7], &gray);
 
         raw_colors[8] = raw_colors[7].clone();
         raw_colors[8].lighten(-30.0);
 
-        raw_colors[15] = blend_color(&raw_colors[15], &GRAY);
+        raw_colors[15] = blend_color(&raw_colors[15], &gray);
     }
 
     raw_colors
