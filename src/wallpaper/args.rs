@@ -14,6 +14,8 @@ pub enum Action {
     List(List),
     #[command(name = "status", about = "wallpaper status")]
     Status(Status),
+    #[command(name = "reload", about = "reload wallpaper")]
+    Reload,
 }
 
 #[derive(Parser)]
