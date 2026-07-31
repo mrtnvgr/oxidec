@@ -53,6 +53,11 @@ in {
       type = types.reloaders;
       default = {};
     };
+
+    default.colorscheme = lib.mkOption {
+      type = with types; nullOr singleLineStr;
+      default = null;
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -102,7 +107,16 @@ in {
     home.shellAliases = lib.mapAttrs (n: v: "oxidec ${v}") cfg.aliases;
 
     home.activation.oxidec = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      ${oxidec}/bin/oxidec colorscheme reload
+      ${if cfg.default.colorscheme != null then ''
+        if [ ! -f "$HOME/.cache/oxidec/colorscheme.json" ]; then
+          ${oxidec}/bin/oxidec colorscheme set ${cfg.default.colorscheme}
+        else
+          ${oxidec}/bin/oxidec colorscheme reload
+        fi
+      '' else ''
+        ${oxidec}/bin/oxidec colorscheme reload
+      ''}
+
       ${oxidec}/bin/oxidec wallpaper reload
     '';
   };
