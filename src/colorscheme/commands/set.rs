@@ -8,7 +8,13 @@ pub fn handle(args: &args::Set) {
     let name = args
         .name
         .clone()
-        .unwrap_or_else(|| Directory::Colorschemes.random_entry());
+        .unwrap_or_else(|| {
+            if let Some(current) = Colorscheme::try_load() {
+                Directory::Colorschemes.random_entry_excluding(&current.name)
+            } else {
+                Directory::Colorschemes.random_entry()
+            }
+        });
 
     log::debug!("Getting colorscheme...");
 

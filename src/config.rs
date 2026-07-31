@@ -1,4 +1,5 @@
 use home::home_dir;
+use rand::prelude::IndexedRandom;
 use rand::seq::IteratorRandom;
 use std::{fs, io};
 use std::path::{Path, PathBuf};
@@ -59,6 +60,19 @@ impl Directory {
         let file = self.random_file().expect(&error_message);
         let stem = file.file_stem().unwrap_or_default();
         stem.to_string_lossy().into()
+    }
+
+    pub fn random_entry_excluding(&self, exclude: &str) -> String {
+        let stems = self.list_stems();
+        let filtered: Vec<String> = stems
+            .into_iter()
+            .filter(|s| s.as_str() != exclude)
+            .collect();
+        if filtered.is_empty() {
+            return self.random_entry();
+        }
+        let mut rng = rand::rng();
+        filtered.choose(&mut rng).unwrap().clone()
     }
 
     pub fn copy(&self, path: &Path) -> io::Result<()> {
