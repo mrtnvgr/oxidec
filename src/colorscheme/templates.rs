@@ -78,6 +78,10 @@ fn get_engine() -> Engine<'static> {
         color.to_hexa_string()
     });
 
+    engine.add_function("is", |x: String, y: String| {
+        x == y
+    });
+
     engine
 }
 
