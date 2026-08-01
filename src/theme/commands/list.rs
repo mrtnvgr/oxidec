@@ -11,7 +11,6 @@ pub fn handle(args: &args::List) {
 }
 
 fn output_using_log(themes: &[String]) {
-    log::info!("Themes: ");
     for entry in themes {
         log::info!("{entry}");
     }
