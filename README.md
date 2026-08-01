@@ -32,6 +32,10 @@ alias wp="oxidec wallpaper"
 alias th="oxidec theme"
 ```
 
+## Quirks
+
+- Adds `name` variable if colorscheme doesn't contain it
+
 ## FAQ
 
 ### GTK live reloading doesn't work for me.

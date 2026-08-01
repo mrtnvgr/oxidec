@@ -8,9 +8,16 @@ pub struct Colorscheme {
 }
 
 impl Colorscheme {
-    pub fn from_file(path: &Path) -> serde_json::Result<Self> {
-        let fr = File::open(path).expect("Failed to read the file");
-        serde_json::from_reader(fr)
+    pub fn from_file(name: String, path: &Path) -> Self {
+        let error_message = format!("Failed to load {name:?}");
+
+        let fr = File::open(path).expect(&error_message);
+        let mut colorscheme: Self = serde_json::from_reader(fr).expect(&error_message);
+
+        macro_rules! s { ($x:expr) => { $x.to_owned() }; }
+        colorscheme.data.entry(s!("name")).or_insert(name);
+
+        colorscheme
     }
 
     pub fn from_vec_16(colors: Vec<String>) -> Self {

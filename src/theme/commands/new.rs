@@ -13,8 +13,8 @@ pub fn handle(args: &args::New) {
         "A theme with this name already exists"
     );
 
-    let colorscheme = status::Colorscheme::load();
-    let colorscheme = colorscheme::schema::Colorscheme::from_file(&colorscheme.path).unwrap();
+    let status = status::Colorscheme::load();
+    let colorscheme = colorscheme::schema::Colorscheme::from_file(status.name, &status.path);
 
     let wallpaper = status::Wallpaper::load();
 

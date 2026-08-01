@@ -1,8 +1,6 @@
-use crate::{
-    cache::status::{Colorscheme, Object},
-    colorscheme::{args, blocks, reloaders, schema, templates},
-    config::Directory,
-};
+use crate::config::Directory;
+use crate::colorscheme::{args, blocks, reloaders, schema, templates};
+use crate::cache::status::{Colorscheme, Object};
 
 pub fn handle(args: &args::Set) {
     let name = args
@@ -22,15 +20,13 @@ pub fn handle(args: &args::Set) {
         .get(&name)
         .expect("This colorscheme does not exist");
 
-    let error_message = format!("Failed to load {name:?}");
-    let colorscheme = schema::Colorscheme::from_file(&colorscheme_path).expect(&error_message);
+    log::debug!("Current colorscheme: {name}");
 
     let cache = Colorscheme::new(&name);
     cache.save().unwrap();
 
+    let colorscheme = schema::Colorscheme::from_file(name, &colorscheme_path);
     set_without_cache(&colorscheme);
-
-    log::debug!("Current colorscheme: {name}");
 
     blocks::print();
 }
