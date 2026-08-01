@@ -42,7 +42,7 @@ pub fn handle(args: &args::Set) {
 
     wallpaper::set(wallpaper.path.clone(), wallpaper.mode);
 
-    log::debug!("Current theme: {name}");
+    log::info!("Current theme: {name}");
     log::info!("Current wallpaper: {wallpaper_name}");
 
     colorscheme::blocks::print();

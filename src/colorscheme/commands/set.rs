@@ -20,7 +20,7 @@ pub fn handle(args: &args::Set) {
         .get(&name)
         .expect("This colorscheme does not exist");
 
-    log::debug!("Current colorscheme: {name}");
+    log::info!("Current colorscheme: {name}");
 
     let cache = Colorscheme::new(&name);
     cache.save().unwrap();

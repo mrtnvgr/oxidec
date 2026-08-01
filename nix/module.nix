@@ -111,6 +111,8 @@ in {
         if [ ! -f "$HOME/.cache/oxidec/colorscheme.json" ]; then
           ${oxidec}/bin/oxidec colorscheme set ${cfg.default.colorscheme}
         else
+          # TODO: if current (set) colorscheme does not exist, apply the default one
+          # implement this by using a custom exit code?
           ${oxidec}/bin/oxidec colorscheme reload
         fi
       '' else ''
