@@ -18,7 +18,7 @@ pub fn handle(args: &args::Set) {
 
     wallpaper::set(path, args.mode);
 
-    log::info!("Current wallpaper: {name}");
+    log::debug!("Current wallpaper: {name}");
 }
 
 fn ensure_that_path_is_a_filename(name: &str) {

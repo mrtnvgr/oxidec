@@ -26,5 +26,5 @@ pub fn handle(args: &args::New) {
     let cache = status::Theme::new(&args.name);
     cache.save().unwrap();
 
-    log::info!("Current theme: {}", args.name);
+    log::debug!("Current theme: {}", args.name);
 }

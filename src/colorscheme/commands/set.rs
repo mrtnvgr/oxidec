@@ -30,7 +30,7 @@ pub fn handle(args: &args::Set) {
 
     set_without_cache(&colorscheme);
 
-    log::info!("Current colorscheme: {name}");
+    log::debug!("Current colorscheme: {name}");
 
     blocks::print();
 }
