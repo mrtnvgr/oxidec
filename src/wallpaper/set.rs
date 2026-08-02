@@ -8,9 +8,9 @@ use which::which;
 
 pub fn wallpaper(path: PathBuf, mode: WallpaperMode) {
     let cache = Wallpaper { path, mode };
-    cache.save().unwrap();
+    cache.save();
 
-    // TODO: support for desktops
+    // TODO: support for DEs
 
     if which("feh").is_ok() {
         feh(cache).unwrap();

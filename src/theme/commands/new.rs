@@ -14,7 +14,7 @@ pub fn handle(args: &args::New) {
     );
 
     let status = status::Colorscheme::load();
-    let colorscheme = colorscheme::schema::Colorscheme::from_file(status.name, &status.path);
+    let colorscheme = colorscheme::schema::Colorscheme::from_status(status);
 
     let wallpaper = status::Wallpaper::load();
 
@@ -24,7 +24,7 @@ pub fn handle(args: &args::New) {
     serde_json::to_writer(File::create(path).unwrap(), &theme).unwrap();
 
     let cache = status::Theme::new(&args.name);
-    cache.save().unwrap();
+    cache.save();
 
     log::debug!("Current theme: {}", args.name);
 }

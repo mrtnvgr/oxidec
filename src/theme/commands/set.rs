@@ -31,7 +31,7 @@ pub fn handle(args: &args::Set) {
     let theme = schema::Theme::from_file(&path).expect(&error_message);
 
     let cache = cache::status::Theme::new(&name);
-    cache.save().unwrap();
+    cache.save();
 
     colorscheme::set_without_cache(&theme.colorscheme);
 

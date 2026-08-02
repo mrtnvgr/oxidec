@@ -37,8 +37,8 @@ where
         home_dir.join(cache_path)
     }
 
-    fn save(&self) -> io::Result<()> {
-        fs::write(Self::path(), self.to_json_string())
+    fn save(&self) {
+        fs::write(Self::path(), self.to_json_string()).unwrap();
     }
 
     fn to_json_string(&self) -> String {
@@ -80,7 +80,9 @@ impl Colorscheme {
     pub fn new(entry: &str) -> Self {
         let stem = Path::new(&entry).file_stem().unwrap();
         let name = stem.to_string_lossy().to_string();
-        let path = Directory::Colorschemes.get(entry).unwrap();
+
+        let path = Directory::Colorschemes.get(entry).expect("This colorscheme does not exist");
+
         Self { name, path }
     }
 }

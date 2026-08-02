@@ -14,18 +14,12 @@ pub fn handle(args: &args::Set) {
             }
         });
 
-    log::debug!("Getting colorscheme...");
-
-    let colorscheme_path = Directory::Colorschemes
-        .get(&name)
-        .expect("This colorscheme does not exist");
+    let status = Colorscheme::new(&name);
+    status.save();
 
     log::info!("Current colorscheme: {name}");
 
-    let cache = Colorscheme::new(&name);
-    cache.save().unwrap();
-
-    let colorscheme = schema::Colorscheme::from_file(name, &colorscheme_path);
+    let colorscheme = schema::Colorscheme::from_status(status);
     set_without_cache(&colorscheme);
 
     blocks::print();
