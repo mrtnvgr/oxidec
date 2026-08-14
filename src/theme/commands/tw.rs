@@ -3,7 +3,7 @@ use crate::theme::args::{Switch, ThemeWallpapers};
 use crate::theme::schema;
 use crate::wallpaper;
 
-use rand::prelude::IndexedRandom;
+use rand::seq::IteratorRandom;
 
 pub fn handle(kind: &ThemeWallpapers) {
     match kind {
@@ -48,18 +48,15 @@ fn set_wallpaper(args: &Switch) {
 }
 
 fn set_random_wallpaper(theme: &schema::Theme, wallpaper_cache: &Wallpaper) {
-    loop {
-        let wallpaper = get_random_wallpaper(theme);
-        if wallpaper != wallpaper_cache {
-            wallpaper::set(wallpaper.path.clone(), wallpaper.mode);
-            break;
-        }
-    }
-}
-
-fn get_random_wallpaper(theme: &schema::Theme) -> &Wallpaper {
     let mut rng = rand::rng();
-    theme.wallpapers.choose(&mut rng).unwrap()
+    let wallpaper = theme
+        .wallpapers
+        .iter()
+        .filter(|x| *x != wallpaper_cache)
+        .choose(&mut rng)
+        .unwrap_or(wallpaper_cache);
+
+    wallpaper::set(wallpaper.path.clone(), wallpaper.mode);
 }
 
 fn set_next_wallpaper<'a>(
