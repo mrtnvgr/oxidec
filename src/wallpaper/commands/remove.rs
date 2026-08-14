@@ -8,10 +8,11 @@ pub fn handle(args: &args::Remove) {
         "This wallpaper does not exist"
     );
 
-    for path in Directory::Themes.list() {
-        let theme = schema::Theme::from_file(&path).unwrap();
-        let theme_name = path.file_name().unwrap().to_string_lossy();
-        let path = Directory::Wallpapers.get(name).unwrap();
+    let path = Directory::Wallpapers.get(name).unwrap();
+
+    for theme_path in Directory::Themes.list() {
+        let theme = schema::Theme::from_file(&theme_path).unwrap();
+        let theme_name = theme_path.file_name().unwrap().to_string_lossy();
 
         for wallpaper in theme.wallpapers {
             assert!(
