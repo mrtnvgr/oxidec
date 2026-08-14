@@ -3,7 +3,14 @@ use rand::prelude::IndexedRandom;
 use rand::seq::IteratorRandom;
 use std::{fs, io};
 use std::path::{Path, PathBuf};
+use std::sync::LazyLock;
 use strum::{EnumIter, IntoEnumIterator};
+
+static CONFIG_ROOT: LazyLock<PathBuf> = LazyLock::new(|| {
+    let mut root = home_dir().expect("Failed to get HOME directory");
+    root.push(".config/oxidec");
+    root
+});
 
 #[derive(EnumIter)]
 pub enum Directory {
@@ -17,13 +24,12 @@ pub enum Directory {
 
 impl Directory {
     fn path(&self) -> PathBuf {
-        let mut root = home_dir().expect("Failed to get HOME directory");
-        root.push(".config/oxidec");
-        root.push(self.get_self_handle());
-        root
+        let mut path = CONFIG_ROOT.clone();
+        path.push(self.get_self_handle());
+        path
     }
 
-    fn get_self_handle(&self) -> String {
+    fn get_self_handle(&self) -> &'static str {
         match self {
             Self::Root => "",
             Self::Colorschemes => "colorschemes",
@@ -32,7 +38,6 @@ impl Directory {
             Self::Wallpapers => "wallpapers",
             Self::Themes => "themes",
         }
-        .to_owned()
     }
 
     fn force_extension(&self, path: PathBuf) -> PathBuf {
@@ -43,9 +48,7 @@ impl Directory {
     }
 
     pub fn contains(&self, name: &str) -> bool {
-        let extension = self.build_path(name);
-        let entry = extension.to_string_lossy().to_string();
-        self.path().join(entry).exists()
+        self.build_path(name).exists()
     }
 
     fn random_file(&self) -> Option<PathBuf> {

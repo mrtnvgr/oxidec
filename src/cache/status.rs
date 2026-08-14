@@ -1,6 +1,6 @@
+use crate::cache::CACHE_DIR;
 use crate::config::Directory;
 use clap::ValueEnum;
-use home::home_dir;
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
 use std::fs::File;
 use std::{fs, io};
@@ -32,9 +32,7 @@ where
     }
 
     fn path() -> PathBuf {
-        let home_dir = home_dir().expect("Failed to get HOME directory");
-        let cache_path = format!(".cache/oxidec/{}.json", Self::NAME);
-        home_dir.join(cache_path)
+        CACHE_DIR.join(format!("{}.json", Self::NAME))
     }
 
     fn save(&self) {
