@@ -3,7 +3,6 @@ use crate::cache::status::{Object, Wallpaper, WallpaperMode};
 use std::io;
 use std::path::PathBuf;
 use std::process::{Command, ExitStatus};
-use sysinfo::{ProcessRefreshKind, ProcessesToUpdate, RefreshKind, System};
 use which::which;
 
 pub fn wallpaper(path: PathBuf, mode: WallpaperMode) {
@@ -53,11 +52,5 @@ fn swaybg(wallpaper: Wallpaper) -> io::Result<ExitStatus> {
 }
 
 fn kill_all(proc_name: &str) {
-    let refreshes = RefreshKind::nothing().with_processes(ProcessRefreshKind::everything());
-    let mut system = System::new_with_specifics(refreshes);
-    system.refresh_processes(ProcessesToUpdate::All, false);
-
-    for process in system.processes_by_exact_name(proc_name.as_ref()) {
-        process.kill();
-    }
+    let _ = Command::new("pkill").arg("-9").arg("-x").arg(proc_name).status();
 }
