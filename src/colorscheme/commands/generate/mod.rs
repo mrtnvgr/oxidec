@@ -11,7 +11,8 @@ pub fn handle(args: &args::Generate) {
     log::info!("Generating colorscheme...");
     let wallpaper = status::Wallpaper::load();
 
-    let name = wallpaper.path.to_string_lossy();
+    let stem = wallpaper.path.file_stem().unwrap_or_default();
+    let name = stem.to_string_lossy();
 
     assert!(
         !Directory::Colorschemes.contains(&name),
