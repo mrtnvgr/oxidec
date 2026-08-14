@@ -1,4 +1,3 @@
-use colorsys::{GrayScaleMethod, Rgb};
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, fs::File};
 use crate::cache::status::Colorscheme as ColorschemeStatus;
