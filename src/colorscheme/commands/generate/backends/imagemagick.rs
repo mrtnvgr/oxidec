@@ -1,9 +1,7 @@
 use colorsys::{ColorTransform, Rgb, SaturationInSpace};
 use regex::Regex;
-use std::cmp::Ordering;
 use std::path::Path;
 use std::process::Command;
-use std::sync::LazyLock;
 
 pub fn generate(path: &Path, light: bool) -> Vec<Rgb> {
     assert!(
@@ -16,34 +14,20 @@ pub fn generate(path: &Path, light: bool) -> Vec<Rgb> {
 }
 
 fn generate_colors(path: &Path) -> Vec<Rgb> {
-    let mut raw_colors = None;
+    let generated_colors = get_image_colors(path, 16);
+    let colors = generated_colors.lines();
 
-    for i in 0..20 {
-        let generated_colors = get_image_colors(path, 16 + i);
-        let colors = generated_colors.lines();
+    // header + 16 colors
+    assert!(
+        colors.count() == 17,
+        "Imagemagick couldn't generate a suitable palette."
+    );
 
-        // header + 16 colors
-        match colors.count().cmp(&17) {
-            Ordering::Less => (),
-            Ordering::Greater => break,
-            Ordering::Equal => raw_colors = Some(generated_colors),
-        }
-    }
+    let re = Regex::new(r"#[0-9a-fA-F]{6}").unwrap();
 
-    if let Some(raw_colors) = raw_colors {
-        static RE: LazyLock<Regex> = LazyLock::new(|| {
-            Regex::new(r"#[0-9a-fA-F]{6}").unwrap()
-        });
-
-        let colors: Vec<Rgb> = RE
-            .find_iter(&raw_colors)
-            .map(|x| Rgb::from_hex_str(x.as_str()).unwrap())
-            .collect();
-
-        return colors;
-    }
-
-    panic!("Imagemagick couldn't generate a suitable palette.");
+    re.find_iter(&generated_colors)
+        .map(|x| Rgb::from_hex_str(x.as_str()).unwrap())
+        .collect()
 }
 
 #[allow(clippy::indexing_slicing)]
@@ -72,9 +56,7 @@ fn adjust_colors(colors: &[Rgb], light: bool) -> Vec<Rgb> {
             raw_colors[0].lighten(-40.0);
         }
 
-        let gray = LazyLock::new(|| {
-            Rgb::from_hex_str("#EEEEEE").unwrap()
-        });
+        let gray = Rgb::from_hex_str("#EEEEEE").unwrap();
 
         raw_colors[7] = blend_color(&raw_colors[7], &gray);
 
