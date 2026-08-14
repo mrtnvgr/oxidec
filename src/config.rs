@@ -1,9 +1,9 @@
 use home::home_dir;
 use rand::prelude::IndexedRandom;
 use rand::seq::IteratorRandom;
-use std::{fs, io};
 use std::path::{Path, PathBuf};
 use std::sync::LazyLock;
+use std::{fs, io};
 use strum::{EnumIter, IntoEnumIterator};
 
 static CONFIG_ROOT: LazyLock<PathBuf> = LazyLock::new(|| {

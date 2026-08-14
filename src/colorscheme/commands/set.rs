@@ -1,18 +1,15 @@
-use crate::config::Directory;
-use crate::colorscheme::{args, blocks, reloaders, schema, templates};
 use crate::cache::status::{Colorscheme, Object};
+use crate::colorscheme::{args, blocks, reloaders, schema, templates};
+use crate::config::Directory;
 
 pub fn handle(args: &args::Set) {
-    let name = args
-        .name
-        .clone()
-        .unwrap_or_else(|| {
-            if let Some(current) = Colorscheme::try_load() {
-                Directory::Colorschemes.random_entry_excluding(&current.name)
-            } else {
-                Directory::Colorschemes.random_entry()
-            }
-        });
+    let name = args.name.clone().unwrap_or_else(|| {
+        if let Some(current) = Colorscheme::try_load() {
+            Directory::Colorschemes.random_entry_excluding(&current.name)
+        } else {
+            Directory::Colorschemes.random_entry()
+        }
+    });
 
     let status = Colorscheme::new(&name);
     status.save();

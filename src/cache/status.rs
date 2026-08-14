@@ -3,8 +3,8 @@ use crate::config::Directory;
 use clap::ValueEnum;
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
 use std::fs::File;
-use std::{fs, io};
 use std::path::{Path, PathBuf};
+use std::{fs, io};
 
 pub trait Object
 where
@@ -79,7 +79,9 @@ impl Colorscheme {
         let stem = Path::new(&entry).file_stem().unwrap();
         let name = stem.to_string_lossy().to_string();
 
-        let path = Directory::Colorschemes.get(entry).expect("This colorscheme does not exist");
+        let path = Directory::Colorschemes
+            .get(entry)
+            .expect("This colorscheme does not exist");
 
         Self { name, path }
     }

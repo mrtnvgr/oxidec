@@ -5,10 +5,7 @@ use std::path::Path;
 
 pub fn handle(args: &args::Add) {
     assert!(args.file_path.exists(), "This file does not exist");
-    assert!(
-        is_image(&args.file_path),
-        "This file is not an image"
-    );
+    assert!(is_image(&args.file_path), "This file is not an image");
 
     let filename = args.file_path.file_name().unwrap();
     let name = filename.to_str().unwrap();

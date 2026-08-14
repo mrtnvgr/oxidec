@@ -1,6 +1,6 @@
+use crate::cache::status::Colorscheme as ColorschemeStatus;
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, fs::File};
-use crate::cache::status::Colorscheme as ColorschemeStatus;
 
 type Data = HashMap<String, String>;
 
@@ -19,7 +19,11 @@ impl Colorscheme {
         let fr = File::open(status.path).expect(&error_message);
         let mut colorscheme: Self = serde_json::from_reader(fr).expect(&error_message);
 
-        macro_rules! s { ($x:expr) => { $x.to_owned() }; }
+        macro_rules! s {
+            ($x:expr) => {
+                $x.to_owned()
+            };
+        }
         colorscheme.data.entry(s!("name")).or_insert(name);
 
         colorscheme

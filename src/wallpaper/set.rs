@@ -52,5 +52,9 @@ fn swaybg(wallpaper: Wallpaper) -> io::Result<ExitStatus> {
 }
 
 fn kill_all(proc_name: &str) {
-    let _ = Command::new("pkill").arg("-9").arg("-x").arg(proc_name).status();
+    let _ = Command::new("pkill")
+        .arg("-9")
+        .arg("-x")
+        .arg(proc_name)
+        .status();
 }
