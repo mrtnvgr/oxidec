@@ -8,6 +8,13 @@ let
     name = "oxidec";
     src = lib.cleanSource ./..;
     cargoLock.lockFile = ./../Cargo.lock;
+
+    buildNoDefaultFeatures = true;
+    buildFeatures = [
+      (lib.optionalString cfg.features.colorschemes "colorschemes")
+      (lib.optionalString cfg.features.wallpapers "wallpapers")
+      (lib.optionalString cfg.features.themes "themes")
+    ];
   };
 in {
   options.oxidec = {
@@ -57,6 +64,21 @@ in {
     default.colorscheme = lib.mkOption {
       type = with types; nullOr singleLineStr;
       default = null;
+    };
+
+    features.colorschemes = lib.mkOption {
+      type = types.bool;
+      default = true;
+    };
+
+    features.wallpapers = lib.mkOption {
+      type = types.bool;
+      default = true;
+    };
+
+    features.themes = lib.mkOption {
+      type = types.bool;
+      default = true;
     };
   };
 
