@@ -22,3 +22,8 @@ jobs:
       run: cargo build --release --verbose
     - name: Run tests
       run: cargo test --verbose
+
+    - name: Build only colorschemes support
+      run: cargo build --no-default-features --features colorschemes
+    - name: Builds only wallpapers support
+      run: cargo build --no-default-features --features wallpapers
