@@ -17,10 +17,14 @@ fn run_reloaders(colorscheme: &str) {
         command.arg("-C").arg(&reloader);
         command.env("OXIDEC_COLORSCHEME", colorscheme);
 
-        let status = command.status();
+        let file_name = reloader.file_name().unwrap_or_default();
 
-        if !status.unwrap().success() {
-            log::error!("Error occured in {:?}", reloader.file_name().unwrap());
+        match command.status() {
+            Ok(status) if !status.success() => {
+                log::error!("Error occurred in {file_name:?}");
+            }
+            Err(error) => log::error!("Failed to run {file_name:?}: {error}"),
+            _ => (),
         }
     }
 }

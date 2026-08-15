@@ -59,10 +59,7 @@ fn set_random_wallpaper(theme: &schema::Theme, wallpaper_cache: &Wallpaper) {
     wallpaper::set(wallpaper.path.clone(), wallpaper.mode);
 }
 
-fn set_next_wallpaper<'a>(
-    theme: &'a schema::Theme,
-    wallpaper_cache: &'a Wallpaper,
-) -> &'a Wallpaper {
+fn set_next_wallpaper<'a>(theme: &'a schema::Theme, wallpaper_cache: &Wallpaper) -> &'a Wallpaper {
     let wallpaper_count = theme.wallpapers.len();
     let current_index = theme
         .wallpapers

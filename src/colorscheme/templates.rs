@@ -1,28 +1,12 @@
 use colorsys::{ColorAlpha, ColorTransform, Rgb};
+use std::sync::LazyLock;
 use upon::Engine;
 
 use super::schema;
 use crate::{cache, config};
 use std::fs;
 
-pub fn generate(colorscheme: &schema::Colorscheme) {
-    let engine = get_engine();
-
-    let templates = config::Directory::Templates.list();
-    assert!(!templates.is_empty(), "No templates for generation.");
-
-    for path in templates {
-        let content = fs::read_to_string(&path).expect("Failed to read template content");
-
-        let template = engine.compile(&content).unwrap();
-        let result = template.render(&engine, colorscheme).to_string().unwrap();
-
-        let template_name: &str = path.file_name().unwrap().to_str().unwrap();
-        cache::templates::create(template_name, result).unwrap();
-    }
-}
-
-fn get_engine() -> Engine<'static> {
+static ENGINE: LazyLock<Engine<'static>> = LazyLock::new(|| {
     let mut engine = Engine::new();
 
     engine.add_function("strip", |text: String| {
@@ -81,6 +65,21 @@ fn get_engine() -> Engine<'static> {
     engine.add_function("is", |x: String, y: String| x == y);
 
     engine
+});
+
+pub fn generate(colorscheme: &schema::Colorscheme) {
+    let templates = config::Directory::Templates.list();
+    assert!(!templates.is_empty(), "No templates for generation.");
+
+    for path in templates {
+        let content = fs::read_to_string(&path).expect("Failed to read template content");
+
+        let template = ENGINE.compile(&content).unwrap();
+        let result = template.render(&ENGINE, colorscheme).to_string().unwrap();
+
+        let template_name: &str = path.file_name().unwrap().to_str().unwrap();
+        cache::templates::create(template_name, result).unwrap();
+    }
 }
 
 #[cfg(test)]

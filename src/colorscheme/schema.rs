@@ -19,12 +19,7 @@ impl Colorscheme {
         let fr = File::open(status.path).expect(&error_message);
         let mut colorscheme: Self = serde_json::from_reader(fr).expect(&error_message);
 
-        macro_rules! s {
-            ($x:expr) => {
-                $x.to_owned()
-            };
-        }
-        colorscheme.data.entry(s!("name")).or_insert(name);
+        colorscheme.data.entry("name".to_owned()).or_insert(name);
 
         colorscheme
     }
