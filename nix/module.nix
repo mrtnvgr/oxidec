@@ -130,19 +130,23 @@ in {
     home.shellAliases = lib.mapAttrs (n: v: "oxidec ${v}") cfg.aliases;
 
     home.activation.oxidec = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      ${if cfg.default.colorscheme != null then ''
-        if [ ! -f "$HOME/.cache/oxidec/colorscheme.json" ]; then
-          ${oxidec}/bin/oxidec colorscheme set ${cfg.default.colorscheme}
-        else
-          # TODO: if current (set) colorscheme does not exist, apply the default one
-          # implement this by using a custom exit code?
+      ${lib.optionalString cfg.features.colorschemes ''
+        ${if cfg.default.colorscheme != null then ''
+          if [ ! -f "$HOME/.cache/oxidec/colorscheme.json" ]; then
+            ${oxidec}/bin/oxidec colorscheme set ${cfg.default.colorscheme}
+          else
+            # TODO: if current (set) colorscheme does not exist, apply the default one
+            # implement this by using a custom exit code?
+            ${oxidec}/bin/oxidec colorscheme reload
+          fi
+        '' else ''
           ${oxidec}/bin/oxidec colorscheme reload
-        fi
-      '' else ''
-        ${oxidec}/bin/oxidec colorscheme reload
+        ''}
       ''}
 
-      ${oxidec}/bin/oxidec wallpaper reload
+      ${lib.optionalString cfg.features.wallpapers ''
+        ${oxidec}/bin/oxidec wallpaper reload
+      ''}
     '';
   };
 }
