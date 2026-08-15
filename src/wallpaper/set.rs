@@ -21,34 +21,43 @@ pub fn wallpaper(path: PathBuf, mode: WallpaperMode) {
 }
 
 fn feh(wallpaper: Wallpaper) -> io::Result<ExitStatus> {
-    let mode = match wallpaper.mode {
-        WallpaperMode::Center => "--bg-center",
-        WallpaperMode::Fill => "--bg-fill",
-        WallpaperMode::Max => "--bg-max",
-        WallpaperMode::Scale => "--bg-scale",
-        WallpaperMode::Tile => "--bg-tile",
-    };
-
-    Command::new("feh").arg(mode).arg(wallpaper.path).status()
+    Command::new("feh")
+        .arg(wallpaper.mode.feh_flag())
+        .arg(wallpaper.path)
+        .status()
 }
 
 fn swaybg(wallpaper: Wallpaper) -> io::Result<ExitStatus> {
-    let mode = match wallpaper.mode {
-        WallpaperMode::Center => "-m center",
-        WallpaperMode::Fill => "-m fill",
-        WallpaperMode::Max => "-m stretch",
-        WallpaperMode::Scale => "-m fit",
-        WallpaperMode::Tile => "-m tile",
-        // TODO: WallpaperMode::Color => "-m solid_color",
-    };
-
     // kill all other instances
     kill_all("swaybg");
 
     Command::new("swaybg")
-        .arg(mode)
+        .arg(wallpaper.mode.swaybg_flag())
         .arg(wallpaper.path)
         .status()
+}
+
+impl WallpaperMode {
+    fn feh_flag(&self) -> &'static str {
+        match self {
+            WallpaperMode::Center => "--bg-center",
+            WallpaperMode::Fill => "--bg-fill",
+            WallpaperMode::Max => "--bg-max",
+            WallpaperMode::Scale => "--bg-scale",
+            WallpaperMode::Tile => "--bg-tile",
+        }
+    }
+
+    fn swaybg_flag(&self) -> &'static str {
+        match self {
+            WallpaperMode::Center => "-m center",
+            WallpaperMode::Fill => "-m fill",
+            WallpaperMode::Max => "-m stretch",
+            WallpaperMode::Scale => "-m fit",
+            WallpaperMode::Tile => "-m tile",
+            // TODO: WallpaperMode::Color => "-m solid_color",
+        }
+    }
 }
 
 fn kill_all(proc_name: &str) {

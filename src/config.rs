@@ -104,10 +104,9 @@ impl Directory {
 
     pub fn list(&self) -> Vec<PathBuf> {
         let entries = fs::read_dir(self.path()).unwrap().flatten();
-        let paths = entries.map(|e| e.path());
-        let mut files = paths.filter(|p| p.is_file()).collect::<Vec<PathBuf>>();
+        let mut files: Vec<PathBuf> = entries.map(|e| e.path()).filter(|p| p.is_file()).collect();
 
-        files.sort_by_key(|path| PathBuf::from(path.file_name().unwrap()));
+        files.sort();
 
         files
     }

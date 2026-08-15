@@ -5,8 +5,6 @@ use crate::{
     theme::{args, schema},
 };
 
-use std::fs::File;
-
 pub fn handle(args: &args::New) {
     assert!(
         !Directory::Themes.contains(&args.name),
@@ -19,9 +17,7 @@ pub fn handle(args: &args::New) {
     let wallpaper = status::Wallpaper::load();
 
     let theme = schema::Theme::new(colorscheme, vec![wallpaper]);
-
-    let path = Directory::Themes.build_path(&args.name);
-    serde_json::to_writer(File::create(path).unwrap(), &theme).unwrap();
+    theme.save(&args.name);
 
     let cache = status::Theme::new(&args.name);
     cache.save();

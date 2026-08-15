@@ -13,11 +13,8 @@ pub fn handle(kind: &ThemeWallpapers) {
 }
 
 fn toggle(kind: &ThemeWallpapers) {
-    let cache = status::Theme::load();
     let wallpaper = status::Wallpaper::load();
-
-    let error_message = format!("Failed to load {:?}", cache.name);
-    let mut theme = schema::Theme::from_file(&cache.path).expect(&error_message);
+    let (mut theme, name) = load_current_theme();
 
     let contains = theme.wallpapers.iter().any(|x| *x.path == wallpaper.path);
 
@@ -28,23 +25,27 @@ fn toggle(kind: &ThemeWallpapers) {
         ThemeWallpapers::Switch(_) => unreachable!(),
     }
 
-    theme.save(&cache.name);
+    theme.save(&name);
 
     log::info!("Success");
 }
 
 fn set_wallpaper(args: &Switch) {
     let wallpaper_cache = status::Wallpaper::load();
-
-    let theme_cache = status::Theme::load();
-    let error_message = format!("Failed to load {:?}", theme_cache.name);
-    let theme = schema::Theme::from_file(&theme_cache.path).expect(&error_message);
+    let (theme, _name) = load_current_theme();
 
     if args.random {
         set_random_wallpaper(&theme, &wallpaper_cache);
     } else {
         set_next_wallpaper(&theme, &wallpaper_cache);
     }
+}
+
+fn load_current_theme() -> (schema::Theme, String) {
+    let cache = status::Theme::load();
+    let error_message = format!("Failed to load {:?}", cache.name);
+    let theme = schema::Theme::from_file(&cache.path).expect(&error_message);
+    (theme, cache.name)
 }
 
 fn set_random_wallpaper(theme: &schema::Theme, wallpaper_cache: &Wallpaper) {

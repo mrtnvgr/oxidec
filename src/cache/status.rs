@@ -12,6 +12,8 @@ where
 {
     const NAME: &'static str;
 
+    fn directory() -> Directory;
+
     fn load() -> Self {
         let path = Self::path();
 
@@ -64,34 +66,46 @@ pub struct Theme {
 
 impl Object for Colorscheme {
     const NAME: &'static str = "colorscheme";
+
+    fn directory() -> Directory {
+        Directory::Colorschemes
+    }
 }
 
 impl Object for Wallpaper {
     const NAME: &'static str = "wallpaper";
+
+    fn directory() -> Directory {
+        Directory::Wallpapers
+    }
 }
 
 impl Object for Theme {
     const NAME: &'static str = "theme";
+
+    fn directory() -> Directory {
+        Directory::Themes
+    }
+}
+
+fn new_from_entry<T: Object>(entry: &str) -> (String, PathBuf) {
+    let stem = Path::new(&entry).file_stem().unwrap();
+    let name = stem.to_string_lossy().to_string();
+    let message = format!("This {} does not exist", T::NAME);
+    let path = T::directory().get(entry).expect(&message);
+    (name, path)
 }
 
 impl Colorscheme {
     pub fn new(entry: &str) -> Self {
-        let stem = Path::new(&entry).file_stem().unwrap();
-        let name = stem.to_string_lossy().to_string();
-
-        let path = Directory::Colorschemes
-            .get(entry)
-            .expect("This colorscheme does not exist");
-
+        let (name, path) = new_from_entry::<Self>(entry);
         Self { name, path }
     }
 }
 
 impl Theme {
     pub fn new(entry: &str) -> Self {
-        let stem = Path::new(&entry).file_stem().unwrap();
-        let name = stem.to_string_lossy().to_string();
-        let path = Directory::Themes.get(entry).unwrap();
+        let (name, path) = new_from_entry::<Self>(entry);
         Self { name, path }
     }
 }
