@@ -10,11 +10,8 @@ use rand::prelude::*;
 
 pub fn handle(args: &args::Set) {
     let name = args.name.clone().unwrap_or_else(|| {
-        if let Some(current) = cache::status::Theme::try_load() {
-            Directory::Themes.random_entry_excluding(&current.name)
-        } else {
-            Directory::Themes.random_entry()
-        }
+        let current = cache::status::Theme::try_load().map(|status| status.name);
+        Directory::Themes.pick_random(current)
     });
 
     assert!(

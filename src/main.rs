@@ -3,6 +3,7 @@ mod theme;
 mod wallpaper;
 
 mod cache;
+mod common;
 mod config;
 mod logger;
 

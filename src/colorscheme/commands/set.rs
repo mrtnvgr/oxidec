@@ -4,11 +4,8 @@ use crate::config::Directory;
 
 pub fn handle(args: &args::Set) {
     let name = args.name.clone().unwrap_or_else(|| {
-        if let Some(current) = Colorscheme::try_load() {
-            Directory::Colorschemes.random_entry_excluding(&current.name)
-        } else {
-            Directory::Colorschemes.random_entry()
-        }
+        let current = Colorscheme::try_load().map(|status| status.name);
+        Directory::Colorschemes.pick_random(current)
     });
 
     let status = Colorscheme::new(&name);

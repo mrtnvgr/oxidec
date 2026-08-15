@@ -78,6 +78,14 @@ impl Directory {
         filtered.choose(&mut rng).unwrap().clone()
     }
 
+    pub fn pick_random(&self, current: Option<String>) -> String {
+        if let Some(current) = current {
+            self.random_entry_excluding(&current)
+        } else {
+            self.random_entry()
+        }
+    }
+
     pub fn copy(&self, path: &Path) -> io::Result<()> {
         let from_path = fs::canonicalize(path)?;
         let file_name = path.file_name().unwrap_or_default();
