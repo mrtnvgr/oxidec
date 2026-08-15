@@ -24,6 +24,12 @@ strum = { version = "0.28", features = ["derive", "strum_macros"] }
 upon = "0.11"
 which = "8.0"
 
+[features]
+default = ["colorschemes", "wallpapers", "themes"]
+colorschemes = []
+wallpapers = []
+themes = ["colorschemes", "wallpapers"]
+
 [profile.release]
 opt-level = 3
 lto = "thin"

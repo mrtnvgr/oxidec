@@ -1,4 +1,7 @@
-use crate::{config::Directory, theme::schema, wallpaper::args};
+use crate::{config::Directory, wallpaper::args};
+
+#[cfg(feature = "themes")]
+use crate::theme::schema;
 
 pub fn handle(args: &args::Remove) {
     let name = args.filename.file_name().unwrap().to_str().unwrap();
@@ -8,6 +11,17 @@ pub fn handle(args: &args::Remove) {
         "This wallpaper does not exist"
     );
 
+    #[cfg(feature = "themes")]
+    check_theme_dep(name);
+
+    match Directory::Wallpapers.remove(name) {
+        Ok(()) => log::info!("Wallpaper was deleted successfully"),
+        Err(error) => log::error!("Failed to delete a wallpaper: {error}"),
+    }
+}
+
+#[cfg(feature = "themes")]
+fn check_theme_dep(name: &str) {
     let path = Directory::Wallpapers.get(name).unwrap();
 
     for theme_path in Directory::Themes.list() {
@@ -17,14 +31,8 @@ pub fn handle(args: &args::Remove) {
         for wallpaper in theme.wallpapers {
             assert!(
                 wallpaper.path != path,
-                "\"{}\" theme depends on this wallpaper",
-                theme_name
+                "\"{theme_name}\" theme depends on this wallpaper",
             );
         }
-    }
-
-    match Directory::Wallpapers.remove(name) {
-        Ok(()) => log::info!("Wallpaper was deleted successfully"),
-        Err(error) => log::error!("Failed to delete a wallpaper: {}", error),
     }
 }
