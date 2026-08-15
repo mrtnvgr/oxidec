@@ -24,6 +24,7 @@ in {
       type = with types; attrsOf str;
       description = "Shell aliases";
       default = {
+        # TODO: strip default aliases set, based on enabled features
         cs = "colorscheme";
         wl = "wallpaper";
         wp = "wallpaper";
