@@ -11,9 +11,9 @@ let
 
     buildNoDefaultFeatures = true;
     buildFeatures = [
-      (lib.optionalString cfg.features.colorschemes "colorschemes")
-      (lib.optionalString cfg.features.wallpapers "wallpapers")
-      (lib.optionalString cfg.features.themes "themes")
+      (lib.optional cfg.features.colorschemes "colorschemes")
+      (lib.optional cfg.features.wallpapers "wallpapers")
+      (lib.optional cfg.features.themes "themes")
     ];
   };
 in {
