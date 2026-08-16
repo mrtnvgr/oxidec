@@ -9,6 +9,8 @@ let
     src = lib.cleanSource ./..;
     cargoLock.lockFile = ./../Cargo.lock;
 
+    RUSTFLAGS = "-A warnings";
+
     buildNoDefaultFeatures = true;
     buildFeatures = [
       (lib.optional cfg.features.colorschemes "colorschemes")
