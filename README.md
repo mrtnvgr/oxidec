@@ -1,9 +1,12 @@
 <h3 align="center">
-    <img
-        src="https://github.com/mrtnvgr/oxidec/assets/48406064/8ce1565d-f65a-4664-92fe-995aacb74d7c"
+    <video
+        src="https://github.com/user-attachments/assets/c9b4a0f9-0216-4fa4-8e88-fe9376beb771"
         width="400px"
-        height="400px"
-    />
+        autoplay
+        loop
+        muted
+        playsinline
+    ></video>
 </h3>
 <h3 align="center">oxidec</h3>
 <p align="center"><b>Manage your desktop appearance with ease!</b></h3>
